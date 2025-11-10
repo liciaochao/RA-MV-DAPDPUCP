@@ -184,9 +184,10 @@ class Model_builder(object):
         self.max_endurance=180
         self.max_drone_capacity =10
         self.max_truck_capacity =650
+        self.Z_constraints = {}  # 用于记录约束对象
         # U[i]
         self.U = [[0] for i in range(data.node_num)]
-        # U_drone[i]
+        # X_{ij}
         self.X_truck_with_drone = [([0] * data.node_num) for j in range(data.node_num)]
         # X_{ij}^{-}
         self.X_truck = [([0] * data.node_num) for j in range(data.node_num)]
@@ -243,8 +244,8 @@ class Model_builder(object):
         self.S = [[0] for i in range(data.node_num)]
 
         #求一个集合的所有子集
-    def all_possible_subsets_of(self, C_drone):
-        return [set(subset) for r in range(2, len(data.drone_customer) + 1) for subset in combinations(data.drone_customer, r)]
+    # def all_possible_subsets_of(self, C_drone):
+    #     return [set(subset) for r in range(2, len(data.drone_customer) + 1) for subset in combinations(data.drone_customer, r)]
 
     def remove_Z_constraint_for_customer(self, cid):
         """
@@ -256,7 +257,7 @@ class Model_builder(object):
             self.model.update()  # 更新模型以生效删除
             del self.Z_constraints[cid]
         else:
-            print(f"⚠️ 客户 {cid} 没有对应的 Z 约束或已被删除。")
+            print(f"️ 客户 {cid} 没有对应的 Z 约束或已被删除。")
 
     def build_model(self, data=None, solve_model=False):
         """
@@ -317,14 +318,15 @@ class Model_builder(object):
             self.Z_truck[i] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name22)
 
             for j in range(data.node_num):
-                name23 = 'X_' + str(i) + "_" + str(j)+'^d'
-                name24 = 'X_' + str(i) + "_" + str(j)
-                name25 = 'Y_' + str(i) + "_" + str(j)
-                name26 = 'e_' + str(i) + "_" + str(j) + '^f'
-                self.X_truck_with_drone[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name23)
-                self.X_truck[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name24)
-                self.Y_drone[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name25)
-                self.e_fly[i][j] = self.model.addVar(lb=0, ub=self.max_endurance, vtype=GRB.CONTINUOUS, name=name26)
+                if i!=j:
+                    name23 = 'X_' + str(i) + "_" + str(j)+'^d'
+                    name24 = 'X_' + str(i) + "_" + str(j)
+                    name25 = 'Y_' + str(i) + "_" + str(j)
+                    name26 = 'e_' + str(i) + "_" + str(j) + '^f'
+                    self.X_truck_with_drone[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name23)
+                    self.X_truck[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name24)
+                    self.Y_drone[i][j] = self.model.addVar(lb=0, ub=1, vtype=GRB.BINARY, name=name25)
+                    self.e_fly[i][j] = self.model.addVar(lb=0, ub=self.max_endurance, vtype=GRB.CONTINUOUS, name=name26)
 
         # 创建目标函数
         objective = 0
@@ -340,9 +342,9 @@ class Model_builder(object):
                 objective += self.e_fly[i][j]  * data.perpower_drone
         # 第三部分：起点到其他节点的路径目标
         objective += data.fixcost_truck
-        # # 第四部分：配送失败的惩罚
-        # for i in range(data.node_num):
-        #     objective += self.Z[i] * data.perpenalize
+        # 第四部分：配送失败的惩罚
+        for i in range(data.node_num):
+            objective += self.Z[i] * data.perpenalize
 
         self.model.setObjective(objective, GRB.MINIMIZE)
 
@@ -531,14 +533,14 @@ class Model_builder(object):
                     expr2.addTerms(1, self.Y_drone[j][i])
                     self.model.addConstr(expr1 <= 1-expr2, name=f"c25_{i}_{j}")
 
-        # 约束 26 生成并添加无人机子环消除约束
-        for S in self.all_possible_subsets_of(data.drone_customer):
-            expr = LinExpr()
-            for i in S:
-                for j in S:
-                    if i != j:
-                        expr.addTerms(1, self.Y_drone[i][j])  # 累加Y_drone[i][j]
-            self.model.addConstr(expr <= len(S) - 1, name=f"subtour_elimination_{S}")
+        # # 约束 26 生成并添加无人机子环消除约束
+        # for S in self.all_possible_subsets_of(data.drone_customer):
+        #     expr = LinExpr()
+        #     for i in S:
+        #         for j in S:
+        #             if i != j:
+        #                 expr.addTerms(1, self.Y_drone[i][j])  # 累加Y_drone[i][j]
+        #     self.model.addConstr(expr <= len(S) - 1, name=f"subtour_elimination_{S}")
 
         # 约束 27  起飞节点后面的不携带无人机的卡车路径为 1
         for i in range(1, data.node_num - 1):
@@ -1288,28 +1290,11 @@ class Model_builder(object):
                     expr.addTerms(self.max_endurance, self.Y_drone[i][j])
                     expr.addTerms(self.max_endurance, self.Y_retrieve[j])
                     self.model.addConstr(expr <= self.max_endurance, name=f"c97_{i}_{j}")
-        # 约束 98 避免陷入自循环
-        for i in range(1, data.node_num - 1):
-                expr = LinExpr(0)
-                expr.addTerms(1, self.X_truck_with_drone[i][i])
-                self.model.addConstr(expr<=0, name=f"c98_{i}")
-        # 约束 99 避免陷入自循环
-        for i in range(1, data.node_num - 1):
-                expr = LinExpr(0)
-                expr.addTerms(1, self.X_truck[i][i])
-                self.model.addConstr(expr<=0, name=f"c99_{i}")
-        # 约束 100 避免陷入自循环
-        for i in range(1, data.node_num - 1):
-                expr = LinExpr(0)
-                expr.addTerms(1, self.Y_drone[i][i])
-                self.model.addConstr(expr<=0, name=f"c100_{i}")
         # 约束 101 设置卡车出发的初始时间
         self.model.addConstr(self.T_truck[0]==0, name=f"c101")
         # 约束 102 设置无人机出发的初始时间
         self.model.addConstr(self.T_drone[0]==0, name=f"c102")
 
-
-        self.Z_constraints = {}  # 用于记录约束对象
         for i in range(1, data.node_num - 1):
             constr = self.model.addConstr(self.Z[i] == 1, name=f"Z_{i}_initial")
             self.Z_constraints[i] = constr
@@ -2368,9 +2353,9 @@ class RollingController(object):
 if __name__ == "__main__":
     # 1. 读取数据
     data = Data()
-    path_customer = 'D:\\python\\pythonProject\\c102.csv'
-    path_caf      = 'D:\\python\\pythonProject\\CAF.csv'
-    customer_num = 16
+    path_customer = 'D:\\python\\mDAPDP-TW-UCP_gurobi\\c102.csv'
+    path_caf      = 'D:\\python\\mDAPDP-TW-UCP_gurobi\\CAF.csv'
+    customer_num = 8
     data.read_data(path_customer, path_caf, customer_num)
     data.print_data(customer_num)
 
