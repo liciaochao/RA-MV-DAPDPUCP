@@ -1,0 +1,4803 @@
+{
+  "depot_id": 0,
+  "vehicle_pair_count": 13,
+  "depot": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "truck_distance_scale": 1.2,
+  "drone_distance_scale": 1.0,
+  "trucks": [
+    {
+      "truck_id": 1,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 2,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 3,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 4,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 5,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 6,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 7,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 8,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 9,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 10,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 11,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 12,
+      "speed": 0.5,
+      "capacity": 100.0
+    },
+    {
+      "truck_id": 13,
+      "speed": 0.5,
+      "capacity": 100.0
+    }
+  ],
+  "drones": [
+    {
+      "drone_id": 1,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 2,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 3,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 4,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 5,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 6,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 7,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 8,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 9,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 10,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 11,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 12,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    },
+    {
+      "drone_id": 13,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    }
+  ],
+  "delivery_customers": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    14,
+    16,
+    18,
+    19,
+    21,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    33,
+    36,
+    42,
+    44,
+    49,
+    50,
+    51,
+    52,
+    56,
+    57,
+    58,
+    59,
+    61,
+    63,
+    67,
+    70,
+    72,
+    73,
+    74,
+    75,
+    77,
+    79,
+    80,
+    81,
+    86,
+    88,
+    92,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    103,
+    104,
+    108,
+    109,
+    110,
+    111,
+    114,
+    116,
+    117,
+    119,
+    121,
+    122,
+    124,
+    126,
+    127,
+    128,
+    129,
+    133,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    146,
+    150,
+    151,
+    153,
+    154,
+    155,
+    157,
+    158,
+    159,
+    160,
+    163,
+    164,
+    165,
+    166,
+    167,
+    169,
+    170,
+    172,
+    173,
+    174,
+    176,
+    177,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    190,
+    191,
+    192,
+    193,
+    194,
+    197,
+    198
+  ],
+  "pickup_customers": [
+    4,
+    13,
+    15,
+    17,
+    20,
+    22,
+    23,
+    24,
+    31,
+    32,
+    34,
+    35,
+    37,
+    38,
+    39,
+    40,
+    41,
+    43,
+    45,
+    46,
+    47,
+    48,
+    53,
+    54,
+    55,
+    60,
+    62,
+    64,
+    65,
+    66,
+    68,
+    69,
+    71,
+    76,
+    78,
+    82,
+    83,
+    84,
+    85,
+    87,
+    89,
+    90,
+    91,
+    93,
+    100,
+    101,
+    102,
+    105,
+    106,
+    107,
+    112,
+    113,
+    115,
+    118,
+    120,
+    123,
+    125,
+    130,
+    131,
+    132,
+    134,
+    135,
+    145,
+    147,
+    148,
+    149,
+    152,
+    156,
+    161,
+    162,
+    168,
+    171,
+    175,
+    178,
+    180,
+    189,
+    195,
+    196,
+    199,
+    200
+  ],
+  "customers": [
+    {
+      "customer_id": 1,
+      "x": 5.06,
+      "y": 16.9,
+      "customer_type": "delivery",
+      "weight": 4.29,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 2,
+      "x": 2.48,
+      "y": 9.91,
+      "customer_type": "delivery",
+      "weight": 8.24,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 3,
+      "x": 0.6,
+      "y": 12.53,
+      "customer_type": "delivery",
+      "weight": 0.8,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 4,
+      "x": 12.33,
+      "y": 7.98,
+      "customer_type": "pickup",
+      "weight": 7.8,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 5,
+      "x": 4.99,
+      "y": 17.85,
+      "customer_type": "delivery",
+      "weight": 8.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 6,
+      "x": 11.08,
+      "y": 16.76,
+      "customer_type": "delivery",
+      "weight": 1.61,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 7,
+      "x": 10.25,
+      "y": 11.68,
+      "customer_type": "delivery",
+      "weight": 3.36,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 8,
+      "x": 4.01,
+      "y": 13.74,
+      "customer_type": "delivery",
+      "weight": 2.38,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 9,
+      "x": 3.52,
+      "y": 14.98,
+      "customer_type": "delivery",
+      "weight": 6.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 10,
+      "x": 1.5,
+      "y": 4.75,
+      "customer_type": "delivery",
+      "weight": 1.41,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 11,
+      "x": 11.52,
+      "y": 12.89,
+      "customer_type": "delivery",
+      "weight": 7.95,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 12,
+      "x": 17.74,
+      "y": 13.59,
+      "customer_type": "delivery",
+      "weight": 3.28,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 13,
+      "x": 14.98,
+      "y": 0.96,
+      "customer_type": "pickup",
+      "weight": 2.41,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 14,
+      "x": 11.01,
+      "y": 13.93,
+      "customer_type": "delivery",
+      "weight": 6.87,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 15,
+      "x": 0.08,
+      "y": 7.44,
+      "customer_type": "pickup",
+      "weight": 3.57,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 16,
+      "x": 6.81,
+      "y": 17.58,
+      "customer_type": "delivery",
+      "weight": 1.97,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 17,
+      "x": 7.15,
+      "y": 1.2,
+      "customer_type": "pickup",
+      "weight": 3.54,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 18,
+      "x": 15.12,
+      "y": 8.34,
+      "customer_type": "delivery",
+      "weight": 2.18,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 19,
+      "x": 3.82,
+      "y": 15.25,
+      "customer_type": "delivery",
+      "weight": 8.48,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 20,
+      "x": 11.85,
+      "y": 2.43,
+      "customer_type": "pickup",
+      "weight": 2.22,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 21,
+      "x": 11.09,
+      "y": 2.43,
+      "customer_type": "delivery",
+      "weight": 9.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 22,
+      "x": 1.27,
+      "y": 8.8,
+      "customer_type": "pickup",
+      "weight": 6.4,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 23,
+      "x": 6.15,
+      "y": 7.1,
+      "customer_type": "pickup",
+      "weight": 0.37,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 24,
+      "x": 7.25,
+      "y": 9.11,
+      "customer_type": "pickup",
+      "weight": 4.43,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 25,
+      "x": 9.85,
+      "y": 8.91,
+      "customer_type": "delivery",
+      "weight": 1.79,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 26,
+      "x": 6.97,
+      "y": 16.12,
+      "customer_type": "delivery",
+      "weight": 3.41,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 27,
+      "x": 12.4,
+      "y": 7.18,
+      "customer_type": "delivery",
+      "weight": 3.07,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 28,
+      "x": 6.77,
+      "y": 6.65,
+      "customer_type": "delivery",
+      "weight": 7.03,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 29,
+      "x": 4.01,
+      "y": 9.64,
+      "customer_type": "delivery",
+      "weight": 6.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 30,
+      "x": 17.03,
+      "y": 13.61,
+      "customer_type": "delivery",
+      "weight": 2.22,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 31,
+      "x": 7.11,
+      "y": 16.26,
+      "customer_type": "pickup",
+      "weight": 4.78,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 32,
+      "x": 17.69,
+      "y": 6.79,
+      "customer_type": "pickup",
+      "weight": 8.64,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 33,
+      "x": 9.51,
+      "y": 17.69,
+      "customer_type": "delivery",
+      "weight": 1.66,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 34,
+      "x": 6.57,
+      "y": 14.68,
+      "customer_type": "pickup",
+      "weight": 3.93,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 35,
+      "x": 17.3,
+      "y": 9.93,
+      "customer_type": "pickup",
+      "weight": 0.96,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 36,
+      "x": 15.84,
+      "y": 6.45,
+      "customer_type": "delivery",
+      "weight": 2.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 37,
+      "x": 14.89,
+      "y": 14.74,
+      "customer_type": "pickup",
+      "weight": 9.58,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 38,
+      "x": 4.21,
+      "y": 3.08,
+      "customer_type": "pickup",
+      "weight": 9.18,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 39,
+      "x": 17.09,
+      "y": 14.35,
+      "customer_type": "pickup",
+      "weight": 3.84,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 40,
+      "x": 9.52,
+      "y": 15.02,
+      "customer_type": "pickup",
+      "weight": 6.03,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 41,
+      "x": 6.81,
+      "y": 11.29,
+      "customer_type": "pickup",
+      "weight": 4.85,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 42,
+      "x": 3.12,
+      "y": 7.81,
+      "customer_type": "delivery",
+      "weight": 0.59,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 43,
+      "x": 13.19,
+      "y": 16.88,
+      "customer_type": "pickup",
+      "weight": 7.65,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 44,
+      "x": 13.18,
+      "y": 13.34,
+      "customer_type": "delivery",
+      "weight": 1.78,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 45,
+      "x": 12.46,
+      "y": 8.41,
+      "customer_type": "pickup",
+      "weight": 7.67,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 46,
+      "x": 17.22,
+      "y": 15.03,
+      "customer_type": "pickup",
+      "weight": 1.26,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 47,
+      "x": 7.65,
+      "y": 9.28,
+      "customer_type": "pickup",
+      "weight": 9.47,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 48,
+      "x": 12.12,
+      "y": 4.48,
+      "customer_type": "pickup",
+      "weight": 1.27,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 49,
+      "x": 9.41,
+      "y": 2.44,
+      "customer_type": "delivery",
+      "weight": 1.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 50,
+      "x": 9.85,
+      "y": 12.62,
+      "customer_type": "delivery",
+      "weight": 7.05,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 51,
+      "x": 13.86,
+      "y": 10.7,
+      "customer_type": "delivery",
+      "weight": 2.11,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 52,
+      "x": 4.31,
+      "y": 8.28,
+      "customer_type": "delivery",
+      "weight": 8.36,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 53,
+      "x": 15.16,
+      "y": 7.48,
+      "customer_type": "pickup",
+      "weight": 3.34,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 54,
+      "x": 8.5,
+      "y": 0.12,
+      "customer_type": "pickup",
+      "weight": 4.24,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 55,
+      "x": 14.2,
+      "y": 15.39,
+      "customer_type": "pickup",
+      "weight": 0.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 56,
+      "x": 12.45,
+      "y": 11.57,
+      "customer_type": "delivery",
+      "weight": 8.58,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 57,
+      "x": 16.69,
+      "y": 17.11,
+      "customer_type": "delivery",
+      "weight": 4.08,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 58,
+      "x": 17.44,
+      "y": 2.53,
+      "customer_type": "delivery",
+      "weight": 1.55,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 59,
+      "x": 15.21,
+      "y": 10.19,
+      "customer_type": "delivery",
+      "weight": 8.53,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 60,
+      "x": 10.05,
+      "y": 14.88,
+      "customer_type": "pickup",
+      "weight": 7.34,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 61,
+      "x": 13.98,
+      "y": 16.22,
+      "customer_type": "delivery",
+      "weight": 0.31,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 62,
+      "x": 2.74,
+      "y": 0.15,
+      "customer_type": "pickup",
+      "weight": 6.26,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 63,
+      "x": 5.27,
+      "y": 0.75,
+      "customer_type": "delivery",
+      "weight": 6.66,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 64,
+      "x": 7.38,
+      "y": 6.88,
+      "customer_type": "pickup",
+      "weight": 2.03,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 65,
+      "x": 15.94,
+      "y": 11.27,
+      "customer_type": "pickup",
+      "weight": 2.73,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 66,
+      "x": 3.8,
+      "y": 0.51,
+      "customer_type": "pickup",
+      "weight": 5.81,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 67,
+      "x": 0.05,
+      "y": 7.9,
+      "customer_type": "delivery",
+      "weight": 6.79,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 68,
+      "x": 0.26,
+      "y": 3.33,
+      "customer_type": "pickup",
+      "weight": 2.69,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 69,
+      "x": 10.56,
+      "y": 15.39,
+      "customer_type": "pickup",
+      "weight": 1.45,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 70,
+      "x": 0.82,
+      "y": 7.72,
+      "customer_type": "delivery",
+      "weight": 2.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 71,
+      "x": 9.46,
+      "y": 8.87,
+      "customer_type": "pickup",
+      "weight": 6.17,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 72,
+      "x": 17.43,
+      "y": 0.51,
+      "customer_type": "delivery",
+      "weight": 1.08,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 73,
+      "x": 6.04,
+      "y": 15.2,
+      "customer_type": "delivery",
+      "weight": 9.74,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 74,
+      "x": 8.43,
+      "y": 2.69,
+      "customer_type": "delivery",
+      "weight": 9.65,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 75,
+      "x": 6.02,
+      "y": 14.0,
+      "customer_type": "delivery",
+      "weight": 3.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 76,
+      "x": 6.48,
+      "y": 14.58,
+      "customer_type": "pickup",
+      "weight": 1.32,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 77,
+      "x": 14.47,
+      "y": 0.06,
+      "customer_type": "delivery",
+      "weight": 3.64,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 78,
+      "x": 2.35,
+      "y": 9.22,
+      "customer_type": "pickup",
+      "weight": 4.62,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 79,
+      "x": 16.9,
+      "y": 11.67,
+      "customer_type": "delivery",
+      "weight": 4.65,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 80,
+      "x": 10.89,
+      "y": 5.08,
+      "customer_type": "delivery",
+      "weight": 5.32,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 81,
+      "x": 2.18,
+      "y": 4.07,
+      "customer_type": "delivery",
+      "weight": 7.13,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 82,
+      "x": 13.8,
+      "y": 11.69,
+      "customer_type": "pickup",
+      "weight": 1.95,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 83,
+      "x": 8.32,
+      "y": 2.48,
+      "customer_type": "pickup",
+      "weight": 5.88,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 84,
+      "x": 2.28,
+      "y": 9.4,
+      "customer_type": "pickup",
+      "weight": 2.71,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 85,
+      "x": 13.32,
+      "y": 14.9,
+      "customer_type": "pickup",
+      "weight": 7.65,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 86,
+      "x": 16.04,
+      "y": 0.58,
+      "customer_type": "delivery",
+      "weight": 1.07,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 87,
+      "x": 16.02,
+      "y": 3.18,
+      "customer_type": "pickup",
+      "weight": 4.54,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 88,
+      "x": 5.71,
+      "y": 0.19,
+      "customer_type": "delivery",
+      "weight": 6.3,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 89,
+      "x": 6.87,
+      "y": 0.68,
+      "customer_type": "pickup",
+      "weight": 4.41,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 90,
+      "x": 4.13,
+      "y": 13.96,
+      "customer_type": "pickup",
+      "weight": 8.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 91,
+      "x": 3.14,
+      "y": 3.79,
+      "customer_type": "pickup",
+      "weight": 9.61,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 92,
+      "x": 6.16,
+      "y": 3.36,
+      "customer_type": "delivery",
+      "weight": 1.96,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 93,
+      "x": 3.54,
+      "y": 10.69,
+      "customer_type": "pickup",
+      "weight": 0.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 94,
+      "x": 12.84,
+      "y": 15.92,
+      "customer_type": "delivery",
+      "weight": 1.46,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 95,
+      "x": 16.88,
+      "y": 2.39,
+      "customer_type": "delivery",
+      "weight": 3.18,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 96,
+      "x": 5.43,
+      "y": 17.24,
+      "customer_type": "delivery",
+      "weight": 1.05,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 97,
+      "x": 5.78,
+      "y": 5.67,
+      "customer_type": "delivery",
+      "weight": 2.89,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 98,
+      "x": 7.05,
+      "y": 13.83,
+      "customer_type": "delivery",
+      "weight": 0.98,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 99,
+      "x": 5.99,
+      "y": 9.45,
+      "customer_type": "delivery",
+      "weight": 4.71,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 100,
+      "x": 15.53,
+      "y": 10.81,
+      "customer_type": "pickup",
+      "weight": 4.55,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 101,
+      "x": 9.12,
+      "y": 13.48,
+      "customer_type": "pickup",
+      "weight": 1.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 102,
+      "x": 8.38,
+      "y": 11.32,
+      "customer_type": "pickup",
+      "weight": 0.65,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 103,
+      "x": 7.69,
+      "y": 0.21,
+      "customer_type": "delivery",
+      "weight": 3.58,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 104,
+      "x": 17.58,
+      "y": 3.69,
+      "customer_type": "delivery",
+      "weight": 2.75,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 105,
+      "x": 5.52,
+      "y": 17.54,
+      "customer_type": "pickup",
+      "weight": 7.07,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 106,
+      "x": 0.66,
+      "y": 0.87,
+      "customer_type": "pickup",
+      "weight": 6.31,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 107,
+      "x": 17.55,
+      "y": 7.15,
+      "customer_type": "pickup",
+      "weight": 1.58,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 108,
+      "x": 4.07,
+      "y": 16.51,
+      "customer_type": "delivery",
+      "weight": 2.5,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 109,
+      "x": 9.44,
+      "y": 17.38,
+      "customer_type": "delivery",
+      "weight": 1.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 110,
+      "x": 1.52,
+      "y": 5.63,
+      "customer_type": "delivery",
+      "weight": 0.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 111,
+      "x": 3.44,
+      "y": 7.69,
+      "customer_type": "delivery",
+      "weight": 9.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 112,
+      "x": 15.06,
+      "y": 11.17,
+      "customer_type": "pickup",
+      "weight": 0.37,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 113,
+      "x": 5.48,
+      "y": 6.01,
+      "customer_type": "pickup",
+      "weight": 1.26,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 114,
+      "x": 10.74,
+      "y": 8.81,
+      "customer_type": "delivery",
+      "weight": 6.41,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 115,
+      "x": 6.4,
+      "y": 9.14,
+      "customer_type": "pickup",
+      "weight": 2.04,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 116,
+      "x": 12.55,
+      "y": 14.64,
+      "customer_type": "delivery",
+      "weight": 5.09,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 117,
+      "x": 17.73,
+      "y": 4.13,
+      "customer_type": "delivery",
+      "weight": 6.51,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 118,
+      "x": 5.37,
+      "y": 15.36,
+      "customer_type": "pickup",
+      "weight": 5.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 119,
+      "x": 16.11,
+      "y": 9.22,
+      "customer_type": "delivery",
+      "weight": 3.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 120,
+      "x": 15.84,
+      "y": 6.47,
+      "customer_type": "pickup",
+      "weight": 0.84,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 121,
+      "x": 1.29,
+      "y": 14.19,
+      "customer_type": "delivery",
+      "weight": 3.51,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 122,
+      "x": 17.37,
+      "y": 5.97,
+      "customer_type": "delivery",
+      "weight": 5.56,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 123,
+      "x": 7.45,
+      "y": 0.39,
+      "customer_type": "pickup",
+      "weight": 5.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 124,
+      "x": 13.96,
+      "y": 7.5,
+      "customer_type": "delivery",
+      "weight": 7.66,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 125,
+      "x": 14.62,
+      "y": 12.86,
+      "customer_type": "pickup",
+      "weight": 7.58,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 126,
+      "x": 14.88,
+      "y": 3.79,
+      "customer_type": "delivery",
+      "weight": 4.06,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 127,
+      "x": 8.91,
+      "y": 12.21,
+      "customer_type": "delivery",
+      "weight": 5.03,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 128,
+      "x": 1.8,
+      "y": 5.9,
+      "customer_type": "delivery",
+      "weight": 3.64,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 129,
+      "x": 13.61,
+      "y": 8.31,
+      "customer_type": "delivery",
+      "weight": 4.2,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 130,
+      "x": 0.04,
+      "y": 0.46,
+      "customer_type": "pickup",
+      "weight": 6.68,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 131,
+      "x": 0.71,
+      "y": 9.57,
+      "customer_type": "pickup",
+      "weight": 5.78,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 132,
+      "x": 4.42,
+      "y": 16.19,
+      "customer_type": "pickup",
+      "weight": 0.36,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 133,
+      "x": 2.53,
+      "y": 3.78,
+      "customer_type": "delivery",
+      "weight": 2.56,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 134,
+      "x": 6.24,
+      "y": 14.69,
+      "customer_type": "pickup",
+      "weight": 6.98,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 135,
+      "x": 12.47,
+      "y": 12.91,
+      "customer_type": "pickup",
+      "weight": 5.19,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 136,
+      "x": 1.11,
+      "y": 3.47,
+      "customer_type": "delivery",
+      "weight": 3.49,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 137,
+      "x": 0.76,
+      "y": 13.99,
+      "customer_type": "delivery",
+      "weight": 0.8,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 138,
+      "x": 0.91,
+      "y": 15.56,
+      "customer_type": "delivery",
+      "weight": 4.71,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 139,
+      "x": 5.37,
+      "y": 6.57,
+      "customer_type": "delivery",
+      "weight": 4.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 140,
+      "x": 9.59,
+      "y": 4.44,
+      "customer_type": "delivery",
+      "weight": 4.1,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 141,
+      "x": 5.71,
+      "y": 0.17,
+      "customer_type": "delivery",
+      "weight": 7.24,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 142,
+      "x": 4.59,
+      "y": 10.13,
+      "customer_type": "delivery",
+      "weight": 2.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 143,
+      "x": 13.74,
+      "y": 2.54,
+      "customer_type": "delivery",
+      "weight": 9.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 144,
+      "x": 1.78,
+      "y": 4.47,
+      "customer_type": "delivery",
+      "weight": 8.29,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 145,
+      "x": 6.58,
+      "y": 4.97,
+      "customer_type": "pickup",
+      "weight": 2.08,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 146,
+      "x": 14.85,
+      "y": 9.95,
+      "customer_type": "delivery",
+      "weight": 9.08,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 147,
+      "x": 17.23,
+      "y": 9.76,
+      "customer_type": "pickup",
+      "weight": 3.97,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 148,
+      "x": 8.61,
+      "y": 10.87,
+      "customer_type": "pickup",
+      "weight": 1.27,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 149,
+      "x": 4.1,
+      "y": 5.42,
+      "customer_type": "pickup",
+      "weight": 9.5,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 150,
+      "x": 1.71,
+      "y": 5.45,
+      "customer_type": "delivery",
+      "weight": 6.89,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 151,
+      "x": 10.71,
+      "y": 2.49,
+      "customer_type": "delivery",
+      "weight": 2.66,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 152,
+      "x": 4.25,
+      "y": 9.09,
+      "customer_type": "pickup",
+      "weight": 3.42,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 153,
+      "x": 17.5,
+      "y": 16.63,
+      "customer_type": "delivery",
+      "weight": 2.7,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 154,
+      "x": 17.52,
+      "y": 17.79,
+      "customer_type": "delivery",
+      "weight": 7.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 155,
+      "x": 9.26,
+      "y": 16.75,
+      "customer_type": "delivery",
+      "weight": 3.68,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 156,
+      "x": 5.53,
+      "y": 14.09,
+      "customer_type": "pickup",
+      "weight": 4.42,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 157,
+      "x": 1.76,
+      "y": 2.61,
+      "customer_type": "delivery",
+      "weight": 9.26,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 158,
+      "x": 2.0,
+      "y": 12.34,
+      "customer_type": "delivery",
+      "weight": 2.2,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 159,
+      "x": 11.77,
+      "y": 17.18,
+      "customer_type": "delivery",
+      "weight": 2.09,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 160,
+      "x": 5.16,
+      "y": 6.88,
+      "customer_type": "delivery",
+      "weight": 9.01,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 161,
+      "x": 14.09,
+      "y": 10.29,
+      "customer_type": "pickup",
+      "weight": 8.74,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 162,
+      "x": 12.32,
+      "y": 9.6,
+      "customer_type": "pickup",
+      "weight": 1.97,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 163,
+      "x": 12.87,
+      "y": 15.19,
+      "customer_type": "delivery",
+      "weight": 3.14,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 164,
+      "x": 13.19,
+      "y": 5.33,
+      "customer_type": "delivery",
+      "weight": 5.71,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 165,
+      "x": 6.79,
+      "y": 3.15,
+      "customer_type": "delivery",
+      "weight": 9.05,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 166,
+      "x": 9.46,
+      "y": 13.91,
+      "customer_type": "delivery",
+      "weight": 3.6,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 167,
+      "x": 11.94,
+      "y": 13.47,
+      "customer_type": "delivery",
+      "weight": 3.92,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 168,
+      "x": 12.41,
+      "y": 3.48,
+      "customer_type": "pickup",
+      "weight": 5.94,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 169,
+      "x": 15.71,
+      "y": 9.76,
+      "customer_type": "delivery",
+      "weight": 7.52,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 170,
+      "x": 1.77,
+      "y": 9.25,
+      "customer_type": "delivery",
+      "weight": 9.84,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 171,
+      "x": 4.92,
+      "y": 11.81,
+      "customer_type": "pickup",
+      "weight": 1.82,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 172,
+      "x": 13.14,
+      "y": 10.96,
+      "customer_type": "delivery",
+      "weight": 1.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 173,
+      "x": 7.05,
+      "y": 13.92,
+      "customer_type": "delivery",
+      "weight": 5.8,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 174,
+      "x": 1.58,
+      "y": 11.32,
+      "customer_type": "delivery",
+      "weight": 6.4,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 175,
+      "x": 6.7,
+      "y": 9.35,
+      "customer_type": "pickup",
+      "weight": 9.85,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 176,
+      "x": 16.94,
+      "y": 9.73,
+      "customer_type": "delivery",
+      "weight": 3.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 177,
+      "x": 1.3,
+      "y": 7.34,
+      "customer_type": "delivery",
+      "weight": 7.76,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 178,
+      "x": 4.52,
+      "y": 3.53,
+      "customer_type": "pickup",
+      "weight": 2.92,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 179,
+      "x": 11.44,
+      "y": 16.94,
+      "customer_type": "delivery",
+      "weight": 0.12,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 180,
+      "x": 3.45,
+      "y": 2.73,
+      "customer_type": "pickup",
+      "weight": 1.31,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 181,
+      "x": 1.19,
+      "y": 13.21,
+      "customer_type": "delivery",
+      "weight": 5.77,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 182,
+      "x": 5.17,
+      "y": 13.71,
+      "customer_type": "delivery",
+      "weight": 1.0,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 183,
+      "x": 5.08,
+      "y": 9.14,
+      "customer_type": "delivery",
+      "weight": 2.6,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 184,
+      "x": 6.66,
+      "y": 6.25,
+      "customer_type": "delivery",
+      "weight": 4.98,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 185,
+      "x": 0.69,
+      "y": 14.07,
+      "customer_type": "delivery",
+      "weight": 8.59,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 186,
+      "x": 2.28,
+      "y": 16.2,
+      "customer_type": "delivery",
+      "weight": 5.64,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 187,
+      "x": 5.71,
+      "y": 13.37,
+      "customer_type": "delivery",
+      "weight": 1.02,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 188,
+      "x": 13.02,
+      "y": 15.14,
+      "customer_type": "delivery",
+      "weight": 9.2,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 189,
+      "x": 17.21,
+      "y": 14.34,
+      "customer_type": "pickup",
+      "weight": 4.79,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 190,
+      "x": 13.84,
+      "y": 2.41,
+      "customer_type": "delivery",
+      "weight": 2.67,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 191,
+      "x": 10.08,
+      "y": 14.27,
+      "customer_type": "delivery",
+      "weight": 2.81,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 192,
+      "x": 2.67,
+      "y": 1.79,
+      "customer_type": "delivery",
+      "weight": 8.13,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 193,
+      "x": 0.24,
+      "y": 12.89,
+      "customer_type": "delivery",
+      "weight": 3.85,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 194,
+      "x": 17.63,
+      "y": 11.54,
+      "customer_type": "delivery",
+      "weight": 2.97,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 195,
+      "x": 12.48,
+      "y": 7.63,
+      "customer_type": "pickup",
+      "weight": 6.74,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 196,
+      "x": 6.88,
+      "y": 4.99,
+      "customer_type": "pickup",
+      "weight": 2.63,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 197,
+      "x": 5.31,
+      "y": 6.84,
+      "customer_type": "delivery",
+      "weight": 7.68,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 198,
+      "x": 1.52,
+      "y": 10.65,
+      "customer_type": "delivery",
+      "weight": 0.21,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 199,
+      "x": 8.16,
+      "y": 0.76,
+      "customer_type": "pickup",
+      "weight": 2.87,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 200,
+      "x": 10.61,
+      "y": 7.9,
+      "customer_type": "pickup",
+      "weight": 9.63,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "scenario_family": "alpha"
+}

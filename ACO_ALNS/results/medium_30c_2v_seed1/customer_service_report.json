@@ -1,0 +1,814 @@
+{
+  "customers": [
+    {
+      "customer_id": 1,
+      "customer_type": "delivery",
+      "x": 1.33,
+      "y": 6.83,
+      "weight": 4.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 77.57728352977286,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 2,
+      "customer_type": "delivery",
+      "x": 3.73,
+      "y": 5.86,
+      "weight": 6.28,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 0,
+      "arrival_time": 66.30058045226819,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 3,
+      "customer_type": "delivery",
+      "x": 3.67,
+      "y": 4.12,
+      "weight": 2.3,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 263.4807782553695,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 4,
+      "customer_type": "delivery",
+      "x": 1.23,
+      "y": 2.86,
+      "weight": 8.95,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 280.0714771560932,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 5,
+      "customer_type": "delivery",
+      "x": 0.57,
+      "y": 2.17,
+      "weight": 0.24,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 15.390683865370237,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 6,
+      "customer_type": "delivery",
+      "x": 4.07,
+      "y": 0.53,
+      "weight": 7.17,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 3,
+      "arrival_time": 306.18986460811533,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 7,
+      "customer_type": "delivery",
+      "x": 4.26,
+      "y": 7.63,
+      "weight": 5.02,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 117.15966568904446,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 8,
+      "customer_type": "delivery",
+      "x": 4.62,
+      "y": 3.58,
+      "weight": 3.64,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 230.9337261730077,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 9,
+      "customer_type": "delivery",
+      "x": 0.52,
+      "y": 2.07,
+      "weight": 4.73,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 5.122355708070262,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 10,
+      "customer_type": "delivery",
+      "x": 6.12,
+      "y": 2.22,
+      "weight": 5.16,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 2,
+      "arrival_time": 225.68594276148053,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 11,
+      "customer_type": "delivery",
+      "x": 0.48,
+      "y": 3.28,
+      "weight": 2.75,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 38.26539539285635,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 12,
+      "customer_type": "delivery",
+      "x": 1.53,
+      "y": 5.73,
+      "weight": 6.91,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 64.89400195677311,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 13,
+      "customer_type": "delivery",
+      "x": 0.75,
+      "y": 2.6,
+      "weight": 2.17,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 26.509454619367673,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 14,
+      "customer_type": "delivery",
+      "x": 6.61,
+      "y": 7.71,
+      "weight": 1.19,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 155.15969209336768,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 15,
+      "customer_type": "delivery",
+      "x": 1.1,
+      "y": 5.43,
+      "weight": 2.53,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 53.63566019079695,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 16,
+      "customer_type": "pickup",
+      "x": 5.49,
+      "y": 6.75,
+      "weight": 1.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 141.6193870217672,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 17,
+      "customer_type": "pickup",
+      "x": 6.15,
+      "y": 4.92,
+      "weight": 2.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 1,
+      "arrival_time": 163.600321377679,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 18,
+      "customer_type": "pickup",
+      "x": 0.86,
+      "y": 6.97,
+      "weight": 0.21,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 0,
+      "arrival_time": 79.37775448049604,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 19,
+      "customer_type": "pickup",
+      "x": 7.42,
+      "y": 3.82,
+      "weight": 7.79,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 202.63840509097065,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 20,
+      "customer_type": "pickup",
+      "x": 1.19,
+      "y": 1.59,
+      "weight": 1.01,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 293.1209885923728,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 21,
+      "customer_type": "pickup",
+      "x": 0.61,
+      "y": 0.38,
+      "weight": 9.3,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 342.4467886463991,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 22,
+      "customer_type": "pickup",
+      "x": 7.85,
+      "y": 4.48,
+      "weight": 1.73,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 190.7478813540131,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 23,
+      "customer_type": "pickup",
+      "x": 7.54,
+      "y": 3.31,
+      "weight": 8.56,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 213.8958310331239,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 24,
+      "customer_type": "pickup",
+      "x": 2.18,
+      "y": 0.86,
+      "weight": 7.12,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 306.0730861517363,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 25,
+      "customer_type": "pickup",
+      "x": 7.61,
+      "y": 1.63,
+      "weight": 8.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 2,
+      "arrival_time": 237.28850321275843,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 26,
+      "customer_type": "pickup",
+      "x": 2.73,
+      "y": 7.25,
+      "weight": 2.98,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 103.37610546089955,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 27,
+      "customer_type": "pickup",
+      "x": 7.72,
+      "y": 6.52,
+      "weight": 9.23,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 169.0652819335839,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 28,
+      "customer_type": "pickup",
+      "x": 3.03,
+      "y": 1.36,
+      "weight": 2.99,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 3,
+      "arrival_time": 317.5204659759186,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 29,
+      "customer_type": "pickup",
+      "x": 5.59,
+      "y": 5.93,
+      "weight": 1.29,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "drone",
+      "served_in_pair": 2,
+      "served_in_sortie": 1,
+      "arrival_time": 152.44546207888973,
+      "within_time_window": true
+    },
+    {
+      "customer_id": 30,
+      "customer_type": "pickup",
+      "x": 4.24,
+      "y": 7.06,
+      "weight": 7.08,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "served_by": "truck",
+      "served_in_pair": 2,
+      "served_in_sortie": null,
+      "arrival_time": 128.52850753527798,
+      "within_time_window": true
+    }
+  ]
+}

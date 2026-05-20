@@ -1,0 +1,53 @@
+Metadata-Version: 2.4
+Name: spd-planner
+Version: 0.1.0
+Summary: Interface-first skeleton for truck-drone SPD optimization.
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: matplotlib>=3.7
+Requires-Dist: numpy>=1.24
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+
+﻿# SPD Planner Skeleton
+
+This repository contains an interface-first Python project layout for the SPD
+(simultaneous pickup and delivery) truck-drone problem from the provided spec.
+
+The current state is intentionally design-only:
+
+- Modules are split by responsibility.
+- Classes and function signatures are defined.
+- Algorithm details are **not implemented**.
+
+## Suggested Structure
+
+```text
+src/spd/
+  app/              # Use-case orchestration and CLI entry points
+  config/           # Parameter dataclasses
+  core/             # Timeline/load/energy/feasibility/objective contracts
+  domain/           # Core entities and enums
+  experiments/      # Experiment runner contracts
+  offline/          # E-TPRC, ACO-ALNS, operators (contracts only)
+  online/           # T5 event handling and lightweight online optimization
+  simulation/       # Execution and Monte Carlo simulation contracts
+```
+
+## Spec to Module Mapping
+
+- Spec Sec 2 + Appendix data structure: `domain`, `config`
+- Spec Sec 3-Sec 6: `core`
+- Spec Sec 7-Sec 8: `offline`
+- Spec Sec 9: `online`
+- Spec Sec 11: `experiments`, `simulation`
+
+## Next Step
+
+Implement module internals incrementally by priority:
+
+1. `core.timeline`, `core.load_tracking`, `core.energy`, `core.feasibility`
+2. `core.objective` + `offline.etprc`
+3. `offline.alns` + operators
+4. `offline.aco_alns`
+5. `online.replanner` + `online.lightweight_alns`

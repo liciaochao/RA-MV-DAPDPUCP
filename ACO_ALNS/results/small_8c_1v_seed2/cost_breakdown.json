@@ -1,0 +1,30 @@
+{
+  "initial_solution": {
+    "z_fixed": 22.0,
+    "z_truck": 8.28441243102419,
+    "z_drone": 1.9190807300247448,
+    "z_fail_expected": 10.970613107345967,
+    "z_tw_penalty": 0.0,
+    "z_unserved_penalty": 0.0,
+    "z_total": 43.1741062683949,
+    "z_operational": 32.20349316104893
+  },
+  "optimized_solution": {
+    "z_fixed": 22.0,
+    "z_truck": 8.386303847747197,
+    "z_drone": 0.95156239709553,
+    "z_fail_expected": 8.813628680400798,
+    "z_tw_penalty": 0.0,
+    "z_unserved_penalty": 0.0,
+    "z_total": 40.151494925243526,
+    "z_operational": 31.337866244842726
+  },
+  "online_trial_0": {
+    "fixed": 22.0,
+    "truck": 8.386303847747197,
+    "drone": 0.5791096946868726,
+    "fail_penalty": 6.838318214298013,
+    "actual_total": 37.803731756732084,
+    "operational": 30.96541354243407
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "depot_id": 0,
+  "vehicle_pair_count": 1,
+  "depot": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "truck_distance_scale": 1.2,
+  "drone_distance_scale": 1.0,
+  "trucks": [
+    {
+      "truck_id": 1,
+      "speed": 0.5,
+      "capacity": 100.0
+    }
+  ],
+  "drones": [
+    {
+      "drone_id": 1,
+      "speed": 1.0,
+      "capacity": 9.0,
+      "max_range_km": 12.0,
+      "energy_wh": 500.0,
+      "launch_time": 1.0,
+      "recovery_time": 1.0
+    }
+  ],
+  "delivery_customers": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "pickup_customers": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "customers": [
+    {
+      "customer_id": 1,
+      "x": 1.42,
+      "y": 2.86,
+      "customer_type": "delivery",
+      "weight": 2.77,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 2,
+      "x": 3.3,
+      "y": 1.01,
+      "customer_type": "delivery",
+      "weight": 3.06,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 3,
+      "x": 3.68,
+      "y": 4.43,
+      "customer_type": "delivery",
+      "weight": 0.42,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 4,
+      "x": 3.25,
+      "y": 1.71,
+      "customer_type": "delivery",
+      "weight": 4.2,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 5,
+      "x": 4.34,
+      "y": 4.83,
+      "customer_type": "delivery",
+      "weight": 1.25,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 6,
+      "x": 2.23,
+      "y": 1.01,
+      "customer_type": "pickup",
+      "weight": 7.36,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 7,
+      "x": 1.76,
+      "y": 0.66,
+      "customer_type": "pickup",
+      "weight": 7.39,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 8,
+      "x": 2.46,
+      "y": 2.74,
+      "customer_type": "pickup",
+      "weight": 0.84,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 9,
+      "x": 2.88,
+      "y": 0.35,
+      "customer_type": "pickup",
+      "weight": 4.35,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "customer_id": 10,
+      "x": 0.4,
+      "y": 0.58,
+      "customer_type": "pickup",
+      "weight": 3.73,
+      "time_window": [
+        0.0,
+        480.0
+      ],
+      "service_time": 10.0,
+      "home_probabilities": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "scenario_family": "alpha"
+}

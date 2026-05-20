@@ -1,0 +1,124 @@
+=== 算例生成报告 ===
+生成时间: 2026-03-31 14:31:43
+
+--- 目录结构 ---
+D:\examples\deterministic\  → 57 个文件（home_probabilities 全 1.0）
+D:\examples\stochastic\  → 57 个文件（home_probabilities 随机）
+
+--- 来源：已有算例（从 D:\codex_drone\examples\instances 转换）---
+共 35 个，每个生成确定性 + 随机两个版本
+  medium_30c_2v_seed1.json | 客户数=30, 车辆对数=2, seed=1
+  medium_30c_2v_seed2.json | 客户数=30, 车辆对数=2, seed=2
+  medium_30c_2v_seed3.json | 客户数=30, 车辆对数=2, seed=3
+  medium_40c_3v_seed1.json | 客户数=40, 车辆对数=3, seed=1
+  medium_40c_3v_seed2.json | 客户数=40, 车辆对数=3, seed=2
+  medium_40c_3v_seed3.json | 客户数=40, 车辆对数=3, seed=3
+  medium_50c_3v_seed1.json | 客户数=50, 车辆对数=3, seed=1
+  medium_50c_3v_seed2.json | 客户数=50, 车辆对数=3, seed=2
+  medium_50c_3v_seed3.json | 客户数=50, 车辆对数=3, seed=3
+  medium_60c_4v_seed1.json | 客户数=60, 车辆对数=4, seed=1
+  medium_60c_4v_seed2.json | 客户数=60, 车辆对数=4, seed=2
+  medium_60c_4v_seed3.json | 客户数=60, 车辆对数=4, seed=3
+  medium_80c_5v_seed1.json | 客户数=80, 车辆对数=5, seed=1
+  medium_80c_5v_seed2.json | 客户数=80, 车辆对数=5, seed=2
+  medium_80c_5v_seed3.json | 客户数=80, 车辆对数=5, seed=3
+  small_10c_1v_seed1.json | 客户数=10, 车辆对数=1, seed=1
+  small_10c_1v_seed2.json | 客户数=10, 车辆对数=1, seed=2
+  small_10c_1v_seed3.json | 客户数=10, 车辆对数=1, seed=3
+  small_12c_1v_seed1.json | 客户数=12, 车辆对数=1, seed=1
+  small_12c_1v_seed2.json | 客户数=12, 车辆对数=1, seed=2
+  small_12c_1v_seed3.json | 客户数=12, 车辆对数=1, seed=3
+  small_15c_1v_seed1.json | 客户数=15, 车辆对数=1, seed=1
+  small_15c_1v_seed2.json | 客户数=15, 车辆对数=1, seed=2
+  small_15c_1v_seed3.json | 客户数=15, 车辆对数=1, seed=3
+  small_16c_1v_seed1.json | 客户数=16, 车辆对数=1, seed=1
+  small_16c_1v_seed2.json | 客户数=16, 车辆对数=1, seed=2
+  small_16c_1v_seed3.json | 客户数=16, 车辆对数=1, seed=3
+  small_18c_2v_seed1.json | 客户数=18, 车辆对数=2, seed=1
+  small_18c_2v_seed2.json | 客户数=18, 车辆对数=2, seed=2
+  small_20c_2v_seed1.json | 客户数=20, 车辆对数=2, seed=1
+  small_20c_2v_seed2.json | 客户数=20, 车辆对数=2, seed=2
+  small_20c_2v_seed3.json | 客户数=20, 车辆对数=2, seed=3
+  small_8c_1v_seed1.json | 客户数=8, 车辆对数=1, seed=1
+  small_8c_1v_seed2.json | 客户数=8, 车辆对数=1, seed=2
+  small_8c_1v_seed3.json | 客户数=8, 车辆对数=1, seed=3
+
+--- 来源：新生成算例 ---
+小规模（新增 1 个，总计 21 个）:
+  small_18c_2v_seed3.json | 客户数=18, 车辆对数=2, 分布=mixed, delivery数=11, pickup数=7, 无人机客户数=11, 卡车客户数=7
+中规模（新增 3 个，总计 18 个）:
+  medium_100c_7v_seed1.json | 客户数=100, 车辆对数=7, 分布=clustered, delivery数=60, pickup数=40, 无人机客户数=60, 卡车客户数=40
+  medium_100c_7v_seed2.json | 客户数=100, 车辆对数=7, 分布=random, delivery数=60, pickup数=40, 无人机客户数=60, 卡车客户数=40
+  medium_100c_7v_seed3.json | 客户数=100, 车辆对数=7, 分布=mixed, delivery数=60, pickup数=40, 无人机客户数=60, 卡车客户数=40
+大规模（新增 18 个，总计 18 个）:
+  large_150c_9v_seed1.json | 客户数=150, 车辆对数=9, 分布=clustered, delivery数=90, pickup数=60, 无人机客户数=90, 卡车客户数=60
+  large_150c_9v_seed2.json | 客户数=150, 车辆对数=9, 分布=random, delivery数=90, pickup数=60, 无人机客户数=90, 卡车客户数=60
+  large_150c_9v_seed3.json | 客户数=150, 车辆对数=9, 分布=mixed, delivery数=90, pickup数=60, 无人机客户数=90, 卡车客户数=60
+  large_180c_11v_seed1.json | 客户数=180, 车辆对数=11, 分布=clustered, delivery数=108, pickup数=72, 无人机客户数=108, 卡车客户数=72
+  large_180c_11v_seed2.json | 客户数=180, 车辆对数=11, 分布=random, delivery数=108, pickup数=72, 无人机客户数=108, 卡车客户数=72
+  large_180c_11v_seed3.json | 客户数=180, 车辆对数=11, 分布=mixed, delivery数=108, pickup数=72, 无人机客户数=108, 卡车客户数=72
+  large_200c_13v_seed1.json | 客户数=200, 车辆对数=13, 分布=clustered, delivery数=120, pickup数=80, 无人机客户数=120, 卡车客户数=80
+  large_200c_13v_seed2.json | 客户数=200, 车辆对数=13, 分布=random, delivery数=120, pickup数=80, 无人机客户数=120, 卡车客户数=80
+  large_200c_13v_seed3.json | 客户数=200, 车辆对数=13, 分布=mixed, delivery数=120, pickup数=80, 无人机客户数=120, 卡车客户数=80
+  large_250c_15v_seed1.json | 客户数=250, 车辆对数=15, 分布=clustered, delivery数=150, pickup数=100, 无人机客户数=150, 卡车客户数=100
+  large_250c_15v_seed2.json | 客户数=250, 车辆对数=15, 分布=random, delivery数=150, pickup数=100, 无人机客户数=150, 卡车客户数=100
+  large_250c_15v_seed3.json | 客户数=250, 车辆对数=15, 分布=mixed, delivery数=150, pickup数=100, 无人机客户数=150, 卡车客户数=100
+  large_280c_18v_seed1.json | 客户数=280, 车辆对数=18, 分布=clustered, delivery数=168, pickup数=112, 无人机客户数=168, 卡车客户数=112
+  large_280c_18v_seed2.json | 客户数=280, 车辆对数=18, 分布=random, delivery数=168, pickup数=112, 无人机客户数=168, 卡车客户数=112
+  large_280c_18v_seed3.json | 客户数=280, 车辆对数=18, 分布=mixed, delivery数=168, pickup数=112, 无人机客户数=168, 卡车客户数=112
+  large_300c_20v_seed1.json | 客户数=300, 车辆对数=20, 分布=clustered, delivery数=180, pickup数=120, 无人机客户数=180, 卡车客户数=120
+  large_300c_20v_seed2.json | 客户数=300, 车辆对数=20, 分布=random, delivery数=180, pickup数=120, 无人机客户数=180, 卡车客户数=120
+  large_300c_20v_seed3.json | 客户数=300, 车辆对数=20, 分布=mixed, delivery数=180, pickup数=120, 无人机客户数=180, 卡车客户数=120
+
+--- 跳过（已存在同组合） ---
+  medium_30c_2v_seed1.json
+  medium_30c_2v_seed2.json
+  medium_30c_2v_seed3.json
+  medium_40c_3v_seed1.json
+  medium_40c_3v_seed2.json
+  medium_40c_3v_seed3.json
+  medium_50c_3v_seed1.json
+  medium_50c_3v_seed2.json
+  medium_50c_3v_seed3.json
+  medium_60c_4v_seed1.json
+  medium_60c_4v_seed2.json
+  medium_60c_4v_seed3.json
+  medium_80c_5v_seed1.json
+  medium_80c_5v_seed2.json
+  medium_80c_5v_seed3.json
+  small_10c_1v_seed1.json
+  small_10c_1v_seed2.json
+  small_10c_1v_seed3.json
+  small_12c_1v_seed1.json
+  small_12c_1v_seed2.json
+  small_12c_1v_seed3.json
+  small_15c_1v_seed1.json
+  small_15c_1v_seed2.json
+  small_15c_1v_seed3.json
+  small_16c_1v_seed1.json
+  small_16c_1v_seed2.json
+  small_16c_1v_seed3.json
+  small_18c_2v_seed1.json
+  small_18c_2v_seed2.json
+  small_20c_2v_seed1.json
+  small_20c_2v_seed2.json
+  small_20c_2v_seed3.json
+  small_8c_1v_seed1.json
+  small_8c_1v_seed2.json
+  small_8c_1v_seed3.json
+
+--- 验证结果 ---
+格式验证: 114/114 通过
+一致性验证: 57/57 通过
+加载验证: 114/114 通过
+load_instance 来源: spd.main._load_instance
+
+--- 统计 ---
+确定性目录总文件数: 57
+随机目录总文件数: 57
+delivery:pickup 比例（新算例平均）: 60.00%:40.00%
+无人机客户占比（weight≤5，新算例平均）: 60.00%
+坐标范围示例: 10c→[0,4.0], 100c→[0,12.6], 300c→[0,21.9]
+depot 坐标: (0.0, 0.0)
+home_probabilities 格式: 长度8数组，随机值[0.35,0.95]
+seed 含义: seed1=clustered, seed2=random, seed3=mixed（仅坐标分布不同）

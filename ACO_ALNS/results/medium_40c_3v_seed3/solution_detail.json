@@ -1,0 +1,175 @@
+{
+  "command": "solve",
+  "instance_file": "medium_40c_3v_seed3.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        3,
+        28,
+        33,
+        15,
+        5,
+        18,
+        14,
+        10,
+        37,
+        22,
+        38,
+        34,
+        27,
+        25,
+        17,
+        21,
+        32,
+        6,
+        20,
+        12,
+        0
+      ],
+      "truck_customers": [
+        3,
+        5,
+        6,
+        10,
+        12,
+        14,
+        15,
+        17,
+        18,
+        20,
+        21,
+        22,
+        25,
+        27,
+        28,
+        32,
+        33,
+        34,
+        37,
+        38
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 33,
+          "recovery_node": 5,
+          "customers": [
+            35,
+            40
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 5,
+          "recovery_node": 18,
+          "customers": [
+            29,
+            16
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 37,
+          "recovery_node": 22,
+          "customers": [
+            19,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        26,
+        23,
+        39,
+        9,
+        24,
+        13,
+        36,
+        30,
+        7,
+        1,
+        4,
+        2,
+        8,
+        31,
+        0
+      ],
+      "truck_customers": [
+        1,
+        2,
+        4,
+        7,
+        8,
+        9,
+        13,
+        23,
+        24,
+        26,
+        30,
+        31,
+        36,
+        39
+      ],
+      "sorties": []
+    },
+    {
+      "pair_id": 3,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "unserved_customers": []
+}

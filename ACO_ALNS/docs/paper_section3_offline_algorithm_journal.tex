@@ -1,0 +1,379 @@
+\documentclass[review,12pt]{elsarticle}
+
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\geometry{a4paper,margin=1in}
+\setstretch{1.15}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Section 3 Draft: Offline Optimization Algorithm}
+\author{}
+\date{}
+\end{frontmatter}
+
+% Keep numbering consistent with the full manuscript where Section 3 follows Sections 1--2.
+\setcounter{section}{2}
+
+\section{Offline Optimization Algorithm}
+\label{sec:offline}
+
+This section presents the offline optimization procedure in a journal-style narrative consistent with the current implementation. Section 3.2 (ETPRC initial construction) is intentionally omitted from this chapter because it is documented separately; here, ETPRC is treated as a provided initializer and as a rebuild primitive.
+
+\subsection{Offline Objective for Algorithmic Optimization}
+\label{subsec:offline_objective}
+
+The full optimization model has been formally defined in the earlier problem formulation section. In the implemented offline optimizer, the search objective is operationalized as
+\begin{equation}
+\min Z =
+Z_{\mathrm{fixed}} + Z_{\mathrm{truck}} + Z_{\mathrm{drone}} +
+Z_{\mathrm{fail}}^{\mathrm{exp}} + \beta Z_{\mathrm{tw}} + Z_{\mathrm{unserved}},
+\label{eq:offline_obj_total}
+\end{equation}
+where
+\begin{align}
+Z_{\mathrm{fixed}} &= c_{\mathrm{pair}} \cdot |\mathcal{P}_{\mathrm{used}}|, \\
+Z_{\mathrm{truck}} &= \sum_{(i,j)\in \mathcal{A}_T} c_T\,d_T(i,j), \\
+Z_{\mathrm{drone}} &= \sum_{s\in \mathcal{S}} c_E\,E_s, \\
+Z_{\mathrm{fail}}^{\mathrm{exp}} &=
+\sum_{i\in \mathcal{N}_{\mathrm{served}}}
+\bigl(1-p_i(t_i^\ast)\bigr)\,Z_{\mathrm{fail}}(i), \\
+Z_{\mathrm{fail}}(i) &= 2\,d_T(0,i)\,c_T, \\
+Z_{\mathrm{tw}} &= \sum_{i\in \mathcal{N}_{\mathrm{served}}}\max(0,a_i-l_i), \\
+Z_{\mathrm{unserved}} &= \sum_{i\in \mathcal{N}_{\mathrm{unserved}}} 2\,Z_{\mathrm{fail}}(i).
+\end{align}
+
+The time-window penalty coefficient is dynamically updated along ACO outer iterations:
+\begin{equation}
+\beta \leftarrow \min\left(\gamma_\beta \beta,\ \beta_{\max}\right).
+\label{eq:beta_schedule}
+\end{equation}
+This schedule encourages exploration in earlier phases and progressively strengthens temporal discipline in later phases.
+
+\paragraph{Recommended figure placement.}
+Figure 3-1: Objective decomposition and information flow from route/sortie/timing states to each cost term.
+
+\subsection{ACO Outer Construction and Pheromone Learning}
+\label{subsec:aco_outer}
+
+The global search layer follows an ACO outer loop. In each outer iteration, multiple ants construct candidate solutions, each candidate is locally refined by ALNS, and the best ant outcome updates the global incumbent and pheromone matrix.
+
+\subsubsection{Ant Construction Policy}
+
+For each customer group, route extension follows
+\begin{equation}
+w_{ij} = \tau_{ij}^{\alpha_{\mathrm{aco}}}\,\eta_{ij}^{\beta_{\mathrm{aco}}},
+\label{eq:transition_weight}
+\end{equation}
+where \(\tau_{ij}\) is pheromone and \(\eta_{ij}\) is a weighted heuristic combining distance slack, time-window slack, and capacity slack. Candidate selection uses roulette-wheel sampling. If no feasible option exists in the near-candidate list, the candidate pool is expanded; if assignment quality degrades, the implementation falls back to a robust ETPRC-based construction path.
+
+\subsubsection{Pheromone Update Rule}
+
+After each outer iteration, the algorithm applies:
+\begin{enumerate}
+  \item global evaporation on all arcs,
+  \item deposition from iteration-best solution,
+  \item weighted deposition from global-best solution,
+  \item clipping to \([\tau_{\min},\tau_{\max}]\).
+\end{enumerate}
+A compact expression is
+\begin{equation}
+\tau \leftarrow \mathrm{clip}\!\left((1-\rho)\tau + \Delta\tau_{\mathrm{iter}} + \omega_g\Delta\tau_{\mathrm{global}},\ \tau_{\min},\tau_{\max}\right).
+\label{eq:pheromone_update}
+\end{equation}
+
+\paragraph{Recommended figure placement.}
+Figure 3-2: ACO workflow (construction \(\rightarrow\) ALNS refinement \(\rightarrow\) selection \(\rightarrow\) pheromone update \(\rightarrow\) beta update).\\
+Figure 3-3: Pheromone heatmap evolution between two consecutive outer iterations.
+
+\subsection{ALNS Local Improvement Mechanism}
+\label{subsec:alns_local}
+
+Each ant solution enters an ALNS inner loop for local refinement. Per ALNS iteration:
+\begin{enumerate}
+  \item one destroy and one repair operator are sampled by roulette-wheel from adaptive weights,
+  \item removal size \(q\) is sampled in \([q_{\min},q_{\max}]\),
+  \item destroy and repair are executed,
+  \item fallback rebuild is triggered if unserved customers or structural damage appears,
+  \item periodic cross-group perturbation is optionally applied,
+  \item acceptance is decided by simulated annealing,
+  \item selected operator weights and temperature are updated.
+\end{enumerate}
+
+The implementation distinguishes between the \emph{current accepted state} (exploratory) and the \emph{best local return state}, which must pass hard-feasibility checks.
+
+\paragraph{Recommended figure placement.}
+Figure 3-4: ALNS state-transition graph with acceptance/rejection branches.
+
+\subsection{Neighborhood Operator Design (D1--D4, R1--R3, Cross-group)}
+\label{subsec:operators}
+
+\subsubsection{Destroy Operators}
+\begin{itemize}
+  \item \textbf{D1 Random Removal}: removes \(q\) randomly sampled customers.
+  \item \textbf{D2 Worst Removal}: ranks customers by objective relief under hypothetical single-customer removal and removes top contributors.
+  \item \textbf{D3 Related Removal}: starts from a random seed and removes geographically related customers.
+  \item \textbf{D4 Low-Probability Removal}: computes \(p_i(t_i^\ast)\) and removes the lowest-probability customers.
+\end{itemize}
+
+\subsubsection{Repair Operators}
+\begin{itemize}
+  \item \textbf{R1 Greedy Insertion}: selects minimum-objective feasible insertion at each step.
+  \item \textbf{R2 Regret Insertion}: prioritizes
+  \begin{equation}
+  \mathrm{regret}(i)=Z_{\mathrm{2nd}}(i)-Z_{\mathrm{best}}(i).
+  \label{eq:regret}
+  \end{equation}
+  \item \textbf{R3 Timeslot-aware Insertion}: prioritizes larger \(p_i(t_i^\ast)\), with objective as tie-breaker.
+\end{itemize}
+
+\subsubsection{Cross-group Operators}
+\begin{itemize}
+  \item \textbf{Cross-pair Swap}: swaps small customer subsets between two pairs; accepted only if strict improvement and feasibility hold.
+  \item \textbf{Cross-pair Transfer}: transfers customers between pairs; accepted only if strict improvement and feasibility hold.
+\end{itemize}
+
+\paragraph{Recommended figure placement.}
+Figure 3-5: Before/after neighborhood transformations for D/R/Cross operators.\\
+Figure 3-6: Two-pair swap/transfer case study.
+
+\subsection{Acceptance Criterion and Adaptive Weight Update}
+\label{subsec:acceptance}
+
+\subsubsection{Simulated Annealing Acceptance}
+
+Let
+\begin{equation}
+\Delta = Z_{\mathrm{new}} - Z_{\mathrm{cur}}.
+\label{eq:delta_def}
+\end{equation}
+If \(\Delta < 0\), the candidate is accepted deterministically; otherwise, acceptance is probabilistic:
+\begin{equation}
+P_{\mathrm{accept}} = \exp\!\left(-\frac{\Delta}{T}\right).
+\label{eq:metropolis}
+\end{equation}
+Temperature cooling is:
+\begin{equation}
+T \leftarrow \max(T\cdot \alpha_{\mathrm{cool}},\epsilon).
+\label{eq:cooling}
+\end{equation}
+
+\subsubsection{Reward Scheme}
+
+Selected operators receive:
+\begin{itemize}
+  \item \(\sigma_1\): new global best,
+  \item \(\sigma_2\): local improvement,
+  \item \(\sigma_3\): accepted worsening move,
+  \item \(0\): rejected or invalid candidate.
+\end{itemize}
+
+\subsubsection{Adaptive Weight Update}
+
+For selected destroy/repair operators:
+\begin{equation}
+w \leftarrow (1-\lambda_w)w + \lambda_w\cdot \mathrm{reward}.
+\label{eq:weight_update}
+\end{equation}
+This provides online credit assignment and adaptive bias balancing.
+
+\paragraph{Recommended table placement.}
+Table 3-1: Reward class, acceptance condition, and weight-update impact.
+
+\subsection{Feasibility Safeguard Mechanism}
+\label{subsec:feasibility}
+
+In the updated implementation, feasibility is no longer represented as isolated standalone repair operators. Instead, a layered safeguard pipeline is used:
+\begin{enumerate}
+  \item structural damage detection for sortie anchors/order consistency,
+  \item fallback rebuild of affected pairs via ETPRC primitives,
+  \item structural/physical pre-check before objective evaluation,
+  \item hard-feasible gating for best-local promotion.
+\end{enumerate}
+Hence, feasibility assurance is centralized into a robust and reusable mechanism rather than fragmented operator-specific patches.
+
+\paragraph{Recommended figure placement.}
+Figure 3-7: Feasibility pipeline (Detect \(\rightarrow\) Rebuild \(\rightarrow\) Pre-check \(\rightarrow\) Best-feasible gate).\\
+Figure 3-8: Damaged sortie structure vs repaired structure.
+
+\subsection{Stopping Rules, Complexity, and Parallelization}
+\label{subsec:stop_complexity_parallel}
+
+\subsubsection{Stopping Rules}
+
+The offline ACO+ALNS solver terminates when either condition is met:
+\begin{enumerate}
+  \item maximum ACO outer iterations reached,
+  \item no-improvement counter reaches \(N_{\mathrm{no\text{-}improve}}\).
+\end{enumerate}
+Within each ant, ALNS executes a fixed number \(N_{\mathrm{alns}}\) of local iterations.
+
+\subsubsection{Complexity Characterization}
+
+Let \(N\) be customer count, \(A\) ant count, \(I\) ACO outer iterations, and \(L\) ALNS local iterations. A practical decomposition is
+\begin{equation}
+\mathcal{T}_{\mathrm{offline}}
+\approx
+I\cdot A\cdot\left(
+\mathcal{T}_{\mathrm{construct}}(N)+\mathcal{T}_{\mathrm{ALNS}}(L,N)
+\right)
+ + I\cdot \mathcal{T}_{\mathrm{pheromone}}.
+\label{eq:complexity}
+\end{equation}
+In practice, candidate generation, feasibility checks, objective recomputation, and fallback-trigger frequency dominate runtime.
+
+\subsubsection{Parallelization Strategy}
+
+Ant-level multiprocessing is used:
+\begin{itemize}
+  \item parallel unit: one ant task (construct + ALNS refine),
+  \item worker count: up to \(\min(A,\mathrm{CPU}-1)\),
+  \item synchronization barrier: end of each ACO iteration,
+  \item fault handling: serial fallback when parallel execution fails.
+\end{itemize}
+
+\paragraph{Recommended figure placement.}
+Figure 3-9: Parallel ant execution timeline with per-iteration synchronization.
+
+\begin{algorithm}[t]
+\caption{Overall Offline Optimization (ACO + ALNS)}
+\label{alg:overall_offline}
+\begin{algorithmic}[1]
+\Require instance, parameters, all-home policy, random seed
+\Ensure best feasible offline solution \(S_{\mathrm{best}}\)
+\State \(S_0 \gets \mathrm{ETPRC\_InitialSolution}(\mathrm{instance}, \mathrm{parameters})\)
+\State \(Z_0 \gets \mathrm{Objective}(S_0,\beta_{\mathrm{init}})\)
+\State Initialize pheromone \(\tau\), \(\beta \gets \beta_{\mathrm{init}}\)
+\State \(S_{\mathrm{best}} \gets S_0\), \(Z_{\mathrm{best}} \gets Z_0\), \(\mathrm{noImprove}\gets 0\)
+\For{\(\mathrm{iterACO}=1\) to \(I_{\mathrm{aco,max}}\)}
+  \State Build ant tasks with shared \(\tau\) and current \(\beta\)
+  \State Run ant tasks in parallel (or serial fallback)
+  \State Select iteration-best \((S_{\mathrm{iter}}, Z_{\mathrm{iter}})\)
+  \If{\(Z_{\mathrm{iter}} < Z_{\mathrm{best}}\)}
+    \State \(S_{\mathrm{best}} \gets S_{\mathrm{iter}}\), \(Z_{\mathrm{best}} \gets Z_{\mathrm{iter}}\), \(\mathrm{noImprove}\gets 0\)
+  \Else
+    \State \(\mathrm{noImprove}\gets \mathrm{noImprove}+1\)
+  \EndIf
+  \State \(\tau \gets \mathrm{PheromoneUpdate}(\tau, S_{\mathrm{iter}}, Z_{\mathrm{iter}}, S_{\mathrm{best}}, Z_{\mathrm{best}})\)
+  \State \(\beta \gets \min(\beta\cdot \gamma_\beta,\beta_{\max})\)
+  \If{\(\mathrm{noImprove} \ge \mathrm{noImprove}_{\max}\)} \State \textbf{break} \EndIf
+\EndFor
+\State \Return \(S_{\mathrm{best}}\)
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{ACO Constructive Procedure}
+\label{alg:aco_construct}
+\begin{algorithmic}[1]
+\Require grouped customers, \(\tau\), heuristic weights
+\Ensure complete candidate solution \(S\)
+\For{each pair-group \(G\)}
+  \State \(\mathrm{route}\gets[\mathrm{depot}]\), \(\mathrm{remaining}\gets G\)
+  \While{\(\mathrm{remaining}\neq\varnothing\)}
+    \State Build near-candidate list \(C\)
+    \State Compute transition weights \(w_{ij}\) for \(j\in C\)
+    \State Roulette-select next customer \(j^\ast\)
+    \State Append \(j^\ast\); update time/load states
+  \EndWhile
+  \State Close route and extract sorties
+\EndFor
+\If{unserved customers exist}
+  \State fallback to robust ETPRC construction
+\EndIf
+\State \Return \(S\)
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{ALNS Local Search Procedure}
+\label{alg:alns_local}
+\begin{algorithmic}[1]
+\Require \(S_{\mathrm{cur}}\), \(Z_{\mathrm{global}}\), \(\beta\)
+\Ensure locally best feasible solution \(S_{\mathrm{best}}\)
+\State Initialize destroy/repair weights and temperature \(T\)
+\State \(S_{\mathrm{best}} \gets S_{\mathrm{cur}}\)
+\For{\(k=1\) to \(N_{\mathrm{alns}}\)}
+  \State Select destroy \(D\) and repair \(R\) by roulette
+  \State Sample \(q\in[q_{\min}, q_{\max}]\)
+  \State \(S_{\mathrm{part}} \gets D(S_{\mathrm{cur}}, q)\)
+  \State \(S_{\mathrm{new}} \gets R(S_{\mathrm{part}})\)
+  \If{unserved customers or structural damage}
+    \State \(S_{\mathrm{new}} \gets \mathrm{FallbackRebuild}(S_{\mathrm{new}})\)
+  \EndIf
+  \If{periodic cross condition holds}
+    \State \(S_{\mathrm{new}} \gets \mathrm{CrossGroupPerturbation}(S_{\mathrm{new}})\)
+  \EndIf
+  \If{pre-check fails}
+    \State reject and set reward \(=0\)
+  \Else
+    \State \(Z_{\mathrm{new}} \gets \mathrm{Objective}(S_{\mathrm{new}},\beta)\)
+    \State \(\mathrm{accept}\gets \mathrm{SA\_Accept}(Z_{\mathrm{cur}},Z_{\mathrm{new}},T)\)
+    \State reward \(\gets \mathrm{RewardClass}(\mathrm{accept}, Z_{\mathrm{new}}, Z_{\mathrm{global}})\)
+  \EndIf
+  \If{accept}
+    \State \(S_{\mathrm{cur}} \gets S_{\mathrm{new}}\)
+  \EndIf
+  \If{accept and hard-feasible\((S_{\mathrm{cur}})\) and better than \(S_{\mathrm{best}}\)}
+    \State \(S_{\mathrm{best}} \gets S_{\mathrm{cur}}\)
+  \EndIf
+  \State Update selected operator weights
+  \State \(T \gets T\cdot \mathrm{cooling\_rate}\)
+\EndFor
+\State \Return \(S_{\mathrm{best}}\)
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{SA Acceptance and Adaptive Weight Update}
+\label{alg:sa_weight}
+\begin{algorithmic}[1]
+\Require \(Z_{\mathrm{cur}}, Z_{\mathrm{new}}, Z_{\mathrm{global}}, T, w_D, w_R\)
+\Ensure accept flag and updated weights
+\State \(\Delta \gets Z_{\mathrm{new}} - Z_{\mathrm{cur}}\)
+\If{\(\Delta < 0\)}
+  \State \(\mathrm{accept}\gets \mathrm{true}\)
+  \State \(\mathrm{reward}\gets \sigma_1\) if \(Z_{\mathrm{new}}<Z_{\mathrm{global}}\), else \(\sigma_2\)
+\Else
+  \State \(p\gets \exp(-\Delta/T)\)
+  \State \(\mathrm{accept}\gets (\mathrm{rand}() < p)\)
+  \State \(\mathrm{reward}\gets \sigma_3\) if accept else \(0\)
+\EndIf
+\State \(w_D \gets (1-\lambda_w)w_D + \lambda_w\cdot \mathrm{reward}\)
+\State \(w_R \gets (1-\lambda_w)w_R + \lambda_w\cdot \mathrm{reward}\)
+\State \Return accept, \(w_D, w_R\)
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{Feasibility Safeguard and Fallback Rebuild}
+\label{alg:fallback}
+\begin{algorithmic}[1]
+\Require candidate solution \(S\)
+\Ensure repaired candidate \(S'\)
+\State Detect damaged pairs and unserved set
+\If{no damage and no unserved}
+  \State \Return \(S\)
+\EndIf
+\State Assign unserved customers to suitable pairs
+\For{each affected pair}
+  \State Rebuild truck route and sorties via ETPRC primitives
+  \If{rebuilt structure remains invalid}
+    \State clear sorties and move affected customers to truck route
+  \EndIf
+\EndFor
+\State Recompute global unserved set from assignments
+\State \Return \(S'\)
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Readability and visual communication note.}
+To preserve the explanatory strength previously achieved by dedicated feasibility-repair figures, the revised chapter can use: (i) one unified feasibility pipeline figure; (ii) one before/after fallback-rebuild snapshot; (iii) one constraints-coverage matrix (pre-check vs hard feasibility vs soft-penalty objective); and (iv) one operator-transformation panel for D/R/Cross exemplars.
+
+\end{document}

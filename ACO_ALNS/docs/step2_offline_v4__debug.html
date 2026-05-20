@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Step2 Offline v4</title>
+<style>
+body {
+  margin: 0;
+  background: #f4f6f8;
+  color: #1f2933;
+  font-family: "Times New Roman", Georgia, "Noto Serif SC", serif;
+  line-height: 1.75;
+}
+main {
+  max-width: 1180px;
+  margin: 28px auto;
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  padding: 40px 52px;
+}
+h1, h2, h3, h4 {
+  color: #102a43;
+  line-height: 1.35;
+}
+h1 {
+  font-size: 2rem;
+  border-bottom: 3px solid #d9e2ec;
+  padding-bottom: 0.55rem;
+}
+h2 { margin-top: 2rem; font-size: 1.5rem; }
+h3 { margin-top: 1.25rem; font-size: 1.22rem; }
+h4 { margin-top: 1rem; font-size: 1.05rem; }
+p {
+  margin: 0.5rem 0 0.95rem 0;
+  text-align: justify;
+}
+ul {
+  margin: 0.35rem 0 0.95rem 0;
+  padding-left: 1.4rem;
+}
+li { margin: 0.22rem 0; }
+code {
+  background: #eef2f7;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.93em;
+}
+pre {
+  white-space: pre-wrap;
+  background: #f7fafc;
+  border: 1px solid #cbd5e0;
+  border-left: 4px solid #486581;
+  padding: 12px 14px;
+  margin: 0.9rem 0 1.1rem 0;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.91rem;
+  line-height: 1.55;
+}
+</style>
+</head>
+<body>
+<main>
+<h1>第2步：离线优化算法章节 v4（学术论文级详细版）</h1>
+<p>文档范围声明：本文仅依据 <code>D:\codex_drone</code> 当前代码实现编写，覆盖离线优化阶段（Offline）。 代码修改声明：未修改算法代码，仅进行代码解析与文档生成。 核心代码文件：<code>src/spd/aco_alns.py</code>、<code>src/spd/core.py</code>、<code>src/spd/config.py</code>、<code>src/spd/etprc.py</code>、<code>src/spd/main.py</code>。</p>
+<p>---</p>
+<h2>3.1 离线问题定义与目标函数</h2>
+<h3>3.1.1 决策变量定义（可执行语义）</h3>
+<p>代码锚点：<code>src/spd/types.py::Solution</code>、<code>VehiclePairSolution</code>、<code>Sortie</code>；<code>src/spd/core.py::compute_objective</code>。</p>
+<p>为与代码结构一致，离线求解采用“结构化解对象”而非单一矩阵变量。将其映射为以下决策变量：</p>
+<p>\[ x_{p,i,j}\in\{0,1\} \] 定义：车辆对 \(p\) 的卡车路径中是否使用有向弧 \((i,j)\)。 代码对应：<code>VehiclePairSolution.truck_route</code> 的相邻节点对（<code>src/spd/types.py</code>）。</p>
+<ul>
+  <li>1. 卡车弧决策变量</li>
+</ul>
+<p>\[ y_{p,s,c}\in\{0,1\} \] 定义：车辆对 \(p\) 的 sortie \(s\) 是否服务客户 \(c\)。 代码对应：<code>Sortie.customers</code>（<code>src/spd/types.py</code>）。</p>
+<ul>
+  <li>2. 无人机服务归属变量</li>
+</ul>
+<p>\[ z_{p,c}\in\{0,1\} \] 定义：客户 \(c\) 是否由车辆对 \(p\) 的卡车服务。 代码对应：<code>VehiclePairSolution.truck_customers</code>。</p>
+<ul>
+  <li>3. 卡车服务归属变量</li>
+</ul>
+<p>\[ u_c\in\{0,1\} \] 定义：客户 \(c\) 是否未被服务。 代码对应：<code>Solution.unserved_customers</code>。</p>
+<ul>
+  <li>4. 未服务变量</li>
+</ul>
+<p>\[ a^T_{p,n}\in\mathbb{R}_{\ge 0},\quad a^D_{p,n}\in\mathbb{R}_{\ge 0} \] 定义：卡车/无人机在节点 \(n\) 的到达时间。 代码对应：<code>TimelineState.truck_arrival</code>、<code>TimelineState.drone_arrival</code>（<code>src/spd/core.py::compute_truck_timeline</code>）。</p>
+<ul>
+  <li>5. 到达时间状态变量（用于评价与可行性）</li>
+</ul>
+<p>\[ \ell^T_{p,n}\in\mathbb{R}_{\ge 0},\quad \ell^D_{p,n}\in\mathbb{R}_{\ge 0} \] 定义：卡车/无人机在节点 \(n\) 的载重。 代码对应：<code>LoadState.truck_load_at_node</code>、<code>drone_load_at_node</code>（<code>src/spd/core.py::compute_truck_load</code>）。</p>
+<ul>
+  <li>6. 载重状态变量（用于可行性）</li>
+</ul>
+<h3>3.1.2 目标函数完整表达</h3>
+<p>代码锚点：<code>src/spd/core.py::compute_objective</code>（行 729）。</p>
+<p>\[ \min Z = Z_{\text{fixed}} + Z_{\text{truck}} + Z_{\text{drone}} + Z_{\text{fail-expected}} + \beta \cdot Z_{\text{tw-penalty}} + Z_{\text{unserved-penalty}} \]</p>
+<p>其中：</p>
+<p>\[ Z_{\text{fixed}}=\alpha\cdot|\mathcal{P}_{\text{used}}| \] 符号定义：\(\alpha=\texttt{params.cost.fixed\_pair\_cost}\)。 代码变量：<code>z_fixed = params.cost.fixed_pair_cost * len(solution.used_vehicle_pairs)</code>。</p>
+<ul>
+  <li>1. 固定车辆对成本</li>
+</ul>
+<p>\[ Z_{\text{truck}}=c_T\sum_{(i,j)\in\mathcal{A}_T} d^T_{ij} \] 符号定义：\(c_T=\texttt{truck\_cost\_per\_km}\)。 代码变量：<code>z_truck += params.cost.truck_cost_per_km * instance.truck_distance_km[(i,j)]</code>。</p>
+<ul>
+  <li>2. 卡车行驶成本</li>
+</ul>
+<p>\[ Z_{\text{drone}}=c_E\sum_{s\in\mathcal{S}} E_s \] 符号定义：\(c_E=\texttt{drone\_energy\_cost\_per\_wh}\)，\(E_s\) 为 sortie 能耗。 代码变量：<code>energy = compute_sortie_energy(...)</code>，<code>z_drone += compute_energy_cost(energy, params)</code>。</p>
+<ul>
+  <li>3. 无人机能耗成本</li>
+</ul>
+<p>\[ Z_{\text{fail-expected}}</p>
+<ul>
+  <li>4. 期望失败成本</li>
+</ul>
+<p>\sum_{c\in\mathcal{N}_{\text{served}}} \left(1-p_c(t_c^\*)\right)\cdot Z_{\text{fail}}(c) \] \[ Z_{\text{fail}}(c)=2\cdot d^T_{0c}\cdot c_T \] 代码函数：<code>compute_expected_failure_cost</code>、<code>failure_penalty</code>。</p>
+<p>\[ Z_{\text{tw-penalty}}</p>
+<ul>
+  <li>5. 时间窗惩罚项</li>
+</ul>
+<p>\sum_{c\in\mathcal{N}_{\text{served}}}\max(0, a_c-l_c) \] 最终进入目标时乘 \(\beta\)。 代码变量：<code>z_tw_penalty += max(0.0, arrival_time-latest)</code>，随后 <code>z_tw_penalty *= beta</code>。</p>
+<p>\[ Z_{\text{unserved-penalty}}</p>
+<ul>
+  <li>6. 未服务惩罚项</li>
+</ul>
+<p>\sum_{c\in\mathcal{N}_{\text{unserved}}}2\cdot Z_{\text{fail}}(c) \] 代码变量：<code>z_unserved_penalty += 2.0 * failure_penalty(...)</code>。</p>
+<h3>3.1.3 惩罚项系数、默认值与触发条件</h3>
+<p>代码锚点：<code>src/spd/config.py</code>、<code>examples/configs/config_small.json</code>、<code>src/spd/core.py::compute_objective</code>。</p>
+<ul>
+  <li>1. 时间窗惩罚系数 \(\beta\)</li>
+  <li>参数名：<code>beta_schedule.beta_init</code>、<code>beta_schedule.beta_max</code>、<code>beta_schedule.gamma_beta</code></li>
+  <li>示例默认值（<code>config_small</code>）：<code>beta_init=10.0</code>，<code>beta_max=1000.0</code>，<code>gamma_beta=1.1</code></li>
+  <li>触发条件：任一客户到达晚于 latest（<code>max(0,a-l)&gt;0</code>）</li>
+</ul>
+<ul>
+  <li>2. 未服务惩罚常数倍数</li>
+  <li>参数名：无独立可配置参数，代码常数 <code>2.0</code></li>
+  <li>默认值：2.0（硬编码）</li>
+  <li>触发条件：<code>customer_id in solution.unserved_customers</code></li>
+</ul>
+<ul>
+  <li>3. 失败惩罚成本系数</li>
+  <li>参数名：<code>cost.truck_cost_per_km</code></li>
+  <li>示例默认值（<code>config_small</code>）：0.75</li>
+  <li>触发条件：用于 <code>Z_fail(c)</code> 与 <code>Z_fail_expected</code></li>
+</ul>
+<ul>
+  <li>4. 能耗成本系数</li>
+  <li>参数名：<code>cost.drone_energy_cost_per_wh</code></li>
+  <li>示例默认值（<code>config_small</code>）：0.00248</li>
+  <li>触发条件：存在 sortie 能耗</li>
+</ul>
+<h3>3.1.4 约束条件逐条列出（与代码约束函数一一对应）</h3>
+<p>代码锚点：<code>src/spd/core.py::check_sortie_feasibility</code>、<code>is_truck_route_feasible</code>、<code>all_hard_constraints_satisfied</code>。</p>
+<p>F1 无人机电量约束： \[ E_s \le E_D \] 代码检查：<code>compute_sortie_energy(...) &gt; drone_battery_capacity</code> 则不可行。</p>
+<p>F2 无人机载重约束： \[ \ell^D_{s,k} \le Q_D,\ \forall k \] 代码检查：<code>check_sortie_load_feasibility(...)</code>。</p>
+<p>F3 卡车等待无人机约束： \[ \max(0, a^D_{\text{rec}}-a^T_{\text{rec}})\le W_{\max} \] 代码检查：<code>check_sortie_feasibility</code> 内等待时间判断。</p>
+<p>F4 无人机服务客户时间窗上界约束： \[ a^D_c \le l_c \] 代码检查：<code>timeline.drone_arrival[customer_id] &gt; latest</code>。</p>
+<p>F5 回收点卡车载重约束： \[ \ell^T_{\text{recovery}}\le Q_T \] 代码检查：<code>load_state.truck_load_at_node[recovery]</code>。</p>
+<p>F6 卡车客户时间窗上界约束： \[ a^T_c \le l_c \] 代码检查：<code>is_truck_route_feasible</code> 中 truck arrival vs latest。</p>
+<p>F7 卡车全路径载重约束： \[ \ell^T_{n}\le Q_T,\ \forall n \in route \] 代码检查：<code>is_truck_route_feasible</code> 中逐节点检查。</p>
+<p>F8 返回仓库时间约束： \[ a^T_{\text{depot-return}}\le L_0 \] 代码检查：<code>is_truck_route_feasible</code> 中 depot latest 检查。</p>
+<p>Sortie 结构约束：</p>
+<p>代码函数：<code>check_sortie_structure</code>、<code>check_sortie_sequence</code>。</p>
+<ul>
+  <li>launch/recovery 不能是 depot</li>
+  <li>launch/recovery 必须在 truck route 且顺序正确</li>
+  <li>sortie customer 不得与 route node 重叠</li>
+</ul>
+<p>---</p>
+<h2>3.2 ACO 外层构造与信息素学习机制（重点）</h2>
+<h3>3.2.1 ACO 整体框架</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ACOALNSSolver.solve</code>、<code>_run_single_ant</code>、<code>ALNSOptimizer.optimize</code>。</p>
+<p>角色定义：</p>
+<ul>
+  <li>ACO 是离线优化的“外层全局构造 + 学习”框架。</li>
+  <li>ALNS 是每只蚂蚁生成解后的“内层局部改进”框架。</li>
+  <li>嵌套关系：<code>ACO outer iteration -&gt; ant construction -&gt; ALNS refine -&gt; select best -&gt; pheromone update</code>。</li>
+</ul>
+<p>关键超参数（名称/代码变量/示例默认值）：</p>
+<ul>
+  <li>外层迭代次数：<code>params.aco.max_iterations</code>，<code>config_small=20</code></li>
+  <li>蚂蚁数：<code>params.aco.ant_count</code>，<code>config_small=5</code></li>
+  <li>无改进提前停止：<code>params.aco.no_improve_max</code>，<code>config_small=15</code></li>
+  <li>并行开关：<code>params.aco.parallel_ants</code>（可选；无则默认 True，通过 monkey patch 兼容）</li>
+</ul>
+<p>外层循环完整版伪代码（含分支）：</p>
+<pre><code>Input: instance, params, home_status(all True offline), rng
+1) initial_solution &lt;- ETPRC.build_initial_solution(...)
+2) initial_objective &lt;- compute_objective(..., beta=beta_init)
+3) initialize pheromone dict
+4) state.best &lt;- initial_solution
+5) for aco_iteration in [1..max_iterations]:
+     a) build ant_args for ant_count ants
+     b) if parallel pool exists:
+          run pool.map(_run_single_ant)
+        else:
+          serial run _run_single_ant
+     c) for each ant_result:
+          skip if not ok
+          collect iteration_history
+          update iteration_best if objective improved
+     d) if iteration_best better than global best:
+          update global best; no_improve_count &lt;- 0
+        else:
+          no_improve_count &lt;- no_improve_count + 1
+     e) update_pheromone(...)
+     f) advance_beta_schedule(...)
+     g) if no_improve_count &gt;= no_improve_max: break
+6) return state.best_solution</code></pre>
+<h3>3.2.2 信息素矩阵设计</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ACOALNSSolver.solve</code>、<code>_resolve_tau_bounds</code>、<code>update_pheromone</code>。</p>
+<p>矩阵定义： \[ \tau_{ij}\ \text{对应有向卡车弧 }(i,j) \] 代码结构：Python 字典 <code>state.pheromone: dict[(i,j), float]</code>。</p>
+<p>初始化方式：</p>
+<p>\[ \tau_{ij}^{(0)}=\tau_0,\ \forall (i,j)\in instance.truck\_distance\_km \] 代码：<code>pheromone = {arc: initial_pheromone for arc in instance.truck_distance_km}</code>。</p>
+<ul>
+  <li>1. 主求解器中内联初始化</li>
+  <li>2. 若距离字典为空，退化为全节点笛卡尔对初始化。</li>
+</ul>
+<p>\(\tau_{\min}, \tau_{\max}\) 取值机制： 函数：<code>_resolve_tau_bounds(params)</code>。</p>
+<p>\[ \tau_{\min}= \max(10^{-9}, 0.1\tau_0),\quad \tau_{\max}= \max(\tau_{\min}+10^{-9}, 10\tau_0) \]</p>
+<ul>
+  <li>若配置缺失：</li>
+  <li>若配置存在：直接取 <code>params.aco.tau_min</code>, <code>params.aco.tau_max</code>，再做合法化截断。</li>
+</ul>
+<p>结论：\(\tau_{\min},\tau_{\max}\) 为“按参数求得的边界”，不是每轮自适应更新的时变变量。</p>
+<h3>3.2.3 路径构建（转移规则）核心细节问答</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::construct_ant_solution</code>（含局部函数 <code>transition_stats</code> 与 <code>roulette_select</code>）。</p>
+<h4>Q1: \(\eta_{ij}\) 完整公式？</h4>
+<p>代码实现公式： \[ \eta_{ij}</p>
+<p>\max\left( 10^{-9}, w_{dist}\cdot \eta^{dist}_{ij} + w_{tw}\cdot \eta^{tw}_{ij} + w_{cap}\cdot \eta^{cap}_{ij} \right) \] 其中： \[ \eta^{dist}_{ij}=\frac{1}{1+d_{ij}/\bar d} \] \[ \eta^{tw}_{ij}=\mathrm{clip01}\left(\frac{l_j-a_j}{T_h}\right) \] \[ \eta^{cap}_{ij}=\mathrm{clip01}\left(\frac{Q_T-\hat \ell_j}{Q_T}\right) \] 符号说明：</p>
+<ul>
+  <li>\(d_{ij}\)：卡车路网距离 <code>instance.truck_distance_km[(i,j)]</code>（不是欧氏距离）</li>
+  <li>\(\bar d\)：当前候选集平均距离 <code>dist_scale</code></li>
+  <li>\(l_j\)：客户 latest</li>
+  <li>\(a_j\)：若从当前状态转移到 j 的预计到达时间</li>
+  <li>\(T_h\)：时间域长度 <code>depot_latest - depot_earliest</code></li>
+  <li>\(Q_T\)：卡车容量（不是无人机容量）</li>
+  <li>\(\hat \ell_j\)：服务 j 后卡车投影载重</li>
+  <li><code>clip01(x)=min(1,max(0,x))</code></li>
+</ul>
+<h4>Q2: 轮盘赌是纯概率还是贪婪混合？</h4>
+<p>代码实现：纯概率轮盘赌，不含 <code>q0</code> 贪婪分支。 证据：<code>roulette_select</code> 仅按累计概率采样。 结论：未找到 ACS 风格 <code>q0</code> 参数；原因：代码中无该变量、无 <code>if rand&lt;q0 then argmax</code> 分支。</p>
+<h4>Q3: 受限候选列表定义、k 取值、扩大邻域触发？</h4>
+<p>候选列表构建：</p>
+<p>\[ candidate\_size=\min\left(remaining,\ \max(10,\min(25, round(4\sqrt{remaining})))\right) \]</p>
+<ul>
+  <li>1. 先按卡车距离升序对 remaining 排序。</li>
+  <li>2. 取前 <code>candidate_size</code> 构成 near list。</li>
+  <li>3. <code>candidate_size</code> 来源函数 <code>_resolve_candidate_list_size</code>：</li>
+  <li>若 <code>params.aco.candidate_list_size</code> 配置存在：取该值</li>
+  <li>否则动态默认：</li>
+</ul>
+<p>扩大邻域触发条件：near list 中无可行候选（<code>feasible_candidates</code> 为空）。 扩大方式：对完整 <code>sorted_candidates</code> 重新评估可行性并构建 <code>expanded_feasible</code>。</p>
+<h4>Q4: “阈值触发回退”在代码中如何实现？</h4>
+<p>未找到“分配质量阈值”变量。 实际触发条件是硬条件：</p>
+<p>结论：回退不是阈值式，而是异常/未服务客户触发。</p>
+<ul>
+  <li>1. sortie 抽取阶段异常 -&gt; 回退到 ETPRC <code>_build_truck_route + _extract_sorties</code>。</li>
+  <li>2. 构造完成后 <code>candidate_solution.unserved_customers</code> 非空 -&gt; 直接回退 <code>build_initial_solution</code>。</li>
+</ul>
+<h3>3.2.4 信息素更新机制完整展开</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::update_pheromone</code>。</p>
+<p>Step 1 全局蒸发： \[ \tau_{ij}\leftarrow \mathrm{clip}\left((1-\rho)\tau_{ij},\tau_{\min},\tau_{\max}\right),\ \forall(i,j) \] 变量：<code>evaporation_rate</code>。</p>
+<p>Step 2 迭代最优沉积： 对 iteration-best 解经过弧集合 \(\mathcal{E}_{iter}\)： \[ \Delta\tau_{iter}</p>
+<p>\frac{Q_{aco}}{Z_{iter}} \] \[ \tau_{ij}\leftarrow \mathrm{clip}(\tau_{ij}+\Delta\tau_{iter},\tau_{\min},\tau_{\max}),\ (i,j)\in\mathcal{E}_{iter} \] 不是对所有蚂蚁解沉积，只对 iteration-best 与 global-best 两条轨道沉积。</p>
+<p>Step 3 全局最优加权沉积： 对 global-best 弧集合 \(\mathcal{E}_{global}\)： \[ \Delta\tau_{global}</p>
+<p>\omega_g\frac{Q_{aco}}{Z_{global}} \] \[ \tau_{ij}\leftarrow \mathrm{clip}(\tau_{ij}+\Delta\tau_{global},\tau_{\min},\tau_{\max}),\ (i,j)\in\mathcal{E}_{global} \]</p>
+<p>Step 4 裁剪：每次更新后 clip 到边界。</p>
+<p>默认值与变量名：</p>
+<ul>
+  <li>\(\rho\)：<code>params.aco.evaporation_rate</code>，<code>config_small=0.2</code></li>
+  <li>\(\omega_g\)：<code>params.aco.global_best_weight</code>，<code>config_small=0.65</code>（函数中缺省回退 0.6）</li>
+  <li>\(\tau_{\min}, \tau_{\max}\)：来自 <code>_resolve_tau_bounds</code>，可配置或按 \(\tau_0\) 推导，不是迭代动态学习变量。</li>
+</ul>
+<p>---</p>
+<h2>3.3 ALNS 局部改进机制</h2>
+<h3>3.3.1 ALNS 主循环伪代码（完整版）</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ALNSOptimizer.optimize</code>。</p>
+<pre><code>Input: initial_solution, params, home_status, global_best_objective
+1) current_solution &lt;- deepcopy(initial_solution)
+2) current_beta &lt;- params.beta_schedule.beta_init
+3) current_objective &lt;- compute_objective(..., time_window_penalty=current_beta)
+4) best_local &lt;- current_solution
+5) initialize destroy_weights/repair_weights = operator_weight_init
+6) temperature &lt;- sa_initial_temperature
+
+7) for iteration in range(params.alns.iterations):
+     a) destroy_idx &lt;- roulette_select(destroy_weights)
+     b) repair_idx &lt;- roulette_select(repair_weights)
+     c) remove_count &lt;- randint(remove_count_min, remove_count_max)
+     d) destroy_result &lt;- destroy_op(current_solution, remove_count)
+     e) new_solution &lt;- repair_op(destroy_result)
+
+     f) if has_unserved OR has_damaged_sortie:
+          _fallback_rebuild(new_solution)
+
+     g) if cross_group_frequency triggered:
+          new_solution &lt;- random cross_group_operator(new_solution)
+
+     h) if not _structural_and_physical_check(new_solution):
+          treat as invalid candidate
+          reward &lt;- 0
+          update selected weights with reward
+          cool temperature
+          record history
+          continue
+
+     i) new_objective &lt;- compute_objective(..., time_window_penalty=current_beta)
+     j) delta &lt;- new_objective - current_objective
+     k) if delta &lt; 0:
+          accept &lt;- True
+          reward &lt;- reward_global_best or reward_improve
+        else:
+          sa_prob &lt;- exp(-delta/temperature)
+          accept &lt;- (rand &lt; sa_prob)
+          reward &lt;- reward_accept_worse if accepted else 0
+
+     l) if accept:
+          current_solution &lt;- new_solution
+          current_objective &lt;- new_objective
+          if current_solution hard-feasible and better:
+               best_local &lt;- current_solution
+
+     m) update selected destroy/repair weights
+     n) temperature &lt;- temperature * sa_cooling_rate
+     o) record history
+
+8) return best_local</code></pre>
+<p>“信息素通知”说明：</p>
+<ul>
+  <li>ALNS 内部不直接改 <code>state.pheromone</code>。</li>
+  <li>ACO 外层使用 ALNS 输出的 refined solution/objective 来调用 <code>update_pheromone</code>。</li>
+  <li>即“间接反馈”。</li>
+</ul>
+<h3>3.3.2 可行性处理流程（严格按代码）</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::_fallback_rebuild</code>、<code>_structural_and_physical_check</code>；<code>src/spd/core.py::all_hard_constraints_satisfied</code>。</p>
+<p>实际流程：</p>
+<pre><code>应用算子后
+  -&gt; 检测 has_unserved 或 has_damaged_sortie
+      -&gt; [是] 直接 _fallback_rebuild(new_solution)
+  -&gt; _structural_and_physical_check(new_solution)
+      -&gt; [失败] 当前候选直接跳过（不进入 SA 比较）
+      -&gt; [通过] 计算 new_objective 并进入 SA 接受准则
+  -&gt; 若 SA 接受，再用 all_hard_constraints_satisfied 决定是否可升级 best_local</code></pre>
+<p>必须回答问题：</p>
+<p>答：**是**。证据：fallback 后仍执行 <code>_structural_and_physical_check</code> 与 <code>compute_objective</code>，通过后进入 SA。</p>
+<ul>
+  <li>1. fallback 之后的解是否参与 SA？</li>
+</ul>
+<p>代码中没有名为 <code>is_feasible</code> 的函数。 对应函数是 <code>_structural_and_physical_check</code>，检查：</p>
+<p>且显式跳过 F4/F6/F8（时间窗与回仓时间）作为软约束交给目标函数惩罚。</p>
+<ul>
+  <li>2. <code>is_feasible()</code> 检查哪些约束？</li>
+  <li>timeline 可计算</li>
+  <li>sortie 结构与序约束</li>
+  <li>sortie cardinality</li>
+  <li>F1 电量</li>
+  <li>F2 无人机载重</li>
+  <li>F5 回收点卡车载重</li>
+  <li>F7 卡车路径载重</li>
+</ul>
+<p>未找到独立 <code>feasibility_repair</code> 函数。 代码中的修复机制为 <code>_fallback_rebuild</code>：重分配未服务客户、对受影响 pair 重新调用 ETPRC 路径+sortie 构造，失败时将 sortie 清空并转回卡车服务。</p>
+<ul>
+  <li>3. <code>feasibility_repair()</code> 采用什么策略？</li>
+</ul>
+<p>---</p>
+<h2>3.4 邻域算子设计（D1-D4, R1-R3, Cross-group）</h2>
+<h3>D1 Random Removal</h3>
+<p>函数名：<code>d1_random_removal</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Destroy 操作对象：卡车路径与无人机 sortie（通过统一移除函数）</p>
+<p>操作定义： Step 1: 收集 <code>solution.all_customers</code>。 Step 2: 计算 \(k=\mathrm{clamp}(remove\_count,0,|customers|)\)。 Step 3: 用 <code>rng.sample(customers,k)</code> 抽样。 Step 4: 对每个移除客户调用 <code>_remove_customer_in_place</code>，将其加入 <code>unserved_customers</code>。</p>
+<p>关键参数：</p>
+<ul>
+  <li>移除数量 \(q\)：变量 <code>remove_count</code>，范围由外层 <code>remove_count_min ~ remove_count_max</code> 给出。</li>
+  <li>随机源：<code>rng</code>（来自 ALNS 主循环中的 <code>random_state</code>）。</li>
+</ul>
+<p>选择逻辑：</p>
+<ul>
+  <li>无评分函数。</li>
+  <li>概率性选择，均匀无放回采样。</li>
+  <li>随机性来源：Python <code>random.Random.sample</code>。</li>
+</ul>
+<p>随机环境设计（概率性算子字段）：</p>
+<ul>
+  <li>分布类型：离散均匀组合采样（无显式参数化正态/泊松）。</li>
+  <li>代码变量：<code>rng.sample(...)</code>。</li>
+</ul>
+<p>触发条件（权重增加）：</p>
+<ul>
+  <li>该算子被选中且候选解达到奖励条件（全局改进/局部改进/接受劣解）时，因 reward&gt;0 而更新权重。</li>
+</ul>
+<p>建议图示：是。图示内容：移除前后客户分配对比。</p>
+<h3>D2 Worst Removal</h3>
+<p>函数名：<code>d2_worst_removal</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Destroy 操作对象：卡车路径与无人机 sortie</p>
+<p>操作定义： Step 1: 计算 baseline <code>compute_objective(solution)</code>。 Step 2: 对每个客户 \(c\)，构造“仅删除 c”的候选解。 Step 3: 计算 <code>improvement = baseline - candidate_obj</code>。 Step 4: 按 <code>improvement</code> 降序排序，取前 \(q\) 个。 Step 5: 统一删除这 \(q\) 个客户。</p>
+<p>关键参数：</p>
+<ul>
+  <li>移除数量 \(q\)：同上。</li>
+  <li>评分值：<code>improvement</code>。</li>
+</ul>
+<p>选择逻辑（完整公式）： \[ score(c)=Z(S)-Z(S\setminus\{c\}) \]</p>
+<ul>
+  <li>确定性选择：按 <code>score</code> 排序取 Top-q。</li>
+  <li>若单删候选不可计算，记为 \(-\infty\)。</li>
+</ul>
+<p>随机环境设计：</p>
+<ul>
+  <li>非概率排序，不使用显式随机分布（除 ties 的 customer_id 次序规则）。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：是。图示内容：边际贡献排序柱状图。</p>
+<h3>D3 Related Removal</h3>
+<p>函数名：<code>d3_related_removal</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Destroy 操作对象：客户集合（间接作用于 route/sortie）</p>
+<p>操作定义： Step 1: 从客户集中随机选择 seed。 Step 2: 计算其他客户到 seed 的几何距离（欧氏）并升序排序。 Step 3: 删除 <code>seed + 最近的(k-1)个客户</code>。 Step 4: 构建部分解。</p>
+<p>关键参数：</p>
+<ul>
+  <li>\(q\)：移除数量。</li>
+  <li>距离度量：<code>hypot(x_i-x_seed,y_i-y_seed)</code>。</li>
+</ul>
+<p>选择逻辑：</p>
+<ul>
+  <li>半随机：seed 随机，seed 之后的相关客户确定性最近邻。</li>
+  <li>随机性来源：<code>rng.choice(customers)</code>。</li>
+</ul>
+<p>随机环境设计：</p>
+<ul>
+  <li>seed 选择服从离散均匀分布。</li>
+  <li>无显式高斯/泊松参数。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：是。图示内容：seed 与空间邻域移除示意。</p>
+<h3>D4 Low Home-Probability Removal</h3>
+<p>函数名：<code>d4_low_home_probability_removal</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Destroy 操作对象：客户分配（按在家概率排序）</p>
+<p>操作定义： Step 1: 对每个 pair 计算 timeline。 Step 2: 对每个客户计算 planned arrival -&gt; slot -&gt; <code>home_probabilities[slot-1]</code>。 Step 3: 按概率升序排序。 Step 4: 删除前 \(q\) 个最低概率客户。</p>
+<p>关键参数：</p>
+<ul>
+  <li>\(q\)：移除数量。</li>
+  <li>概率来源：<code>instance.customers[c].home_probabilities</code>。</li>
+</ul>
+<p>选择逻辑（评分公式）： \[ score(c)=p_c(t_c^\*) \] 按 <code>score</code> 升序删除。</p>
+<ul>
+  <li>确定性排序，不做概率抽样。</li>
+</ul>
+<p>随机环境设计（概率性算子字段）：</p>
+<ul>
+  <li>未找到显式“随机场景采样分布”。</li>
+  <li>原因：该算子读取离线实例给定的时隙概率向量，不在算子内进行 Monte Carlo 抽样。</li>
+  <li>变量名：<code>home_probabilities</code> + <code>map_time_to_slot(...)</code>。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：是。图示内容：客户时隙概率热力图 + 被移除客户标记。</p>
+<h3>R1 Greedy Insertion</h3>
+<p>函数名：<code>r1_greedy_insertion</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Repair 操作对象：卡车插入、插入已有 sortie、新建 sortie</p>
+<p>操作定义： Step 1: 维护 pending 队列。 Step 2: 对队首客户调用 <code>_candidate_solutions_for_customer</code> 枚举所有可行插入方案。 Step 3: 选 objective 最小方案。 Step 4: 无可行方案则回队尾重试，限制无进展轮数。</p>
+<p>关键参数：</p>
+<ul>
+  <li>候选评分：<code>objective_value</code>。</li>
+  <li>可行性过滤：<code>all_hard_constraints_satisfied(..., enforce_sortie_sequence=True)</code>。</li>
+</ul>
+<p>选择逻辑： \[ \arg\min_{S'\in \mathcal{C}(c)} Z(S') \] 确定性选择。</p>
+<p>随机环境设计：</p>
+<ul>
+  <li>算子内部无随机抽样（<code>rng</code> 未使用）。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：否（文本足够复现）。</p>
+<h3>R2 Regret Insertion</h3>
+<p>函数名：<code>r2_regret_insertion</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Repair 操作对象：同 R1</p>
+<p>操作定义： Step 1: 对每个 pending 客户枚举候选并按 objective 排序。 Step 2: 计算 <code>regret = second_best - best</code>。 Step 3: 选择 regret 最大客户并采用其 best 方案插入。 Step 4: 重复直到 pending 为空或无候选。</p>
+<p>关键参数：</p>
+<ul>
+  <li>regret 值。</li>
+  <li>候选由 <code>_candidate_solutions_for_customer</code> 给出。</li>
+</ul>
+<p>选择逻辑公式： \[ regret(c)=Z_2(c)-Z_1(c) \] 选择 \(\arg\max regret(c)\)，然后执行其 \(Z_1(c)\) 方案。确定性。</p>
+<p>随机环境设计：</p>
+<ul>
+  <li>无显式概率采样。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：是。图示内容：regret 选择过程示意。</p>
+<h3>R3 Timeslot-aware Insertion</h3>
+<p>函数名：<code>r3_timeslot_aware_insertion</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Repair 操作对象：同 R1</p>
+<p>操作定义： Step 1: 对每个待插客户枚举所有可行候选方案。 Step 2: 计算候选的 <code>(objective, home_prob_at_arrival)</code>。 Step 3: 选择 <code>home_prob</code> 最大；若并列选 objective 最小。</p>
+<p>关键参数：</p>
+<ul>
+  <li>概率值：<code>_customer_probability_at_arrival</code>。</li>
+  <li>评价：<code>compute_objective</code>。</li>
+</ul>
+<p>选择逻辑： \[ \arg\max p_c(t_c^\*),\ \text{tie-break by } \arg\min Z \] 代码实现等价为 <code>min(candidates, key=lambda item: (-prob, objective))</code>。</p>
+<p>随机环境设计：</p>
+<ul>
+  <li>未找到显式随机分布；概率来自实例 <code>home_probabilities</code>。</li>
+</ul>
+<p>触发条件（权重增加）：同 D1。</p>
+<p>建议图示：是。图示内容：同一客户不同插入位置的时隙概率差异。</p>
+<h3>Cross-group: cross_pair_swap</h3>
+<p>函数名：<code>cross_pair_swap</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Cross-group（低频跨车辆对） 操作对象：两个 pair 的 customer set + 重建后的 route/sortie</p>
+<p>操作定义： Step 1: 随机选择两个 used pairs。 Step 2: 各自随机抽 <code>q_cross</code> 客户子集。 Step 3: 交换子集，得到 <code>target_a,target_b</code>。 Step 4: 调用 <code>_rebuild_pair</code> 重建两侧。 Step 5: 刷新未服务集合。 Step 6: 若硬约束不满足或目标不改进，返回原解；否则接受新解。</p>
+<p>关键参数：</p>
+<ul>
+  <li><code>q_cross = max(1, params.alns.cross_group_remove_count)</code>。</li>
+</ul>
+<p>选择逻辑：</p>
+<ul>
+  <li>子集选择概率性（均匀 sample）。</li>
+  <li>接受判据确定性：<code>new_obj &lt; old_obj</code> 且硬可行。</li>
+</ul>
+<p>随机环境设计：</p>
+<ul>
+  <li>离散均匀采样，无显式正态/泊松参数。</li>
+</ul>
+<p>触发条件（权重增加）：</p>
+<ul>
+  <li>Cross-group 不在 destroy/repair 权重向量中，不参与 ALNS 自适应权重更新。</li>
+  <li>触发条件是周期：<code>(iteration+1) % cross_group_frequency == 0</code>。</li>
+</ul>
+<p>建议图示：是。图示内容：两 pair 交换前后结构图。</p>
+<h3>Cross-group: cross_pair_transfer</h3>
+<p>函数名：<code>cross_pair_transfer</code>（文件：<code>src/spd/aco_alns.py</code>） 类型：Cross-group 操作对象：两个 pair 的 customer set + 重建后的 route/sortie</p>
+<p>操作定义： Step 1: 随机选 pair_a, pair_b。 Step 2: 从 pair_a 随机选 1 个客户移动到 pair_b。 Step 3: 重建两 pair。 Step 4: 检查硬可行与目标改进；不满足则回退原解。</p>
+<p>关键参数：</p>
+<ul>
+  <li>移动客户个数在当前实现固定为 1。</li>
+</ul>
+<p>选择逻辑：</p>
+<ul>
+  <li>移动客户选择概率性（均匀随机）。</li>
+  <li>接受判据确定性（严格改进+可行）。</li>
+</ul>
+<p>随机环境设计：</p>
+<ul>
+  <li>离散均匀采样，无显式分布参数。</li>
+</ul>
+<p>触发条件（权重增加）：同 <code>cross_pair_swap</code>（不参与权重更新）。</p>
+<p>建议图示：是。图示内容：单客户跨 pair 迁移前后图。</p>
+<p>---</p>
+<h2>3.5 SA 接受准则与自适应权重更新</h2>
+<h3>3.5.1 SA 接受准则</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ALNSOptimizer.optimize</code>。</p>
+<p>接受概率公式： \[ \Delta = Z_{new}-Z_{cur} \] \[ P_{accept}= \begin{cases} 1, &amp; \Delta&lt;0\\ \exp\left(-\frac{\Delta}{T}\right), &amp; \Delta\ge 0 \end{cases} \] 代码实现：<code>if delta &lt; 0: accept=True else sa_probability = exp(-delta/T); accept = rand &lt; sa_probability</code>。</p>
+<p>温度参数：</p>
+<p>\[ T\leftarrow \max(T\cdot \alpha,\ 10^{-9}) \] 其中 \(\alpha=\texttt{params.alns.sa\_cooling\_rate}\)，<code>config_small=0.98</code>。</p>
+<ul>
+  <li>初始温度 \(T_0\)：<code>params.alns.sa_initial_temperature</code>（<code>config_small=100.0</code>）</li>
+  <li>冷却方式：几何冷却</li>
+  <li>\(T_{min}\)：未找到独立参数变量；代码下界硬编码为 <code>1e-9</code>。</li>
+</ul>
+<h3>3.5.2 自适应权重更新</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ALNSOptimizer.optimize</code>（行 1255-1262）。</p>
+<p>奖励类别与默认值（<code>config_small</code>）：</p>
+<ul>
+  <li>\(\sigma_1\)（新全局最优）：<code>reward_global_best=33.0</code></li>
+  <li>\(\sigma_2\)（改进但非新全局最优）：<code>reward_improve=13.0</code></li>
+  <li>\(\sigma_3\)（接受劣解）：<code>reward_accept_worse=9.0</code></li>
+  <li>拒绝/无效候选：reward=0</li>
+</ul>
+<p>反应因子：</p>
+<ul>
+  <li>参数名：<code>reaction_factor</code>，<code>config_small=0.1</code></li>
+</ul>
+<p>更新公式（destroy 与 repair 选中算子分别更新）： \[ w \leftarrow (1-r)w + r\cdot reward \] 其中 \(r=\texttt{reaction\_factor}\)。</p>
+<p>更新频率：</p>
+<ul>
+  <li>每次 ALNS 迭代更新一次（非 segment 式）。</li>
+  <li>仅更新本次被选中的 <code>destroy_idx</code> 与 <code>repair_idx</code>。</li>
+</ul>
+<p>---</p>
+<h2>3.6 终止条件与算法复杂度</h2>
+<h3>3.6.1 终止条件（逐条，含变量名）</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ACOALNSSolver.solve</code>、<code>ALNSOptimizer.optimize</code>。</p>
+<ul>
+  <li>1. ACO 外层最大迭代：</li>
+  <li>变量：<code>params.aco.max_iterations</code></li>
+  <li>示例默认：20（<code>config_small</code>）</li>
+</ul>
+<ul>
+  <li>2. ACO 无改进提前停止：</li>
+  <li>变量：<code>params.aco.no_improve_max</code></li>
+  <li>条件：<code>no_improve_count &gt;= no_improve_max</code></li>
+  <li>示例默认：15（<code>config_small</code>）</li>
+</ul>
+<ul>
+  <li>3. ALNS 内层固定迭代结束：</li>
+  <li>变量：<code>params.alns.iterations</code></li>
+  <li>示例默认：50（<code>config_small</code>）</li>
+</ul>
+<p>说明：ALNS 内层无“温度阈值停止”参数，按固定迭代执行。</p>
+<h3>3.6.2 时间复杂度分析</h3>
+<p>设：</p>
+<ul>
+  <li>\(I\)：ACO 外层迭代数</li>
+  <li>\(A\)：每轮蚂蚁数</li>
+  <li>\(L\)：ALNS 内层迭代数</li>
+  <li>\(N\)：客户数</li>
+</ul>
+<p>总复杂度可分解为： \[ \mathcal{O}\left( I\cdot A\cdot\left(C_{construct}(N)+C_{alns}(L,N)\right) + I\cdot C_{pheromone}(N) \right) \]</p>
+<p>其中：</p>
+<ul>
+  <li><code>construct_ant_solution</code> 主成本来自候选评估与可行性估计；</li>
+  <li><code>ALNSOptimizer.optimize</code> 主成本来自候选生成、可行性检查、目标函数计算与 fallback 重建；</li>
+  <li><code>update_pheromone</code> 主成本与 pheromone 边规模线性相关。</li>
+</ul>
+<h3>3.6.3 并行实现</h3>
+<p>代码锚点：<code>src/spd/aco_alns.py::ACOALNSSolver.solve</code>。</p>
+<p>并行粒度：蚂蚁级并行（ant-level parallelism）。 实现：<code>multiprocessing</code> + <code>spawn</code> + <code>pool.map(_run_single_ant, ant_args_list)</code>。 worker 数：<code>min(ant_count, max(1, cpu_count-1))</code>。 失败退化：并行异常时自动回退串行执行本轮。</p>
+<p>---</p>
+<h2>3.7 关键参数汇总表</h2>
+<p>代码锚点：<code>src/spd/config.py</code>、<code>examples/configs/config_small.json</code>、<code>src/spd/main.py::_load_parameters</code>。</p>
+<pre><code>| 参数符号/名称 | 含义 | 默认值(示例: config_small) | 代码变量名 | 敏感性 |
+|---|---|---:|---|---|
+| I_max | ACO外层最大迭代 | 20 | params.aco.max_iterations | 高 |
+| A | 每轮蚂蚁数 | 5 | params.aco.ant_count | 高 |
+| alpha_aco | 信息素指数 | 1.0 | params.aco.alpha_aco | 中 |
+| beta_aco | 启发式指数 | 2.0 | params.aco.beta_aco | 高 |
+| rho | 信息素蒸发率 | 0.2 | params.aco.evaporation_rate | 高 |
+| Q_aco | 信息素沉积强度 | 10.0 | params.aco.pheromone_q | 中 |
+| tau0 | 初始信息素 | 1.0 | params.aco.pheromone_init | 中 |
+| tau_min | 信息素下界 | 0.1 | params.aco.tau_min | 中 |
+| tau_max | 信息素上界 | 10.0 | params.aco.tau_max | 中 |
+| omega_g | 全局最优沉积权重 | 0.65 | params.aco.global_best_weight | 高 |
+| k_cand | 受限候选列表大小 | 10 | params.aco.candidate_list_size | 中 |
+| no_improve_max | 无改进提前停止阈值 | 15 | params.aco.no_improve_max | 高 |
+| beta_init | 时间窗惩罚初值 | 10.0 | params.beta_schedule.beta_init | 高 |
+| beta_max | 时间窗惩罚上限 | 1000.0 | params.beta_schedule.beta_max | 中 |
+| gamma_beta | beta增长系数 | 1.1 | params.beta_schedule.gamma_beta | 高 |
+| L_alns | ALNS迭代次数 | 50 | params.alns.iterations | 高 |
+| q_min | 最小移除数量 | 1 | params.alns.remove_count_min | 中 |
+| q_max | 最大移除数量 | 3 | params.alns.remove_count_max | 中 |
+| T0 | SA初始温度 | 100.0 | params.alns.sa_initial_temperature | 高 |
+| alpha_sa | SA冷却率 | 0.98 | params.alns.sa_cooling_rate | 高 |
+| w0 | 算子初始权重 | 1.0 | params.alns.operator_weight_init | 中 |
+| sigma1 | 新全局最优奖励 | 33.0 | params.alns.reward_global_best | 高 |
+| sigma2 | 改进奖励 | 13.0 | params.alns.reward_improve | 高 |
+| sigma3 | 接受劣解奖励 | 9.0 | params.alns.reward_accept_worse | 高 |
+| r | 权重反应因子 | 0.1 | params.alns.reaction_factor | 高 |
+| f_cross | 跨组算子触发频率 | 10 | params.alns.cross_group_frequency | 中 |
+| q_cross | 跨组操作规模 | 1 | params.alns.cross_group_remove_count | 中 |
+| W_max | 卡车等待上限 | 30.0 | params.constraints.max_truck_wait_time | 中 |
+| m_max | sortie最大客户数 | 3 | params.constraints.max_customers_per_sortie | 中 |
+| Q_T | 卡车容量 | 100.0 | params.vehicle.truck_capacity | 高 |
+| Q_D | 无人机容量 | 9.0 | params.vehicle.drone_capacity | 高 |
+| E_D | 无人机电池容量 | 500.0 | params.energy.drone_battery_capacity | 高 |</code></pre>
+<p>---</p>
+<h2>3.8 伪代码（Algorithm2e 格式）</h2>
+<h3>Algorithm 1: 整体算法主流程（ACO + ALNS 嵌套）</h3>
+<pre><code>\begin{algorithm}[H]
+\caption{Offline ACO-ALNS Main Procedure}
+\KwIn{instance, params, rng}
+\KwOut{best feasible offline solution}
+home\_status $\leftarrow$ all customers set to True\;
+S0 $\leftarrow$ ETPRC.build\_initial\_solution(instance, params, rng)\;
+Z0 $\leftarrow$ compute\_objective(S0, beta\_init)\;
+initialize pheromone matrix $\tau$\;
+best $\leftarrow$ (S0, Z0)\;
+noImprove $\leftarrow 0$\;
+\For{$iter=1$ \KwTo $I_{max}$}{
+  build ant argument list\;
+  \eIf{parallel pool available}{
+    run all ants by pool.map(\_run\_single\_ant)\;
+  }{
+    run all ants serially\;
+  }
+  select iteration-best ant result\;
+  \If{iteration-best improves global best}{
+    update global best\;
+    noImprove $\leftarrow 0$\;
+  }\Else{
+    noImprove $\leftarrow$ noImprove + 1\;
+  }
+  update\_pheromone(state, iteration-best, global-best)\;
+  advance\_beta\_schedule(state)\;
+  \If{noImprove $\ge$ no\_improve\_max}{break\;}
+}
+\Return global best solution\;
+\end{algorithm}</code></pre>
+<h3>Algorithm 2: ACO 路径构建（含 \(\eta\) 计算、轮盘赌、fallback）</h3>
+<pre><code>\begin{algorithm}[H]
+\caption{ACO Ant Construction with Candidate Expansion and Fallback}
+\KwIn{instance, params, state.pheromone, rng}
+\KwOut{candidate solution}
+groups $\leftarrow$ ETPRC.\_customer\_grouping(...)\;
+\ForEach{group}{
+  initialize route=[depot], remaining=group, current\_time, current\_load\;
+  \While{remaining not empty}{
+    sorted\_candidates $\leftarrow$ remaining sorted by truck distance\;
+    near\_candidates $\leftarrow$ first k candidates\;
+    evaluate transition\_stats on near\_candidates\;
+    \eIf{feasible candidates exist in near list}{
+      selection\_pool $\leftarrow$ feasible near candidates\;
+    }{
+      expand to full sorted\_candidates and re-evaluate\;
+      \eIf{expanded feasible exists}{
+        selection\_pool $\leftarrow$ expanded feasible\;
+      }{
+        selection\_pool $\leftarrow$ near (or full) candidates with fallback weights\;
+      }
+    }
+    next $\leftarrow$ roulette\_select(selection\_pool, weights)\;
+    append next to route and update time/load\;
+  }
+  append depot to route\;
+  \eIf{extract sortie succeeds}{
+    keep updated route/sorties\;
+  }{
+    fallback route $\leftarrow$ ETPRC.\_build\_truck\_route(...)\;
+    extract sorties from fallback route\;
+  }
+}
+assemble full candidate solution\;
+\If{candidate has unserved customers}{
+  \Return ETPRC.build\_initial\_solution(...)\;
+}
+\Return candidate\;
+\end{algorithm}</code></pre>
+<h3>Algorithm 3: 信息素更新</h3>
+<pre><code>\begin{algorithm}[H]
+\caption{Pheromone Evaporation and Dual Deposit Update}
+\KwIn{state.pheromone, iteration-best, global-best, params}
+\KwOut{updated state.pheromone}
+resolve $(\tau_{min}, \tau_{max})$\;
+\ForEach{edge in pheromone}{
+  $\tau(edge) \leftarrow clip(\tau(edge)\cdot(1-\rho), \tau_{min}, \tau_{max})$\;
+}
+compute $\Delta_{iter} = Q_{aco}/Z_{iter}$ if iteration-best valid\;
+deposit $\Delta_{iter}$ on edges of iteration-best route\;
+compute $\Delta_{global} = \omega_g \cdot Q_{aco}/Z_{global}$ if global-best valid\;
+deposit $\Delta_{global}$ on edges of global-best route\;
+clip all touched values into $[\tau_{min}, \tau_{max}]$\;
+\Return updated pheromone\;
+\end{algorithm}</code></pre>
+<h3>Algorithm 4: ALNS 内层循环（含可行性处理完整分支）</h3>
+<pre><code>\begin{algorithm}[H]
+\caption{ALNS Inner Loop with Fallback and SA Acceptance}
+\KwIn{initial solution, params, home\_status, global\_best\_objective}
+\KwOut{best\_local feasible solution}
+initialize current solution/objective, best\_local, temperature, operator weights\;
+\For{$it=1$ \KwTo $N_{alns}$}{
+  select destroy and repair by roulette over weights\;
+  sample remove\_count in [q\_min, q\_max]\;
+  partial $\leftarrow$ destroy(current)\;
+  candidate $\leftarrow$ repair(partial)\;
+  \If{candidate has unserved OR damaged sortie structure}{
+    fallback\_rebuild(candidate)\;
+  }
+  \If{cross-group frequency condition holds}{
+    candidate $\leftarrow$ random cross-group operator(candidate)\;
+  }
+  \If{structural\_and\_physical\_check(candidate) fails}{
+    reward $\leftarrow 0$\;
+    update selected weights\;
+    cool temperature\;
+    record history\;
+    continue\;
+  }
+  newObj $\leftarrow$ compute\_objective(candidate)\;
+  $\Delta \leftarrow$ newObj - currentObj\;
+  \uIf{$\Delta&lt;0$}{
+    accept\;
+    reward $\leftarrow \sigma_1$ or $\sigma_2$\;
+  }\Else{
+    accept with probability $\exp(-\Delta/T)$\;
+    reward $\leftarrow \sigma_3$ if accepted else 0\;
+  }
+  \If{accepted}{
+    current $\leftarrow$ candidate\;
+    \If{current is hard-feasible and better than best\_local}{
+      best\_local $\leftarrow$ current\;
+    }
+  }
+  update selected weights\;
+  cool temperature\;
+  record history\;
+}
+\Return best\_local\;
+\end{algorithm}</code></pre>
+<h3>Algorithm 5: 自适应权重更新</h3>
+<pre><code>\begin{algorithm}[H]
+\caption{Adaptive Weight Update for Selected Operators}
+\KwIn{$w_d, w_r, reward, reaction\_factor$}
+\KwOut{$w_d', w_r'$}
+$w_d' \leftarrow (1-r)\cdot w_d + r\cdot reward$\;
+$w_r' \leftarrow (1-r)\cdot w_r + r\cdot reward$\;
+\Return $(w_d', w_r')$\;
+\end{algorithm}</code></pre>
+<p>---</p>
+<h2>附：本版本对“未找到项”的显式声明</h2>
+<ul>
+  <li>1. 未找到独立 <code>is_feasible()</code> 函数：原因是代码使用 <code>_structural_and_physical_check</code> 与 <code>all_hard_constraints_satisfied</code> 分层检查。</li>
+  <li>2. 未找到独立 <code>feasibility_repair()</code> 函数：原因是代码使用 <code>_fallback_rebuild</code> 统一修复。</li>
+  <li>3. 未找到 ACO 的 <code>q0</code> 参数：原因是实现为纯轮盘赌采样，无 ACS 贪婪分支。</li>
+  <li>4. 未找到“分配质量阈值”变量：回退触发为异常或 <code>unserved_customers</code> 非空。</li>
+  <li>5. 未找到 SA 的独立 <code>T_min</code> 参数：代码下限硬编码 <code>1e-9</code>。</li>
+</ul>
+</main>
+</body>
+</html>

@@ -1,0 +1,444 @@
+{
+  "command": "solve",
+  "instance_file": "medium_100c_7v_seed1.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        19,
+        39,
+        26,
+        42,
+        44,
+        76,
+        87,
+        81,
+        84,
+        94,
+        96,
+        36,
+        61,
+        13,
+        25,
+        37,
+        4,
+        50,
+        30,
+        82,
+        0
+      ],
+      "truck_customers": [
+        4,
+        13,
+        19,
+        25,
+        26,
+        30,
+        36,
+        37,
+        39,
+        42,
+        44,
+        50,
+        61,
+        76,
+        81,
+        82,
+        84,
+        87,
+        94,
+        96
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 61,
+          "recovery_node": 13,
+          "customers": [
+            92,
+            73
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 25,
+          "recovery_node": 4,
+          "customers": [
+            47
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 3,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    },
+    {
+      "pair_id": 4,
+      "truck_route": [
+        0,
+        68,
+        80,
+        100,
+        49,
+        70,
+        90,
+        57,
+        93,
+        7,
+        8,
+        9,
+        52,
+        65,
+        45,
+        88,
+        77,
+        89,
+        35,
+        27,
+        71,
+        34,
+        46,
+        10,
+        6,
+        72,
+        43,
+        5,
+        0
+      ],
+      "truck_customers": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        27,
+        34,
+        35,
+        43,
+        45,
+        46,
+        49,
+        52,
+        57,
+        65,
+        68,
+        70,
+        71,
+        72,
+        77,
+        80,
+        88,
+        89,
+        90,
+        93,
+        100
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 88,
+          "recovery_node": 77,
+          "customers": [
+            31
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 89,
+          "recovery_node": 35,
+          "customers": [
+            16
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 43,
+          "recovery_node": 5,
+          "customers": [
+            91
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 5,
+      "truck_route": [
+        0,
+        59,
+        23,
+        48,
+        33,
+        15,
+        20,
+        83,
+        67,
+        78,
+        1,
+        28,
+        79,
+        66,
+        0
+      ],
+      "truck_customers": [
+        1,
+        15,
+        20,
+        23,
+        28,
+        33,
+        48,
+        59,
+        66,
+        67,
+        78,
+        79,
+        83
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 33,
+          "recovery_node": 20,
+          "customers": [
+            74
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 83,
+          "recovery_node": 67,
+          "customers": [
+            22,
+            63
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 1,
+          "recovery_node": 28,
+          "customers": [
+            56
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 6,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    },
+    {
+      "pair_id": 7,
+      "truck_route": [
+        0,
+        11,
+        86,
+        51,
+        54,
+        60,
+        53,
+        62,
+        3,
+        75,
+        98,
+        64,
+        24,
+        18,
+        29,
+        69,
+        21,
+        85,
+        99,
+        97,
+        58,
+        95,
+        14,
+        40,
+        2,
+        38,
+        55,
+        0
+      ],
+      "truck_customers": [
+        2,
+        3,
+        11,
+        14,
+        18,
+        21,
+        24,
+        29,
+        38,
+        40,
+        51,
+        53,
+        54,
+        55,
+        58,
+        60,
+        62,
+        64,
+        69,
+        75,
+        85,
+        86,
+        95,
+        97,
+        98,
+        99
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 29,
+          "recovery_node": 69,
+          "customers": [
+            17,
+            32
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 99,
+          "recovery_node": 97,
+          "customers": [
+            12
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 95,
+          "recovery_node": 40,
+          "customers": [
+            41
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "unserved_customers": []
+}

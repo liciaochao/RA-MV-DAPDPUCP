@@ -1,0 +1,137 @@
+{
+  "command": "solve",
+  "instance_file": "medium_30c_2v_seed3.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        7,
+        6,
+        9,
+        2,
+        24,
+        11,
+        14,
+        23,
+        29,
+        12,
+        21,
+        26,
+        8,
+        25,
+        15,
+        19,
+        27,
+        0
+      ],
+      "truck_customers": [
+        2,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        14,
+        15,
+        19,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 21,
+          "recovery_node": 26,
+          "customers": [
+            5,
+            22
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 19,
+          "recovery_node": 27,
+          "customers": [
+            4,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        10,
+        13,
+        28,
+        18,
+        1,
+        30,
+        16,
+        0
+      ],
+      "truck_customers": [
+        1,
+        10,
+        13,
+        16,
+        18,
+        28,
+        30
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 18,
+          "recovery_node": 1,
+          "customers": [
+            3,
+            20
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "unserved_customers": []
+}

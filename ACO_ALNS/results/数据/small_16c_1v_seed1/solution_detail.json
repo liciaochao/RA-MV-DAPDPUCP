@@ -1,0 +1,75 @@
+{
+  "command": "solve",
+  "instance_file": "small_16c_1v_seed1.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        11,
+        16,
+        10,
+        3,
+        14,
+        8,
+        2,
+        5,
+        6,
+        13,
+        9,
+        15,
+        4,
+        1,
+        12,
+        0
+      ],
+      "truck_customers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 13,
+          "recovery_node": 9,
+          "customers": [
+            7
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "unserved_customers": []
+}

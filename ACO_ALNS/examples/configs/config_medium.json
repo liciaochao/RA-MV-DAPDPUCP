@@ -1,0 +1,79 @@
+{
+  "time": {
+    "depot_earliest": 0.0,
+    "depot_latest": 480.0,
+    "num_time_slots": 8
+  },
+  "vehicle": {
+    "truck_capacity": 100.0,
+    "drone_capacity": 9.0,
+    "drone_empty_weight": 15.0,
+    "truck_speed": 0.5,
+    "drone_speed": 1.0
+  },
+  "energy": {
+    "drone_battery_capacity": 500.0,
+    "eta_wh_per_kg_min": 0.97
+  },
+  "cost": {
+    "truck_cost_per_km": 0.75,
+    "fixed_pair_cost": 22.0,
+    "drone_energy_cost_per_wh": 0.00248
+  },
+  "beta_schedule": {
+    "beta_init": 10.0,
+    "beta_max": 1000.0,
+    "gamma_beta": 1.1
+  },
+  "constraints": {
+    "max_truck_wait_time": 30.0,
+    "max_customers_per_sortie": 3
+  },
+  "aco": {
+    "max_iterations": 2,
+    "ant_count": 5,
+    "alpha_aco": 1.0,
+    "beta_aco": 2.0,
+    "evaporation_rate": 0.25,
+    "pheromone_q": 10.0,
+    "pheromone_init": 1.0,
+    "no_improve_max": 10,
+    "eta_weight_distance": 1.0,
+    "eta_weight_time_window": 0.9,
+    "eta_weight_capacity": 0.7,
+    "candidate_list_size": 24,
+    "tau_min": 0.1,
+    "tau_max": 10.0,
+    "stagnation_restart_threshold": 8,
+    "stagnation_restart_ratio": 0.4,
+    "global_best_weight": 0.45
+  },
+  "alns": {
+    "iterations": 350,
+    "remove_count_min": 1,
+    "remove_count_max": 8,
+    "sa_initial_temperature": 100.0,
+    "sa_cooling_rate": 0.98,
+    "operator_weight_init": 1.0,
+    "reward_global_best": 33.0,
+    "reward_improve": 13.0,
+    "reward_accept_worse": 9.0,
+    "reaction_factor": 0.1,
+    "cross_group_frequency": 10,
+    "cross_group_remove_count": 1
+  },
+  "etprc": {
+    "k_cluster": 1,
+    "max_iter_kmeans": 100,
+    "omega_distance": 1.0,
+    "omega_time_window": 1.0,
+    "omega_balance": 1.0
+  },
+  "online_alns": {
+    "iterations": 20,
+    "remove_count": 2
+  },
+  "monte_carlo": {
+    "trial_count": 50
+  }
+}

@@ -1,0 +1,1302 @@
+{
+  "command": "solve",
+  "instance_file": "large_280c_18v_seed2.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        24,
+        154,
+        56,
+        79,
+        54,
+        223,
+        166,
+        205,
+        13,
+        195,
+        184,
+        77,
+        53,
+        58,
+        0
+      ],
+      "truck_customers": [
+        13,
+        24,
+        53,
+        54,
+        56,
+        58,
+        77,
+        79,
+        154,
+        166,
+        184,
+        195,
+        205,
+        223
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 79,
+          "recovery_node": 223,
+          "customers": [
+            212,
+            279
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 223,
+          "recovery_node": 205,
+          "customers": [
+            88,
+            159
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 13,
+          "recovery_node": 195,
+          "customers": [
+            190,
+            39
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        6,
+        127,
+        7,
+        268,
+        197,
+        19,
+        90,
+        11,
+        21,
+        172,
+        139,
+        240,
+        186,
+        237,
+        164,
+        104,
+        150,
+        248,
+        0
+      ],
+      "truck_customers": [
+        6,
+        7,
+        11,
+        19,
+        21,
+        90,
+        104,
+        127,
+        139,
+        150,
+        164,
+        172,
+        186,
+        197,
+        237,
+        240,
+        248,
+        268
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 21,
+          "recovery_node": 139,
+          "customers": [
+            122,
+            230
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 237,
+          "recovery_node": 164,
+          "customers": [
+            43
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 3,
+      "truck_route": [
+        0,
+        50,
+        275,
+        143,
+        18,
+        62,
+        65,
+        272,
+        110,
+        57,
+        206,
+        231,
+        31,
+        0
+      ],
+      "truck_customers": [
+        18,
+        31,
+        50,
+        57,
+        62,
+        65,
+        110,
+        143,
+        206,
+        231,
+        272,
+        275
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 275,
+          "recovery_node": 62,
+          "customers": [
+            222,
+            123
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 110,
+          "recovery_node": 57,
+          "customers": [
+            238,
+            75
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 57,
+          "recovery_node": 206,
+          "customers": [
+            140,
+            121
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 4,
+      "truck_route": [
+        0,
+        41,
+        96,
+        63,
+        266,
+        45,
+        151,
+        98,
+        0
+      ],
+      "truck_customers": [
+        41,
+        45,
+        63,
+        96,
+        98,
+        151,
+        266
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 63,
+          "recovery_node": 266,
+          "customers": [
+            42
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 45,
+          "recovery_node": 98,
+          "customers": [
+            200,
+            224
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 5,
+      "truck_route": [
+        0,
+        106,
+        101,
+        148,
+        193,
+        128,
+        192,
+        9,
+        0
+      ],
+      "truck_customers": [
+        9,
+        101,
+        106,
+        128,
+        148,
+        192,
+        193
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 106,
+          "recovery_node": 148,
+          "customers": [
+            30,
+            99
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 148,
+          "recovery_node": 193,
+          "customers": [
+            178
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 193,
+          "recovery_node": 128,
+          "customers": [
+            115,
+            253
+          ]
+        },
+        {
+          "sortie_index": 3,
+          "launch_node": 128,
+          "recovery_node": 192,
+          "customers": [
+            134
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 6,
+      "truck_route": [
+        0,
+        203,
+        130,
+        84,
+        114,
+        196,
+        76,
+        142,
+        78,
+        218,
+        170,
+        255,
+        0
+      ],
+      "truck_customers": [
+        76,
+        78,
+        84,
+        114,
+        130,
+        142,
+        170,
+        196,
+        203,
+        218,
+        255
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 114,
+          "recovery_node": 76,
+          "customers": [
+            221,
+            274
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 78,
+          "recovery_node": 218,
+          "customers": [
+            46
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 7,
+      "truck_route": [
+        0,
+        59,
+        252,
+        210,
+        204,
+        12,
+        135,
+        60,
+        198,
+        125,
+        235,
+        119,
+        16,
+        147,
+        162,
+        0
+      ],
+      "truck_customers": [
+        12,
+        16,
+        59,
+        60,
+        119,
+        125,
+        135,
+        147,
+        162,
+        198,
+        204,
+        210,
+        235,
+        252
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 12,
+          "recovery_node": 135,
+          "customers": [
+            67,
+            182
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 198,
+          "recovery_node": 125,
+          "customers": [
+            36,
+            161
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 119,
+          "recovery_node": 16,
+          "customers": [
+            138
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 8,
+      "truck_route": [
+        0,
+        111,
+        209,
+        132,
+        271,
+        157,
+        0
+      ],
+      "truck_customers": [
+        111,
+        132,
+        157,
+        209,
+        271
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 111,
+          "recovery_node": 209,
+          "customers": [
+            86
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 209,
+          "recovery_node": 271,
+          "customers": [
+            167,
+            202
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 271,
+          "recovery_node": 157,
+          "customers": [
+            113
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 9,
+      "truck_route": [
+        0,
+        5,
+        226,
+        97,
+        117,
+        48,
+        180,
+        254,
+        72,
+        185,
+        33,
+        0
+      ],
+      "truck_customers": [
+        5,
+        33,
+        48,
+        72,
+        97,
+        117,
+        180,
+        185,
+        226,
+        254
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 226,
+          "recovery_node": 117,
+          "customers": [
+            229,
+            144
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 117,
+          "recovery_node": 48,
+          "customers": [
+            129
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 254,
+          "recovery_node": 185,
+          "customers": [
+            61,
+            169
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 10,
+      "truck_route": [
+        0,
+        213,
+        149,
+        145,
+        108,
+        47,
+        228,
+        155,
+        29,
+        262,
+        233,
+        263,
+        225,
+        52,
+        95,
+        0
+      ],
+      "truck_customers": [
+        29,
+        47,
+        52,
+        95,
+        108,
+        145,
+        149,
+        155,
+        213,
+        225,
+        228,
+        233,
+        262,
+        263
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 149,
+          "recovery_node": 145,
+          "customers": [
+            251,
+            74
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 47,
+          "recovery_node": 228,
+          "customers": [
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 11,
+      "truck_route": [
+        0,
+        70,
+        214,
+        220,
+        156,
+        3,
+        171,
+        126,
+        264,
+        158,
+        34,
+        0
+      ],
+      "truck_customers": [
+        3,
+        34,
+        70,
+        126,
+        156,
+        158,
+        171,
+        214,
+        220,
+        264
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 220,
+          "recovery_node": 3,
+          "customers": [
+            55
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 3,
+          "recovery_node": 126,
+          "customers": [
+            38,
+            259
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 126,
+          "recovery_node": 264,
+          "customers": [
+            73,
+            175
+          ]
+        },
+        {
+          "sortie_index": 3,
+          "launch_node": 264,
+          "recovery_node": 34,
+          "customers": [
+            183,
+            105
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 12,
+      "truck_route": [
+        0,
+        28,
+        277,
+        107,
+        82,
+        256,
+        241,
+        188,
+        40,
+        216,
+        17,
+        219,
+        0
+      ],
+      "truck_customers": [
+        17,
+        28,
+        40,
+        82,
+        107,
+        188,
+        216,
+        219,
+        241,
+        256,
+        277
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 28,
+          "recovery_node": 107,
+          "customers": [
+            71,
+            191
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 107,
+          "recovery_node": 256,
+          "customers": [
+            94,
+            265
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 241,
+          "recovery_node": 188,
+          "customers": [
+            152
+          ]
+        },
+        {
+          "sortie_index": 3,
+          "launch_node": 40,
+          "recovery_node": 216,
+          "customers": [
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 13,
+      "truck_route": [
+        0,
+        124,
+        85,
+        116,
+        243,
+        2,
+        146,
+        49,
+        232,
+        68,
+        278,
+        174,
+        239,
+        249,
+        207,
+        14,
+        91,
+        201,
+        258,
+        0
+      ],
+      "truck_customers": [
+        2,
+        14,
+        49,
+        68,
+        85,
+        91,
+        116,
+        124,
+        146,
+        174,
+        201,
+        207,
+        232,
+        239,
+        243,
+        249,
+        258,
+        278
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 146,
+          "recovery_node": 49,
+          "customers": [
+            102,
+            35
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 239,
+          "recovery_node": 207,
+          "customers": [
+            32,
+            66
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 207,
+          "recovery_node": 14,
+          "customers": [
+            194,
+            261
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 14,
+      "truck_route": [
+        0,
+        1,
+        211,
+        136,
+        245,
+        0
+      ],
+      "truck_customers": [
+        1,
+        136,
+        211,
+        245
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 136,
+          "recovery_node": 245,
+          "customers": [
+            165,
+            51
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 15,
+      "truck_route": [
+        0,
+        276,
+        177,
+        44,
+        217,
+        234,
+        137,
+        103,
+        10,
+        22,
+        270,
+        20,
+        8,
+        260,
+        69,
+        187,
+        280,
+        4,
+        80,
+        92,
+        189,
+        215,
+        0
+      ],
+      "truck_customers": [
+        4,
+        8,
+        10,
+        20,
+        22,
+        44,
+        69,
+        80,
+        92,
+        103,
+        137,
+        177,
+        187,
+        189,
+        215,
+        217,
+        234,
+        260,
+        270,
+        276,
+        280
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 44,
+          "recovery_node": 234,
+          "customers": [
+            227,
+            208
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 234,
+          "recovery_node": 137,
+          "customers": [
+            247,
+            160
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 22,
+          "recovery_node": 20,
+          "customers": [
+            163
+          ]
+        },
+        {
+          "sortie_index": 3,
+          "launch_node": 189,
+          "recovery_node": 215,
+          "customers": [
+            250
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 16,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    },
+    {
+      "pair_id": 17,
+      "truck_route": [
+        0,
+        236,
+        81,
+        173,
+        242,
+        257,
+        89,
+        27,
+        112,
+        168,
+        131,
+        176,
+        273,
+        267,
+        199,
+        83,
+        118,
+        244,
+        109,
+        153,
+        179,
+        0
+      ],
+      "truck_customers": [
+        27,
+        81,
+        83,
+        89,
+        109,
+        112,
+        118,
+        131,
+        153,
+        168,
+        173,
+        176,
+        179,
+        199,
+        236,
+        242,
+        244,
+        257,
+        267,
+        273
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 242,
+          "recovery_node": 89,
+          "customers": [
+            269,
+            100
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 176,
+          "recovery_node": 273,
+          "customers": [
+            64,
+            23
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 267,
+          "recovery_node": 199,
+          "customers": [
+            93,
+            25
+          ]
+        },
+        {
+          "sortie_index": 3,
+          "launch_node": 109,
+          "recovery_node": 153,
+          "customers": [
+            37
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 18,
+      "truck_route": [
+        0,
+        246,
+        133,
+        120,
+        181,
+        0
+      ],
+      "truck_customers": [
+        120,
+        133,
+        181,
+        246
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 133,
+          "recovery_node": 120,
+          "customers": [
+            87,
+            141
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190,
+    191,
+    192,
+    193,
+    194,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229,
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241,
+    242,
+    243,
+    244,
+    245,
+    246,
+    247,
+    248,
+    249,
+    250,
+    251,
+    252,
+    253,
+    254,
+    255,
+    256,
+    257,
+    258,
+    259,
+    260,
+    261,
+    262,
+    263,
+    264,
+    265,
+    266,
+    267,
+    268,
+    269,
+    270,
+    271,
+    272,
+    273,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279,
+    280
+  ],
+  "unserved_customers": []
+}

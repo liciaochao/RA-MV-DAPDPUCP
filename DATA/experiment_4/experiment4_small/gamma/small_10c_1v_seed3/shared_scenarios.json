@@ -1,0 +1,3190 @@
+{
+  "customer_count": 10,
+  "num_time_slots": 8,
+  "trial_count": 30,
+  "scenario_seed": 1581482078,
+  "execution_seeds": [
+    1030641663,
+    2019791331,
+    977236582,
+    138709693,
+    1500446477,
+    529780434,
+    1667309993,
+    140905124,
+    329745257,
+    225916487,
+    1597230301,
+    2034932261,
+    1075800369,
+    575577512,
+    665296462,
+    868040599,
+    1810445595,
+    901433773,
+    473319431,
+    1118753212,
+    1731614428,
+    1642003121,
+    72830792,
+    1454369809,
+    525624120,
+    1313763034,
+    622443282,
+    1829299049,
+    882360319,
+    768536860
+  ],
+  "scenarios": [
+    {
+      "trial_index": 0,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 1,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 2,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 3,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 4,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 5,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 6,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 7,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 8,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 9,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 10,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 11,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 12,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 13,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "4": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 14,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 15,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 16,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 17,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 18,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 19,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 20,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 21,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 22,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 23,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 24,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 25,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 26,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 27,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 28,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 29,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ]
+      }
+    }
+  ]
+}

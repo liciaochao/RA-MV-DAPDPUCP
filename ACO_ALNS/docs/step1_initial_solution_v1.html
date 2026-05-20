@@ -1,0 +1,535 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Step 1 Initial Solution Construction Analysis</title>
+<style>
+body { margin: 0; background: #f5f7fb; color: #1f2937; font-family: Georgia, "Times New Roman", serif; line-height: 1.75; }
+main { max-width: 1120px; margin: 36px auto; background: #ffffff; border: 1px solid #d9e2ec; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); padding: 40px 52px; }
+h1, h2, h3 { color: #102a43; line-height: 1.35; }
+h1 { font-size: 2.2rem; margin: 0 0 0.4rem 0; border-bottom: 3px solid #d9e2ec; padding-bottom: 0.6rem; }
+h2 { font-size: 1.7rem; margin-top: 2.4rem; margin-bottom: 0.8rem; }
+h3 { font-size: 1.25rem; margin-top: 1.6rem; margin-bottom: 0.5rem; }
+p { margin: 0.5rem 0 0.9rem 0; text-align: justify; }
+header p.meta { color: #486581; font-size: 0.96rem; }
+section.phase { margin-top: 2.2rem; padding-top: 0.6rem; }
+article.step { margin-top: 1.1rem; padding: 1rem 1.1rem; border: 1px solid #d9e2ec; background: #fbfdff; }
+pre.equation { white-space: pre-wrap; background: #f7fafc; border: 1px solid #cbd5e0; border-left: 4px solid #486581; padding: 12px 14px; margin: 0.9rem 0 1rem 0; font-family: "Consolas", "Courier New", monospace; font-size: 0.95rem; line-height: 1.55; overflow-x: auto; }
+.code-ref { font-size: 0.95rem; color: #243b53; }
+.note-box { border: 1px solid #d9e2ec; background: #f8fbff; padding: 12px 14px; margin: 1rem 0; }
+code { background: #eef2f7; border-radius: 4px; padding: 1px 5px; font-family: "Consolas", "Courier New", monospace; font-size: 0.94em; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem 0; table-layout: fixed; }
+th, td { border: 1px solid #cbd5e0; padding: 10px 12px; vertical-align: top; font-size: 0.96rem; }
+th { background: #eaf2f8; color: #102a43; text-align: left; }
+ul { margin-top: 0.4rem; }
+.small { font-size: 0.92rem; color: #486581; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Step 1. Initial Solution Construction Analysis</h1>
+    <p class="meta">Target file: <code>D:\codex_drone\docs\step1_initial_solution_v1.html</code></p>
+    <p class="meta">Scope: only the initial-solution construction path implemented in <code>src/spd/etprc.py</code> and its directly invoked support modules is discussed. No code file was modified.</p>
+  </header>
+
+  <section>
+    <h2>1. Algorithm Overview</h2>
+    <p>
+      The initial solution construction procedure is implemented around <code>ETPRCBuilder.build_initial_solution()</code>. In the current code base, the customer set is first partitioned into geographically compact and delivery-balanced vehicle-pair clusters; a feasible all-truck route is then constructed for each cluster; profitable drone sorties are subsequently extracted from the truck route; temporarily skipped customers are then rescued through cross-pair reinsertion; and a probability-aware post-adjustment stage is finally applied to improve the expected service timing without violating hard feasibility. Therefore, the executable implementation is organized into five consecutive phases rather than a single monolithic heuristic.
+    </p>
+    <p>
+      The five phases are tightly coupled. Phase I reduces the search space by localized partitioning. Phase II creates a feasible truck backbone for each cluster. Phase III converts part of that backbone into truck-drone cooperation by positive-gain sortie extraction and intra-sortie sequencing. Phase IV attempts to restore any temporarily skipped customer so that complete customer coverage can be recovered whenever possible. Phase V repositions low home-probability visits while preserving hard feasibility through rollback checks. Across these phases, structural constraints, truck capacity constraints, residual customer-time checks, depot return constraints, sortie cardinality constraints, drone payload constraints, drone battery constraints, truck waiting constraints, and global customer-coverage constraints are addressed. Under the current experimental configuration, however, the customer windows are uniformly set to $[0,480]$, so differentiated customer-level time-window effects are largely degenerate and the practically binding conditions in the truck-route stage are more likely to be capacity feasibility and the global 480-minute route horizon.
+    </p>
+    <div class="note-box">
+      <p><strong>Recognized phases.</strong> Phase I: Customer Partitioning and Delivery-Load Balancing. Phase II: Feasible Truck Route Construction. Phase III: Sortie Extraction and Intra-Sortie Sequencing. Phase IV: Cross-Pair Rescue and Solution Assembly. Phase V: Probability-Aware Post-Adjustment and Final Coverage Enforcement.</p>
+      <p class="small">Where a classical method is evidently adapted but no explicit citation is provided in code comments, the placeholder <code>[REF]</code> is retained as requested.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Phase-by-Phase Description</h2>
+    <p>
+      The following five phases describe the executable structure of the implemented initial-solution constructor. For each phase, the operative goal is first stated, after which the detailed steps, the governing equations, the satisfaction and violation conditions, and the corresponding code locations are reported.
+    </p>
+  </section>
+
+  <section class="phase">
+    <h2>Phase I. Customer Partitioning and Delivery-Load Balancing</h2>
+    <p>
+      In Phase I, the customer set $\mathcal{N}$ is partitioned into $K$ clusters, where each cluster is intended to serve as the initial working domain of one truck-drone pair. The primary purpose of this phase is to generate geographically compact groups while preventing an obviously overloaded delivery cluster from being passed to the routing stage. In this sense, spatial cohesion is first established, and delivery-load feasibility is then repaired. This phase adapts the classical <em>K</em>-means paradigm [REF].
+    </p>
+
+    <article class="step">
+      <h3>Step 1: Cluster cardinality and centroid initialization.</h3>
+      <p>
+        The cluster count is set as $K$, where $K$ is taken directly from <code>instance.vehicle_pair_count</code>. A centroid set $\mathcal{M}^{(0)}=\{\mu_1^{(0)},\dots,\mu_K^{(0)}\}$ is then initialized by random sampling from the existing customer coordinates. This operation is performed so that the downstream assignment process is anchored on actual customer locations rather than on synthetic coordinate guesses.
+      </p>
+      <pre class="equation">\begin{equation}
+K = \texttt{instance.vehicle\_pair\_count},
+\qquad
+\mathcal{M}^{(0)} = \{\mu_1^{(0)}, \mu_2^{(0)}, \ldots, \mu_K^{(0)}\}.
+\tag{1}
+\end{equation}</pre>
+      <p>
+        If $K &gt; |\mathcal{N}|$, repeated sampling from the available customer set is performed until $K$ centroids are obtained. Hence, the state update at the end of this step is the availability of an initialized centroid set and an empty assignment structure for the iterative grouping loop.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code>, invoked by <code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Iterative customer assignment and centroid update.</h3>
+      <p>
+        Each customer $i \in \mathcal{N}$ with coordinate vector $(x_i, y_i)$ is assigned to its nearest centroid under squared Euclidean distance. The assignment is performed because the route-construction stage benefits from spatially concentrated customer subsets. After the assignment, each centroid is updated to the mean coordinate of its current cluster. The resulting output is the temporary cluster family $\{\mathcal{C}_1^{(t)},\dots,\mathcal{C}_K^{(t)}\}$ and its updated centroid set.
+      </p>
+      <pre class="equation">\begin{equation}
+k^{\star}(i) = \arg\min_{k \in \{1,\ldots,K\}} \left[(x_i-\mu_{k,x}^{(t)})^2 + (y_i-\mu_{k,y}^{(t)})^2\right].
+\tag{2}
+\end{equation}
+
+\begin{equation}
+\mu_k^{(t+1)} = \left(
+\frac{1}{|\mathcal{C}_k^{(t)}|}\sum_{i \in \mathcal{C}_k^{(t)}} x_i,
+\frac{1}{|\mathcal{C}_k^{(t)}|}\sum_{i \in \mathcal{C}_k^{(t)}} y_i
+\right).
+\tag{3}
+\end{equation}
+
+\begin{equation}
+\Delta^{(t)} = \sum_{k=1}^{K} \left\| \mu_k^{(t+1)} - \mu_k^{(t)} \right\|_2.
+\tag{4}
+\end{equation}</pre>
+      <p>
+        The iteration is terminated once $\Delta^{(t)} \le \varepsilon$, where $\varepsilon$ is the internal tolerance represented by <code>_EPS</code>, or once the configured iteration cap is reached. Satisfaction is therefore declared when the centroid shift becomes negligible; otherwise, another assignment-update iteration is performed.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 3: Empty-cluster repair.</h3>
+      <p>
+        Whenever an empty cluster is detected, one customer is removed from the largest donor cluster and is transferred to the empty recipient cluster. The transferred customer is selected as the farthest customer from the donor centroid. This operation is performed because the later pair-wise route construction assumes that each vehicle pair is associated with a concrete customer subset. The output of this step is a non-empty assignment pattern whenever the donor cluster contains more than one customer.
+      </p>
+      <pre class="equation">\begin{equation}
+i^{\star} = \arg\max_{i \in \mathcal{C}_{d}} \left\| (x_i, y_i) - \mu_{d} \right\|_2,
+\qquad
+\mathcal{C}_{e} \leftarrow \mathcal{C}_{e} \cup \{i^{\star}\},
+\qquad
+\mathcal{C}_{d} \leftarrow \mathcal{C}_{d} \setminus \{i^{\star}\}.
+\tag{5}
+\end{equation}</pre>
+      <p>
+        A repair is feasible only when the donor cluster has cardinality greater than one. Otherwise, the empty cluster cannot be repaired in that iteration, and the previous centroid is retained. Hence, the state is updated by enforced non-emptiness whenever a valid donor exists.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 4: Delivery-load balancing across clusters.</h3>
+      <p>
+        After the geometric partition has converged, a delivery-load repair is performed. For each cluster $\mathcal{C}_k$, the delivery-only weight is computed as $W_k^D$. If $W_k^D &gt; Q_T$, where $Q_T$ denotes truck capacity, the farthest delivery customer in the overloaded cluster is considered for reassignment to the nearest feasible recipient cluster. The purpose is to remove obviously infeasible delivery mass before the route stage is entered.
+      </p>
+      <pre class="equation">\begin{equation}
+W_k^D = \sum_{i \in \mathcal{C}_k \cap \mathcal{N}^D} w_i,
+\qquad
+W_k^D \le Q_T \quad \text{must hold for cluster-level delivery feasibility}.
+\tag{6}
+\end{equation}
+
+\begin{equation}
+k' = \arg\min_{r \in \mathcal{R}(i)} \left\| (x_i,y_i) - \bar{\mu}_r \right\|_2,
+\qquad
+\mathcal{R}(i)=\left\{r \ne k : W_r^D + w_i \le Q_T \right\}.
+\tag{7}
+\end{equation}</pre>
+      <p>
+        Satisfaction is achieved when every cluster obeys $W_k^D \le Q_T$. A violation occurs whenever no feasible recipient cluster exists for a removable delivery customer; in that case, the cluster remains unchanged in the current pass. The resulting output is the balanced group family $\{\mathcal{C}_1,\dots,\mathcal{C}_K\}$.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code>.</p>
+    </article>
+  </section>
+  <section class="phase">
+    <h2>Phase II. Feasible Truck Route Construction</h2>
+    <p>
+      In Phase II, an all-truck route is constructed for each cluster $\mathcal{C}_k$ by a cheapest-feasible-insertion mechanism equipped with a deadlock fallback and a retry pass. This phase is intended to produce a temporally feasible and load-feasible truck backbone from which drone sorties can later be extracted. The route is therefore not treated as the final service plan; rather, it is used as a feasible scaffold for the subsequent truck-drone decomposition. In the current experiments, because every customer shares the same window $[0,480]$, the practically decisive conditions in this phase are not customer-specific time-window differences but truck-load feasibility and compliance with the global depot-return horizon. This mechanism follows the logic of classical cheapest-insertion heuristics [REF].
+    </p>
+
+    <article class="step">
+      <h3>Step 1: Route and load-state initialization.</h3>
+      <p>
+        For each cluster $\mathcal{C}_k$, a partial route $R_k$ is initialized as the depot-only sequence $[0]$, and the uninserted set is initialized as $\mathcal{U}_k = \mathcal{C}_k$. The initial truck load is computed as the total delivery mass assigned to the cluster. This initialization is performed because the delivery parcels must be loaded before the first truck movement is simulated. The output is the initial state $(R_k, \mathcal{U}_k, L_k^{(0)})$.
+      </p>
+      <pre class="equation">\begin{equation}
+R_k^{(0)} = [0],
+\qquad
+\mathcal{U}_k^{(0)} = \mathcal{C}_k,
+\qquad
+L_k^{(0)} = \sum_{i \in \mathcal{C}_k \cap \mathcal{N}^D} w_i.
+\tag{8}
+\end{equation}</pre>
+      <p>
+        The initialization is valid only if $L_k^{(0)} \le Q_T$; otherwise, the candidate route would already violate truck capacity before any movement is performed. In the implementation, this condition is checked inside the route-feasibility routine.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._build_truck_route</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Cheapest feasible insertion evaluation.</h3>
+      <p>
+        For each uninserted customer $i \in \mathcal{U}_k$ and each insertion position $p$ in the current route, an insertion cost is evaluated. The cost combines a truck-distance increment and a time-window tightness penalty. The purpose is to identify the insertion that is simultaneously economical and less likely to endanger the temporal feasibility of later route segments. The output is the best feasible insertion pair $(i^{\star}, p^{\star})$, if such a pair exists.
+      </p>
+      <pre class="equation">\begin{equation}
+\Delta c_{i,p} = \omega_d \left[d_T(r_{p-1}, i) + d_T(i, r_p) - d_T(r_{p-1}, r_p)\right]
++ \omega_{tw} \left(\frac{1}{\max(l_i - e_i, 0.01)}\right).
+\tag{9}
+\end{equation}
+
+\begin{equation}
+a_h = \delta_{h-1} + \frac{d_T(r_{h-1}, r_h)}{v_T},
+\qquad
+\delta_h = \max(a_h, e_{r_h}) + s_{r_h}.
+\tag{10}
+\end{equation}
+
+\begin{equation}
+L_h =
+\begin{cases}
+L_{h-1} - w_{r_h}, & r_h \in \mathcal{N}^D, \\
+L_{h-1} + w_{r_h}, & r_h \in \mathcal{N}^P.
+\end{cases}
+\tag{11}
+\end{equation}
+
+\begin{equation}
+a_h \le l_{r_h},
+\qquad
+L_h \le Q_T,
+\qquad
+\delta_{|R_k|} + \frac{d_T(r_{|R_k|}, 0)}{v_T} \le t_0^{\max}.
+\tag{12}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared when all inequalities in (12) hold for the candidate route. A violation occurs when any customer is reached after its latest time, the truck load exceeds $Q_T$, or the depot return time exceeds $t_0^{\max}$. Under the current uniform-window setting $[0,480]$, the first condition is usually non-binding at the customer-discrimination level, whereas the second and third conditions remain active and are the more plausible reasons why no insertion position can be found. Among all feasible insertions, the minimum-cost one is selected and appended to the route state.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._build_truck_route</code>, especially the internal routines <code>is_route_feasible()</code> and <code>_try_insert_one()</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 3: Deadlock fallback, skipping, and retry.</h3>
+      <p>
+        If no feasible insertion can be identified over the current route, a deadlock fallback is activated. The remaining customers are ranked by ascending time-window width $\Delta_i^{tw}=l_i-e_i$, and the tightest customer is attempted first. This is performed because a customer with a narrow temporal slack is the least likely to remain insertable if it is postponed. Under the present configuration, however, all customers share the same width $480$, so this ordering is effectively degenerate and the fallback behaves more like a tie-broken retry rule than a genuinely time-window-sensitive prioritization rule. If the fallback still fails, the selected customer is temporarily skipped and is reconsidered in a retry pass after the route backbone has been completed.
+      </p>
+      <pre class="equation">\begin{equation}
+i^{\mathrm{tight}} = \arg\min_{i \in \mathcal{U}_k} (l_i - e_i).
+\tag{13}
+\end{equation}
+
+\begin{equation}
+\mathcal{S}_k^{\mathrm{skip}} \leftarrow \mathcal{S}_k^{\mathrm{skip}} \cup \{ i^{\mathrm{tight}} \},
+\qquad
+\mathcal{U}_k \leftarrow \mathcal{U}_k \setminus \{ i^{\mathrm{tight}} \}.
+\tag{14}
+\end{equation}</pre>
+      <p>
+        In the retry pass, skipped customers are revisited in descending time-window width order, as implemented in the code. Because the widths are identical in the current experiments, the retry order is again effectively neutral with respect to time-window differentiation. Therefore, if customers remain skipped after the retry pass, the more plausible causes are route-horizon infeasibility or truck-load infeasibility rather than customer-specific temporal ordering. The state update at the end of this step is a closed all-truck route $R_k = [0, \ldots, 0]$ together with a residual skipped set, if any customers still cannot be reinserted.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._build_truck_route</code>.</p>
+    </article>
+  </section>
+
+  <section class="phase">
+    <h2>Phase III. Sortie Extraction and Intra-Sortie Sequencing</h2>
+    <p>
+      In Phase III, each all-truck route is converted into a cooperative truck-drone plan by identifying customer subsets whose removal from the truck route yields a positive objective gain. This phase is not executed by a direct local distance rule. Instead, the current implementation enumerates launch-recovery pairs, evaluates customer subsets between them, optimizes the internal service order of each subset, and retains only those sortie candidates that improve the offline objective. Under the current uniform-window setting, the sortie stage still preserves customer latest-time checks, but these checks are less discriminative than the battery, payload, truck-wait, and recovery-load constraints. Consequently, a profit-screened and feasibility-protected sortie set is produced.
+    </p>
+
+    <article class="step">
+      <h3>Step 1: Baseline definition and candidate subset enumeration.</h3>
+      <p>
+        For a route $R_k$, a baseline pair solution with no drone sortie is first defined, and its scalar objective value is denoted by $Z_0$. A launch node $u$ and a recovery node $v$ are then selected such that $u$ appears before $v$ on the route. The intermediate node set $\mathcal{B}(u,v)$ is scanned, and candidate subsets are formed subject to sortie-size and individual drone-capacity filters. The operation is performed because only customers embedded between a feasible launch-recovery pair can be extracted without changing the truck backbone arbitrarily.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{B}(u,v) = \left\{ i \in R_k : \operatorname{pos}_{R_k}(u) < \operatorname{pos}_{R_k}(i) < \operatorname{pos}_{R_k}(v) \right\}.
+\tag{15}
+\end{equation}
+
+\begin{equation}
+S \subseteq \left\{ i \in \mathcal{B}(u,v) : w_i \le Q_D \right\},
+\qquad
+1 \le |S| \le m_{\max}.
+\tag{16}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared when a subset obeys the cardinality bound $|S| \le m_{\max}$ and each candidate customer satisfies the individual weight screen $w_i \le Q_D$. The output is a finite pool of launch-recovery-subset candidates to be further evaluated.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._extract_sorties</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Intra-sortie order optimization.</h3>
+      <p>
+        For every candidate subset $S$, all customer permutations $\pi \in \Pi(S)$ are enumerated. A sortie $s=(u,\pi,v)$ is constructed on the simplified pair route $[0,u,v,0]$, and the permutation is retained only if structure feasibility, synchronized timeline feasibility, truck-load feasibility, drone-payload feasibility, drone-energy feasibility, truck-wait feasibility, and drone-arrival time-window feasibility are satisfied. The purpose is to ensure that the customer order is not assumed but is optimization-based. The output is the best feasible permutation $\pi^{\star}$, if one exists.
+      </p>
+      <pre class="equation">\begin{equation}
+\pi^{\star} = \arg\min_{\pi \in \Pi(S)} Z(u, \pi, v)
+\quad
+\text{s.t.}
+\quad
+\texttt{check\_sortie\_structure} = \text{True},
+\quad
+\texttt{check\_sortie\_feasibility} = \text{True}.
+\tag{17}
+\end{equation}</pre>
+      <p>
+        A violation occurs whenever any candidate permutation breaks launch-recovery ordering, sortie structure, payload progression, energy capacity, truck wait, or time-window admissibility. In such a case, the permutation is discarded. If all permutations are infeasible, the original customer order is returned by the implementation as a deterministic fallback.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._optimize_sortie_order</code>; support routines: <code>src/spd/core.py::check_sortie_structure</code>, <code>compute_truck_timeline</code>, <code>compute_truck_load</code>, <code>check_sortie_feasibility</code>, and <code>compute_objective</code>.</p>
+    </article>
+    <article class="step">
+      <h3>Step 3: Positive-gain evaluation and greedy sortie selection.</h3>
+      <p>
+        Once a feasible sortie candidate has been constructed, the customers of $S$ are removed from the truck route to form a candidate pair, and the objective improvement is computed relative to the all-truck baseline. Only candidates with positive gain are retained. The surviving candidates are then sorted by descending gain and are greedily selected under a set of conflict-exclusion rules. This is performed because a jointly optimal selection is not solved exactly in the implementation; instead, a gain-ranked greedy schedule is used.
+      </p>
+      <pre class="equation">\begin{equation}
+\Delta Z(s) = Z_0 - Z_s.
+\tag{18}
+\end{equation}
+
+\begin{equation}
+\Delta Z(s) > 0
+\quad \text{must hold for selection eligibility.}
+\tag{19}
+\end{equation}
+
+\begin{equation}
+S(s) \cap \mathcal{D}^{\mathrm{sel}} = \varnothing,
+\qquad
+\{u,v\} \cap \mathcal{D}^{\mathrm{sel}} = \varnothing,
+\qquad
+u \notin \mathcal{L}^{\mathrm{sel}},
+\qquad
+v \notin \mathcal{R}^{\mathrm{sel}}.
+\tag{20}
+\end{equation}
+
+\begin{equation}
+\operatorname{pos}_{R_k'}(u) < \operatorname{pos}_{R_k'}(v).
+\tag{21}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared when the gain is positive and the customer, anchor-node, and launch/recovery conflicts are absent. A violation occurs when a candidate overlaps with already selected drone customers, consumes an existing launch or recovery anchor, or breaks the current route order. The state output is the tuple $(R_k', \mathcal{S}_k, \mathcal{T}_k, \mathcal{D}_k)$ consisting of the updated truck route, the selected sortie list, the truck-customer set, and the drone-customer set.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._extract_sorties</code>; support objective and feasibility routines are located in <code>src/spd/core.py</code>.</p>
+    </article>
+  </section>
+
+  <section class="phase">
+    <h2>Phase IV. Cross-Pair Rescue and Solution Assembly</h2>
+    <p>
+      In Phase IV, customers that remain uninserted after the cluster-wise route construction stage are collected into a global skipped set and are re-examined through cross-pair insertion. The goal is to recover customer coverage without discarding already constructed pair solutions. This phase is necessary because the route builder is allowed to skip customers temporarily when local feasibility deadlocks are encountered, yet the overall constructive heuristic attempts to end with a complete assignment whenever a consistent reinsertion can still be found. In the present configuration, the rescue stage should again be interpreted primarily as a response to route-duration and capacity pressure, not as a response to heterogeneous customer windows.
+    </p>
+
+    <article class="step">
+      <h3>Step 1: Aggregation and ordering of skipped customers.</h3>
+      <p>
+        Let $\mathcal{U}^{\mathrm{skip}}$ denote the union of all skipped customers returned by the Phase II route builder. In the implementation, these customers are processed in descending order of time-window width rather than in ascending order. This ordering is performed so that less urgent customers are considered first in the cross-pair rescue loop. The resulting state is an ordered rescue candidate list.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{U}^{\mathrm{skip}} = \bigcup_{k=1}^{K} \mathcal{S}_k^{\mathrm{skip}},
+\qquad
+i_1, i_2, \ldots \text{ are sorted by } (l_i - e_i) \text{ in descending order.}
+\tag{22}
+\end{equation}</pre>
+      <p>
+        No feasibility is decided at this step. Only the global rescue order is defined, and the output is the ordered skipped-customer sequence.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> The rescue loop is implemented inside <code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Cross-pair insertion search with anchor preservation.</h3>
+      <p>
+        For each skipped customer $i \in \mathcal{U}^{\mathrm{skip}}$, every pair route and every insertion position are examined. The same insertion-cost form as in Phase II is used. However, at this rescue step, explicit route-time feasibility and depot-return feasibility are checked, and the existing sortie anchors are preserved by requiring every already selected launch node and recovery node to remain on the route with the same precedence relation. This operation is performed because skipped customers must be reintroduced without destroying an already valid sortie skeleton.
+      </p>
+      <pre class="equation">\begin{equation}
+\Delta c_{i,p}^{\mathrm{res}} = \omega_d \left[d_T(r_{p-1}, i) + d_T(i, r_p) - d_T(r_{p-1}, r_p)\right]
++ \omega_{tw} \left(\frac{1}{\max(l_i - e_i, 0.01)}\right).
+\tag{23}
+\end{equation}
+
+\begin{equation}
+a_h \le l_{r_h},
+\qquad
+\delta_{|R_p|} \le t_0^{\max},
+\qquad
+\operatorname{pos}_{R_p'}(l(s)) < \operatorname{pos}_{R_p'}(r(s)) \quad \forall s \in \mathcal{S}_p.
+\tag{24}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared when the candidate route remains temporally feasible and every existing sortie anchor pair remains present and correctly ordered. A violation occurs if any anchor disappears or is reversed. Under the current $[0,480]$ setting, the temporal part of this test mainly acts as a route-horizon filter rather than as a differentiated customer-window filter. It should be noted that the rescue loop does not explicitly recompute truck-load feasibility inside this local test; instead, the implemented acceptance rule is restricted to the conditions written above. The output is either a rescued customer assignment to one pair or a residual skipped status.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> The rescue block inside <code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 3: Global solution assembly.</h3>
+      <p>
+        Once all pair-level routes and sorties have been finalized, the global assignment set is assembled, and a <code>Solution</code> object is created. The purpose of this step is to establish a uniform global representation that can be passed to the probability-adjustment stage and to the downstream ACO/ALNS solvers. The resulting output is the intermediate solution $\mathcal{S}^{(0)}$ together with an explicit unserved-customer set.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{A} = \bigcup_{k=1}^{K} \left( \mathcal{T}_k \cup \mathcal{D}_k \right),
+\qquad
+\mathcal{U} = \mathcal{N} \setminus \mathcal{A} \; \cup \; \mathcal{U}^{\mathrm{skip,res}}.
+\tag{25}
+\end{equation}</pre>
+      <p>
+        Satisfaction is achieved when $\mathcal{U}=\varnothing$. If $\mathcal{U}\neq\varnothing$ at this intermediate point, the solution is still passed to Phase V, and a final failure is raised only after the probability-aware post-adjustment has been completed.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/types.py::Solution</code> and the assembly block in <code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code>.</p>
+    </article>
+  </section>
+
+  <section class="phase">
+    <h2>Phase V. Probability-Aware Post-Adjustment and Final Coverage Enforcement</h2>
+    <p>
+      In Phase V, the constructed solution is copied and is then adjusted according to arrival-time-dependent home probabilities. The phase is intended to improve the expected visit timing of low-probability customers while preserving global hard feasibility through immediate rollback. Therefore, the adjustment is not applied greedily without validation; each replacement candidate is evaluated against the full current solution before it is accepted. This phase should not be interpreted as the primary source of the skip phenomenon observed in Phase II; rather, it is a post-construction refinement layer applied after a candidate initial solution has already been assembled.
+    </p>
+
+    <article class="step">
+      <h3>Step 1: Pair cloning, arrival-time evaluation, and probability ranking.</h3>
+      <p>
+        A deep copy of every pair route, sortie list, truck-customer set, and drone-customer set is first created. For each customer $i$ in a pair, the planned arrival time $a_i$ is computed on the all-home timeline, the corresponding slot index $\tau(i)$ is identified, and the visit probability $p_i$ is read from the customer profile. The customers are then ranked in ascending order of $p_i$. This operation is performed because low-probability visits must be addressed first if the expected service reliability is to be improved.
+      </p>
+      <pre class="equation">\begin{equation}
+\tau(i) = \texttt{map\_time\_to\_slot}(a_i),
+\qquad
+p_i = h_{i,\tau(i)},
+\qquad
+p_i < p_{\mathrm{th}} \Rightarrow i \text{ is eligible for adjustment},
+\tag{26}
+\end{equation}
+
+\begin{equation}
+p_{\mathrm{th}} = 0.3.
+\tag{27}
+\end{equation}</pre>
+      <p>
+        Satisfaction is not a feasibility notion here; rather, it is an eligibility notion. A customer is selected for possible modification only when $p_i < p_{\mathrm{th}}$. The output is an ordered list of low-probability customers for each pair.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code>; support routines: <code>src/spd/core.py::compute_truck_timeline</code>, <code>get_arrival_time</code>, and <code>src/spd/config.py::map_time_to_slot</code>.</p>
+    </article>
+    <article class="step">
+      <h3>Step 2: Reinsertion of low-probability truck customers.</h3>
+      <p>
+        If a low-probability customer $i$ is truck-served, the customer is temporarily removed from the route, and every reinsertion position is examined. The arrival probability induced by each candidate position is computed, and the best-improving position is retained. This operation is performed because truck customers can only have their arrival slot changed by route-position modification. The output is a candidate pair with improved $p_i$, if such a pair exists.
+      </p>
+      <pre class="equation">\begin{equation}
+h^{\star}(i) = \arg\max_{h \in \mathcal{H}_i} p_i'(h)
+\quad \text{s.t.} \quad
+\texttt{all\_hard\_constraints\_satisfied} = \text{True}.
+\tag{28}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared only when the full-solution hard-feasibility checker accepts the modified pair. A violation occurs when the probability is improved locally but the global solution becomes infeasible; in that case, the candidate is rolled back immediately. The state update is therefore conditional rather than unconditional.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code>; validation routine: <code>src/spd/core.py::all_hard_constraints_satisfied</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 3: Resequencing of low-probability drone customers.</h3>
+      <p>
+        If a low-probability customer belongs to the drone-customer set, the sortie containing that customer is identified, and the Phase III permutation optimizer is called again on the sortie customer list. The purpose is to improve the arrival probability of the target drone customer without altering the launch and recovery anchors. The output is an updated sortie order if a different feasible order is found.
+      </p>
+      <pre class="equation">\begin{equation}
+\pi_{s}^{\star} = \arg\min_{\pi \in \Pi(S_s)} Z(l(s), \pi, r(s))
+\quad \text{s.t.} \quad
+\texttt{all\_hard\_constraints\_satisfied} = \text{True}.
+\tag{29}
+\end{equation}</pre>
+      <p>
+        Satisfaction is declared only when the reordered sortie improves the candidate order and the full solution remains hard-feasible after replacement. A violation occurs when the permutation changes but the feasibility rollback test fails. Therefore, sortie resequencing is feasibility-dominant rather than probability-dominant.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code> and <code>src/spd/etprc.py::ETPRCBuilder._optimize_sortie_order</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 4: Final customer-coverage enforcement.</h3>
+      <p>
+        After all accepted pair replacements have been applied, the assigned-customer union is recomputed, and the final unserved set is derived. This step is performed because the constructive stage is explicitly required to terminate with complete customer coverage. The output is the final initial solution if and only if no customer remains unserved.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{U}^{\mathrm{final}} = \mathcal{N} \setminus \bigcup_{k=1}^{K} \left( \mathcal{T}_k^{\mathrm{final}} \cup \mathcal{D}_k^{\mathrm{final}} \right).
+\tag{30}
+\end{equation}
+
+\begin{equation}
+\mathcal{U}^{\mathrm{final}} = \varnothing
+\quad \Longrightarrow \quad
+\text{construction succeeds};
+\qquad
+\mathcal{U}^{\mathrm{final}} \neq \varnothing
+\quad \Longrightarrow \quad
+\texttt{ValueError} \text{ is raised}.
+\tag{31}
+\end{equation}</pre>
+      <p>
+        Satisfaction is achieved when the final unserved set is empty. A violation is converted into an exception rather than being silently tolerated. Hence, the state at the end of the entire procedure is either a complete initial solution or an explicit construction failure.
+      </p>
+      <p class="code-ref"><strong>Code location.</strong> <code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code> and the final check in <code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code>.</p>
+    </article>
+  </section>
+
+  <section>
+    <h2>3. Key Parameter List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%;">Parameter</th>
+          <th style="width: 12%;">Symbol</th>
+          <th style="width: 33%;">Meaning</th>
+          <th style="width: 17%;">Default Value</th>
+          <th style="width: 18%;">File / Function</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>instance.vehicle_pair_count</code></td><td>$K$</td><td>Implemented cluster count and vehicle-pair count used by the constructive procedure.</td><td>Instance-supplied; no intrinsic code default.</td><td><code>src/spd/types.py::ProblemInstance</code>; used in <code>_customer_grouping</code></td></tr>
+        <tr><td><code>params.etprc.k_cluster</code></td><td>$K_{cfg}$</td><td>Configured cluster-count parameter written by experiment scripts.</td><td>Example configs: <code>1</code></td><td><code>src/spd/config.py::ETPRCParameters</code></td></tr>
+        <tr><td><code>params.etprc.max_iter_kmeans</code></td><td>$I_{km}^{max}$</td><td>Maximum number of clustering iterations.</td><td>Example configs and tests: <code>100</code></td><td><code>src/spd/config.py::ETPRCParameters</code>; <code>_customer_grouping</code></td></tr>
+        <tr><td><code>params.etprc.omega_distance</code></td><td>$\omega_d$</td><td>Weight of the truck-distance increment in insertion and rescue cost.</td><td>Example configs and tests: <code>1.0</code></td><td><code>src/spd/config.py::ETPRCParameters</code>; <code>_build_truck_route</code>, rescue block</td></tr>
+        <tr><td><code>params.etprc.omega_time_window</code></td><td>$\omega_{tw}$</td><td>Weight of the time-window tightness term in insertion and rescue cost.</td><td>Example configs and tests: <code>1.0</code></td><td><code>src/spd/config.py::ETPRCParameters</code>; <code>_build_truck_route</code>, rescue block</td></tr>
+        <tr><td><code>params.etprc.omega_balance</code></td><td>$\omega_b$</td><td>Declared balancing weight in configuration; no direct use was found in the current constructor.</td><td>Example configs and tests: <code>1.0</code></td><td><code>src/spd/config.py::ETPRCParameters</code></td></tr>
+        <tr><td><code>params.vehicle.truck_capacity</code></td><td>$Q_T$</td><td>Truck capacity used in cluster balancing, route feasibility, and recovery-load validation.</td><td>Example configs: <code>100.0</code>; test fixture: <code>100.0</code></td><td><code>src/spd/config.py::VehicleParameters</code>; <code>_customer_grouping</code>, <code>_build_truck_route</code>, core feasibility</td></tr>
+        <tr><td><code>params.vehicle.drone_capacity</code></td><td>$Q_D$</td><td>Drone payload capacity used in sortie filtering and payload-feasibility checks.</td><td>Example configs: <code>9.0</code>; test fixture: <code>5.0</code></td><td><code>src/spd/config.py::VehicleParameters</code>; <code>_extract_sorties</code>, core feasibility</td></tr>
+        <tr><td><code>params.vehicle.truck_speed</code></td><td>$v_T$</td><td>Truck speed used in route-time propagation.</td><td>Example configs and tests: <code>0.5</code></td><td><code>src/spd/config.py::VehicleParameters</code>; <code>_build_truck_route</code>, rescue block, <code>compute_truck_timeline</code></td></tr>
+        <tr><td><code>params.vehicle.drone_speed</code></td><td>$v_D$</td><td>Drone speed used in sortie timeline and energy computation.</td><td>Example configs and tests: <code>1.0</code></td><td><code>src/spd/config.py::VehicleParameters</code>; core drone timeline and energy routines</td></tr>
+        <tr><td><code>params.constraints.max_customers_per_sortie</code></td><td>$m_{\max}$</td><td>Upper bound on the number of customers served in one sortie.</td><td>Example configs and tests: <code>3</code></td><td><code>src/spd/config.py::ConstraintParameters</code>; <code>_extract_sorties</code>, core feasibility</td></tr>
+        <tr><td><code>params.constraints.max_truck_wait_time</code></td><td>$W_{max}$</td><td>Maximum admissible truck wait at a recovery node.</td><td>Example configs and tests: <code>30.0</code></td><td><code>src/spd/config.py::ConstraintParameters</code>; <code>check_sortie_feasibility</code></td></tr>
+        <tr><td><code>params.energy.drone_battery_capacity</code></td><td>$E_D$</td><td>Drone battery capacity used in sortie energy feasibility.</td><td>Example configs and tests: <code>500.0</code></td><td><code>src/spd/config.py::EnergyParameters</code>; <code>compute_sortie_energy</code>, <code>check_sortie_feasibility</code></td></tr>
+        <tr><td><code>params.energy.eta_wh_per_kg_min</code></td><td>$\eta$</td><td>Energy coefficient per unit total weight and per minute.</td><td>Example configs: <code>0.97</code>; test fixture: <code>0.5</code></td><td><code>src/spd/config.py::EnergyParameters</code>; <code>compute_sortie_energy</code></td></tr>
+        <tr><td><code>params.cost.truck_cost_per_km</code></td><td>$c_T$</td><td>Truck travel cost coefficient appearing in the offline objective.</td><td>Example configs: <code>0.75</code>; test fixture: <code>1.0</code></td><td><code>src/spd/config.py::CostParameters</code>; <code>compute_objective</code></td></tr>
+        <tr><td><code>params.cost.fixed_pair_cost</code></td><td>$\alpha$</td><td>Fixed cost per used truck-drone pair.</td><td>Example configs: <code>22.0</code>; test fixture: <code>50.0</code></td><td><code>src/spd/config.py::CostParameters</code>; <code>compute_objective</code></td></tr>
+        <tr><td><code>params.cost.drone_energy_cost_per_wh</code></td><td>$c_E$</td><td>Drone energy cost coefficient in the offline objective.</td><td>Example configs: <code>0.00248</code>; test fixture: <code>0.1</code></td><td><code>src/spd/config.py::CostParameters</code>; <code>compute_objective</code></td></tr>
+        <tr><td><code>params.beta_schedule.beta_init</code></td><td>$\beta_0$</td><td>Initial time-window penalty weight used when objective values are computed during construction.</td><td>Example configs and tests: <code>10.0</code></td><td><code>src/spd/config.py::BetaScheduleParameters</code>; <code>compute_objective</code></td></tr>
+        <tr><td><code>params.time.depot_earliest</code></td><td>$t_0^{min}$</td><td>Earliest departure time from the depot.</td><td>Example configs and tests: <code>0.0</code></td><td><code>src/spd/config.py::TimeParameters</code>; routing and timeline routines</td></tr>
+        <tr><td><code>params.time.depot_latest</code></td><td>$t_0^{max}$</td><td>Latest admissible depot return time.</td><td>Example configs and tests: <code>480.0</code></td><td><code>src/spd/config.py::TimeParameters</code>; routing and timeline routines</td></tr>
+        <tr><td><code>params.time.num_time_slots</code></td><td>$H$</td><td>Number of time slots used for home-probability lookup.</td><td>Code default: <code>8</code></td><td><code>src/spd/config.py::TimeParameters</code>; <code>map_time_to_slot</code></td></tr>
+        <tr><td><code>threshold</code> in <code>_adjust_by_probability()</code></td><td>$p_{th}$</td><td>Low-probability threshold that triggers post-adjustment.</td><td>Hard-coded: <code>0.3</code></td><td><code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code></td></tr>
+        <tr><td><code>rng</code> / internal fallback seed</td><td>$s$</td><td>Random source controlling centroid initialization and other stochastic choices.</td><td>Internal fallback: <code>random.Random(0)</code></td><td><code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code> and <code>_customer_grouping</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Implementation Notes and Uncertainty Markers</h2>
+    <ul>
+      <li><strong><code>instance.vehicle_pair_count</code> versus <code>params.etprc.k_cluster</code>.</strong> The implemented grouping cardinality is taken from <code>instance.vehicle_pair_count</code>. The configured parameter <code>etprc.k_cluster</code> is present in configuration objects and experiment scripts, but it is not directly consumed by <code>_customer_grouping()</code>.</li>
+      <li><strong><code>omega_balance</code>.</strong> The parameter is declared in <code>ETPRCParameters</code>, yet no direct use was identified in the current initial-solution constructor.</li>
+      <li><strong>Cross-pair rescue feasibility scope.</strong> The rescue loop explicitly checks route-time feasibility and sortie-anchor preservation. Truck-load feasibility is not explicitly recomputed inside that local rescue test.</li>
+      <li><strong>Reference placeholders.</strong> No explicit literature citations were found in the relevant code comments for the classical heuristic components; therefore, <code>[REF]</code> has been retained where requested.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Step 3 Online Execution Algorithm Analysis v1</title>
+<style>
+body { margin: 0; background: #f5f7fb; color: #1f2937; font-family: Georgia, "Times New Roman", serif; line-height: 1.75; }
+main { max-width: 1120px; margin: 36px auto; background: #ffffff; border: 1px solid #d9e2ec; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); padding: 40px 52px; }
+h1, h2, h3 { color: #102a43; line-height: 1.35; }
+h1 { font-size: 2.2rem; margin: 0 0 0.4rem 0; border-bottom: 3px solid #d9e2ec; padding-bottom: 0.6rem; }
+h2 { font-size: 1.7rem; margin-top: 2.4rem; margin-bottom: 0.8rem; }
+h3 { font-size: 1.25rem; margin-top: 1.6rem; margin-bottom: 0.5rem; }
+p { margin: 0.5rem 0 0.9rem 0; text-align: justify; }
+header p.meta { color: #486581; font-size: 0.96rem; }
+section.phase { margin-top: 2.2rem; padding-top: 0.6rem; }
+article.step { margin-top: 1.1rem; padding: 1rem 1.1rem; border: 1px solid #d9e2ec; background: #fbfdff; }
+pre.equation { white-space: pre-wrap; background: #f7fafc; border: 1px solid #cbd5e0; border-left: 4px solid #486581; padding: 12px 14px; margin: 0.9rem 0 1rem 0; font-family: "Consolas", "Courier New", monospace; font-size: 0.95rem; line-height: 1.55; overflow-x: auto; }
+.code-ref { font-size: 0.95rem; color: #243b53; }
+.note-box { border: 1px solid #d9e2ec; background: #f8fbff; padding: 12px 14px; margin: 1rem 0; }
+code { background: #eef2f7; border-radius: 4px; padding: 1px 5px; font-family: "Consolas", "Courier New", monospace; font-size: 0.94em; }
+.small { font-size: 0.92rem; color: #486581; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Step 3. Online Execution Algorithm Analysis v1</h1>
+    <p class="meta">Target files: <code>D:\codex_drone\docs\step3_online_execution_v1.docx</code> and <code>D:\codex_drone\docs\step3_online_execution_v1.html</code>.</p>
+    <p class="meta">Format template read before writing: <code>D:\codex_drone\docs\step1_initial_solution_v1.html</code>. Content reference read before writing: <code>D:\codex_drone\docs\step2_offline_v5.html</code>. Scope: online execution and event-driven replanning implemented in <code>src/spd/simulation.py</code>, <code>src/spd/online.py</code>, <code>src/spd/core.py</code>, <code>src/spd/main.py</code>, <code>src/spd/types.py</code>, and <code>src/spd/config.py</code>. No production code file was modified.</p>
+  </header>
+
+  <section>
+    <h2>4.1 Online Execution Stage Overview</h2>
+    <p>
+      First, the online stage is positioned as the execution layer that receives an already optimized offline structural solution, where the offline layer provides the truck route sequence, sortie list, pair assignment state, and expected-cost calibration coefficients, while the online layer receives this structure as <code>planned_solution</code> and executes it under realized customer absence. Subsequently, the online stage no longer optimizes under expectation over all unobserved events; instead, it runs a realized trajectory under sampled binary presence and updates the remaining plan only when a not-home event is observed. Finally, the essential distinction is therefore deterministic expectation optimization offline versus stochastic realized response online.
+    </p>
+    <p>
+      Subsequently, the main challenge is that customer absence uncertainty enters execution as node-level event revelation, because binary outcomes in <code>home_status</code> are sampled from <code>home_probabilities</code> and then consumed by the event engine. In turn, irrevocability appears because visited truck nodes, started sorties, and sortie prefixes before a failed customer are frozen through <code>frozen_customers</code>, which constrains the feasible neighborhood for replanning. As a result, real-time response must compress search depth, since only a lightweight online ALNS with strict-improvement acceptance and a short fixed iteration budget is allowed during execution.
+    </p>
+    <p>
+      Consequently, the global logic is an execution-sensing-decision loop over each pair route: the engine advances arc by arc, checks truck-side and drone-side not-home events at reached nodes, dispatches event objects, repairs affected sorties, freezes executed decisions, and performs local remaining-path optimization on the affected pair. Once each repair has been completed, timeline and load states are recomputed so that subsequent sortie feasibility is validated before continuing traversal. Thereafter, actual cost is accumulated from realized truck distance, realized drone energy, and realized failure penalties.
+    </p>
+    <p>
+      Finally, this chapter is organized so that Section 4.2 formalizes online initialization from offline outputs, Section 4.3 details the execution loop and node-level service actions, Section 4.4 explains failure processing and local replanning decisions, Section 4.5 clarifies online feasibility-preservation mechanisms, Section 4.6 summarizes realized-cost reporting structures, Section 4.7 discusses budget-complexity implications of online optimization compression, and Section 4.8 provides a consolidated implementation-level interpretation of the complete online stage.
+    </p>
+  </section>
+
+  <section class="phase">
+    <h2>4.2 Online Initialization from Offline Solution</h2>
+
+    <article class="step">
+      <h3>Step 1: Reception of offline solution and initialization of execution state.</h3>
+      <p>
+        This step is performed because the online engine cannot execute events without an initial structural carrier that already specifies which pair visits which nodes and which customers belong to each sortie. Once <code>planned_solution</code> has been passed into <code>ExecutionEngine.run</code>, the engine deep-copies it into <code>current_solution</code> so that online mutations do not corrupt the offline baseline, and this copied state becomes the mutable execution plan.
+      </p>
+      <p>
+        Subsequently, initialization of dynamic execution variables is completed by constructing the realized home-status map, by preparing per-trial distance and energy accumulators, and by preparing snapshot containers for replanning history. In turn, the first executable state is therefore the tuple containing the copied solution, realized home-status map, and zeroed realized-cost accumulators.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{X}^{\mathrm{on}}_0
+=
+\left(S^{\mathrm{off}},\,\hat{h},\,t_0,\,\mathcal{D}_T^0,\,\mathcal{E}_D^0\right),
+\quad
+S^{\mathrm{off}}\xrightarrow[]{\texttt{deepcopy}}S^{\mathrm{cur}}.
+\tag{76}
+\end{equation}</pre>
+      <p>
+        In Eq. (76), <code>S^{off}</code> is the offline plan object (<code>planned_solution</code>), <code>S^{cur}</code> is the mutable online plan (<code>current_solution</code>), <code>\hat{h}</code> is realized binary home status (<code>home_status</code>), <code>t_0</code> is execution start time implied by depot earliest time (<code>params.time.depot_earliest</code>), <code>\mathcal{D}_T^0</code> is the zeroed truck-distance list (<code>truck_distances_km</code>), and <code>\mathcal{E}_D^0</code> is the zeroed drone-energy list (<code>drone_energies_wh</code>).
+      </p>
+      <p>
+        Satisfaction is declared when the deep-copied solution remains structurally valid and all required runtime containers are created. A violation occurs when solution copying or downstream timeline building raises structural exceptions; in that case, the execution loop skips failing branches and returns a result assembled from the available consistent state.
+      </p>
+      <p>
+        The output of this step is a mutable online execution state anchored on an immutable offline baseline.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code>, called by <code>src/spd/main.py::SPDPlanner.execute_online</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Construction of execution-tracking structures and lock-ready sets.</h3>
+      <p>
+        This operation is performed because online replanning must preserve already executed decisions while still allowing adaptive search on the untouched suffix. Once a not-home event has been triggered, the replanner constructs <code>frozen_customers</code> by combining traversed truck nodes, customers in already launched sorties, and, for drone failures, the visited prefix before the failed customer.
+      </p>
+      <p>
+        Subsequently, the destroy phase of lightweight ALNS checks whether removed customers intersect the frozen set; if an intersection exists, that iteration is skipped rather than applied. As a result, the system enforces irreversible execution locks without introducing a second immutable solution copy.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{F}=\mathcal{V}^{\mathrm{truck}}_{\le k}
+\cup
+\mathcal{V}^{\mathrm{sortie}}_{\mathrm{launched}}
+\cup
+\mathcal{V}^{\mathrm{prefix}}_{\mathrm{drone\,event}}.
+\tag{77}
+\end{equation}
+
+\begin{equation}
+\text{Destroy iteration accepted for repair}
+\iff
+\mathcal{R}\cap\mathcal{F}=\varnothing,
+\tag{78}
+\end{equation}</pre>
+      <p>
+        In Eq. (77), <code>\mathcal{F}</code> is <code>frozen_customers</code>, <code>\mathcal{V}^{truck}_{\le k}</code> is the traversed truck prefix extracted from <code>truck_route</code>, <code>\mathcal{V}^{sortie}_{launched}</code> is the customer set of sorties whose launch node has been passed, and <code>\mathcal{V}^{prefix}_{drone event}</code> is the visited prefix of the currently affected sortie. In Eq. (78), <code>\mathcal{R}</code> is the removal set returned by destroy operators (<code>destroy_result.removed_customers</code>).
+      </p>
+      <p>
+        Satisfaction is declared when frozen customers are excluded from all applied destroy-repair moves. A violation occurs when a destroy result touches frozen customers; in that case, the corresponding online ALNS iteration is skipped and the current pair state is preserved.
+      </p>
+      <p>
+        The output of this step is a lock-aware online search space over only the non-executed suffix.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/online.py::_handle_drone_event</code>, <code>src/spd/online.py::_handle_truck_event</code>, and <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+    </article>
+
+    <div class="note-box">
+      <p>
+        The information architecture is explicitly two-layered. The offline planning layer uses <code>home_probabilities</code> as slot-wise probability vectors to optimize expected cost. The online execution layer uses realized binary home-status values revealed by execution progression and event checks. This separation is required so that offline optimization cannot leak realized trial outcomes.
+      </p>
+    </div>
+
+    <article class="step">
+      <h3>Step 3: Isolation mechanism between planning probabilities and execution truth.</h3>
+      <p>
+        This step is performed because experimental validity requires that offline planning remains expectation-based while online execution remains realization-based. Once offline optimization starts, the planner-side interface is fixed to all-home status and reads only slot probabilities inside expected-failure computation; consequently, it never consumes realized trial binary values.
+      </p>
+      <p>
+        Subsequently, online execution samples binary outcomes and stores them in <code>home_status</code>, and event handling updates this map at trigger customers to maintain explicit absence revelation. In turn, timeline, load, and feasibility updates are recomputed under this realized map, while expected-failure estimation inside local sortie reordering may still consult probability vectors for forward-looking ranking.
+      </p>
+      <pre class="equation">\begin{equation}
+\text{Planning layer: }p_i(s)\in[0,1],\qquad
+\text{Execution layer: }\hat{h}_i\in\{0,1\}.
+\tag{79}
+\end{equation}
+
+\begin{equation}
+\hat{h}_i
+=\mathbf{1}\{u_i<p_i(s_i^{\ast})\},
+\quad
+u_i\sim\mathcal{U}(0,1),
+\quad
+s_i^{\ast}=\texttt{map\_time\_to\_slot}(t_i^{\ast}).
+\tag{80}
+\end{equation}</pre>
+      <p>
+        In Eq. (79), <code>p_i(s)</code> is read from <code>instance.customers[i].home_probabilities</code>, and <code>\hat{h}_i</code> is stored in <code>home_status[i]</code>. In Eq. (80), <code>u_i</code> is generated by <code>rng.random()</code>, <code>t_i^*</code> is planned arrival time from the all-home timeline in planned-slot computation, and <code>s_i^*</code> is the mapped slot.
+      </p>
+      <p>
+        Q1: the execution truth is stored in <code>home_status</code> during execution and persisted as <code>ExecutionResult.actual_is_home</code>. Q2: there is no code path in offline solve that accesses realized execution truth, because <code>SPDPlanner.solve_offline</code> constructs <code>home_status={True,...}</code> and offline objective computes expected failure from <code>home_probabilities</code>; therefore, the answer is No. Q3: execution truth becomes operationally known to the decision loop when the traversal reaches service opportunities and not-home checks are evaluated at the reached truck node or launched sortie-customer scan.
+      </p>
+      <p>
+        Satisfaction is declared when planning probability tensors and execution truth maps remain separately stored and separately consumed by their corresponding modules. A violation occurs when realized truth is fed into offline optimization interfaces; in that case, experimental comparability is broken, although the present code does not expose such a path.
+      </p>
+      <p>
+        The output of this step is an explicitly isolated dual-information execution model that preserves offline-online methodological separation.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/main.py::SPDPlanner.solve_offline</code>, <code>src/spd/core.py::compute_expected_failure_cost</code>, <code>src/spd/simulation.py::ExecutionEngine.generate_home_status</code>, and <code>src/spd/simulation.py::ExecutionEngine.run</code>, called by <code>src/spd/main.py::SPDPlanner.execute_online</code>.</p>
+    </article>
+  </section>
+
+  <section class="phase">
+    <h2>4.3 Online Execution Main Loop</h2>
+
+    <section>
+      <h3>4.3.1 Main-loop structure overview</h3>
+      <p>
+        The implemented loop is primarily node-arrival-driven over each pair route index rather than globally time-stepped. First, the engine advances from one truck arc to the next, records traveled distance, and then performs node-local event checks. Subsequently, if a not-home event is detected, event dispatch is immediately executed and the current solution is replaced by the returned replanned solution before the loop continues; as a result, loop progression and decision updates are tightly interleaved.
+      </p>
+      <p>
+        Loop termination occurs when the route cursor reaches the last node of the current pair route, after which the engine moves to the next pair identifier. Once all pair routes have been completed, timelines are recomputed for realized reporting, realized costs are aggregated, and execution output is returned. Consequently, the stopping condition is structural exhaustion of all route positions, and the loop-internal decision sequence is travel update, truck-event check, drone-event scan at launch node, optional replanning, and continuation.
+      </p>
+    </section>
+
+    <section>
+      <h3>4.3.2 Node arrival and service attempts</h3>
+
+      <article class="step">
+        <h3>Step 1: Truck arrival at current node.</h3>
+        <p>
+          This step is performed because every subsequent service and sortie decision depends on realized node arrival times propagated from previous departures. Once the truck moves from <code>prev</code> to <code>curr</code>, arrival is computed by adding travel time to the previous departure, and if the node is a recovery node the truck availability is synchronized with drone arrival before service-start evaluation.
+        </p>
+        <p>
+          Subsequently, node role is inferred by membership in truck customers, sortie launch anchors, sortie recovery anchors, or depot identity, and this role determines whether service, launch, recovery merge, or direct pass-through behavior applies. In turn, time-window comparison is executed online at customer nodes through earliest-start and latest-bound logic embedded in timeline and feasibility routines.
+        </p>
+        <pre class="equation">\begin{equation}
+AT_T(v_k)=DT_T(v_{k-1})+\frac{d_T(v_{k-1},v_k)}{v_T},
+\qquad
+A^{\mathrm{avail}}_k=\max\{AT_T(v_k),AT_D(v_k)\}\;\text{if }v_k\in\mathcal{R}.
+\tag{81}
+\end{equation}
+
+\begin{equation}
+ST_T(v_k)=\max\{A^{\mathrm{avail}}_k,e_{v_k}\},
+\qquad
+DT_T(v_k)=ST_T(v_k)+\hat{h}_{v_k}\,s_{v_k}.
+\tag{82}
+\end{equation}</pre>
+        <p>
+          In Eq. (81), <code>AT_T</code> corresponds to <code>timeline.truck_arrival</code>, <code>DT_T</code> corresponds to <code>timeline.truck_departure</code>, <code>d_T</code> uses <code>instance.truck_distance_km</code> and <code>instance.truck_travel_time</code>, and <code>\mathcal{R}</code> denotes recovery nodes detected via <code>find_sortie_by_recovery</code>. In Eq. (82), <code>ST_T</code> is service start, <code>e_i</code> is <code>customer.time_window[0]</code>, and <code>s_i</code> is <code>customer.service_time</code>.
+        </p>
+        <p>
+          Satisfaction is declared when timeline propagation yields finite arrivals and departures consistent with route order. A violation occurs when required predecessor departures or synchronized drone arrivals are missing; in that case, timeline computation raises errors and the caller handles the exception by skipping the inconsistent replanning branch.
+        </p>
+        <p>
+          The output of this step is a realized arrival-departure state at the current node that is ready for event detection and service decisions.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::compute_truck_timeline</code>, called by <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 2: Customer home-status revelation at execution time.</h3>
+        <p>
+          This step is performed because service feasibility in online execution depends on realized rather than planned presence. Once the loop reaches a truck-customer node, absence is checked directly from <code>home_status</code>; once a sortie launched at the current node is scanned, each remaining absent customer is detected through the same map and converted into a drone event.
+        </p>
+        <p>
+          Subsequently, revelation affects all downstream timing and load updates because not-home customers consume no service time and do not update payload transfers that require successful service. As a result, revelation at one customer can shift the departure and recovery timeline for the same sortie and may cascade to later launch windows through recomputation.
+        </p>
+        <pre class="equation">\begin{equation}
+\text{Reveal}(i,k)=\hat{h}_i
+\quad\text{when node/scan position }k\text{ reaches service attempt for }i.
+\tag{83}
+\end{equation}</pre>
+        <p>
+          In Eq. (83), revelation is operationalized by direct access to <code>home_status[i]</code> in execution checks. Truck-side revelation occurs at route node reach, while drone-side revelation occurs during launched-sortie customer scan.
+        </p>
+        <p>
+          Satisfaction is declared when each service attempt uses the current binary map without overwriting unrelated customers. A violation occurs when stale sortie indices or inconsistent pair membership prevent proper location of the event customer; in that case, the replanner returns without mutation for that event path.
+        </p>
+        <p>
+          The output of this step is an event-ready local truth state that directly conditions immediate service and replanning actions.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 3: Service-attempt decision and outcome classification.</h3>
+        <p>
+          This step is performed because execution must separate realized success from realized failure before deciding whether to continue traversal or trigger replanning. Once a truck node is reached, success corresponds to customer membership plus presence truth, whereas failure corresponds to membership plus absence truth; similarly, drone-side failure corresponds to absent customers inside launched sorties that have not yet been handled in the current scan.
+        </p>
+        <p>
+          Subsequently, a successful attempt keeps the loop on the current plan without event dispatch, whereas a failed attempt immediately instantiates <code>CustomerNotHomeEvent</code> and routes control to the replanner. In turn, this event-first architecture means that failure processing is explicit and success remains the implicit continuation branch.
+        </p>
+        <pre class="equation">\begin{equation}
+\mathbb{I}^{\mathrm{fail}}_i
+=\mathbb{I}\{i\in\mathcal{C}^{\mathrm{mode}}\}\cdot(1-\hat{h}_i),
+\qquad
+\mathbb{I}^{\mathrm{succ}}_i
+=\mathbb{I}\{i\in\mathcal{C}^{\mathrm{mode}}\}\cdot\hat{h}_i.
+\tag{84}
+\end{equation}
+
+\begin{equation}
+C^{\mathrm{fail}}_{\mathrm{real}}=\sum_{i\in\mathcal{F}}Z_{\mathrm{fail}}(i),
+\qquad
+Z_{\mathrm{fail}}(i)=2\,d_T(0,i)\,c_T.
+\tag{85}
+\end{equation}</pre>
+        <p>
+          In Eq. (84), <code>\mathcal{C}^{mode}</code> is either <code>pair_solution.truck_customers</code> or the launched-sortie customer list under scan. In Eq. (85), <code>\mathcal{F}</code> is the realized failed-customer set <code>failed_customers</code>, and <code>Z_fail(i)</code> uses <code>failure_penalty(instance, i, params)</code>.
+        </p>
+        <p>
+          Satisfaction is declared when each failed customer generates exactly one actionable event in the current scan context. A violation occurs when the same absent customer would be repeatedly processed; in that case, local <code>handled_customers</code> guards prevent duplicate processing in one launch-scan loop.
+        </p>
+        <p>
+          The output of this step is a binary event decision that either continues execution or invokes online replanning.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/core.py::failure_penalty</code>, called by <code>src/spd/simulation.py::ExecutionEngine.run</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 4: Online execution of drone sorties.</h3>
+        <p>
+          This step is performed because launch-recovery coupling must be explicitly synchronized with truck progression, and failure within a sortie can invalidate only a suffix rather than the entire pair route. Once launch is reached, drone timeline is instantiated from truck departure at launch, customers are traversed in sortie order, and recovery arrival is synchronized against truck arrival for waiting feasibility.
+        </p>
+        <p>
+          Subsequently, if an in-sortie customer fails, the replanner repairs the current sortie by skip, truncate, and reorder logic, then recomputes timeline and load states and validates downstream sorties. As a result, the sortie process is treated as a dynamically repairable sequence constrained by battery, payload, synchronization, and frozen-prefix rules.
+        </p>
+        <pre class="equation">\begin{equation}
+AT_D(c_r)=DT_D(c_{r-1})+\frac{d_D(c_{r-1},c_r)}{v_D},
+\qquad
+DT_D(c_r)=\max\{AT_D(c_r),e_{c_r}\}+\hat{h}_{c_r}s_{c_r}.
+\tag{86}
+\end{equation}
+
+\begin{equation}
+E_s=\sum_{r\in\text{legs}(s)}\eta\,W_r\,\Delta t_r,
+\qquad
+C^{\mathrm{drone}}_s=c_E\,E_s.
+\tag{87}
+\end{equation}</pre>
+        <p>
+          In Eq. (86), drone arrivals and departures map to <code>timeline.drone_arrival</code> and <code>timeline.drone_departure</code>, with leg time from <code>instance.drone_travel_time</code>. In Eq. (87), <code>\eta</code> is <code>params.energy.eta_wh_per_kg_min</code>, <code>W_r</code> is payload-plus-empty weight reconstructed by load-tracking functions, <code>\Delta t_r</code> includes flight, wait, service, and hover subsegments in <code>compute_sortie_energy</code>, and <code>c_E</code> is <code>params.cost.drone_energy_cost_per_wh</code>.
+        </p>
+        <p>
+          Satisfaction is declared when each launched sortie remains structurally valid and satisfies hard checks after local repair or optimization. A violation occurs when battery, payload, ordering, or waiting limits fail; in that case, sortie repair is executed and, if no feasible mutation is found, the algorithm keeps the best feasible known state and continues.
+        </p>
+        <p>
+          The output of this step is an updated sortie structure with synchronized realized timeline and energy contributions.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::compute_drone_timeline</code>, <code>src/spd/core.py::compute_sortie_energy</code>, and <code>src/spd/online.py::repair_sortie</code>, called by <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 5: Online accumulation of realized cost.</h3>
+        <p>
+          This step is performed because realized performance must be measured on the executed trajectory rather than on offline expectation terms. Once execution loops complete, the engine aggregates fixed pair cost, realized truck distance cost, realized drone energy cost, and realized failure penalties, and the result is stored in the execution output object.
+        </p>
+        <p>
+          Subsequently, a secondary consistency pass computes actual cost from <code>ExecutionResult</code> through <code>compute_actual_cost</code>; consequently, cost reporting remains robust even when some component lists are partially unavailable due handled exceptions.
+        </p>
+        <pre class="equation">\begin{equation}
+Z^{\mathrm{actual}}=
+\alpha\,|\mathcal{P}_{\mathrm{used}}|
++c_T\sum\mathcal{D}_T
++c_E\sum\mathcal{E}_D
++\sum_{i\in\mathcal{F}}Z_{\mathrm{fail}}(i).
+\tag{88}
+\end{equation}</pre>
+        <p>
+          In Eq. (88), <code>\alpha</code> is <code>params.cost.fixed_pair_cost</code>, <code>\sum\mathcal{D}_T</code> is <code>sum(truck_distances_km)</code>, <code>\sum\mathcal{E}_D</code> is <code>sum(drone_energies_wh)</code>, and <code>\mathcal{F}</code> is <code>failed_customers</code>.
+        </p>
+        <p>
+          Satisfaction is declared when actual cost components are finite and composable from execution traces. A violation occurs when component extraction is incomplete; in that case, the fallback actual-cost computation infers fail-penalty residual from stored total and operational subtotal.
+        </p>
+        <p>
+          The output of this step is the realized total-cost scalar and its component-ready execution record.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/core.py::compute_actual_cost</code>, called by <code>src/spd/simulation.py::ExecutionEngine.run</code>.</p>
+      </article>
+    </section>
+  </section>
+
+  <section class="phase">
+    <h2>4.4 Service-Failure Handling and Online Replanning</h2>
+
+    <section>
+      <h3>4.4.1 Failure classes and detection logic</h3>
+      <p>
+        Online execution includes heterogeneous failures with different operational scopes. Truck-side not-home failures are node-local events that directly affect the current truck customer and the future suffix. Drone-side not-home failures occur inside a launched sortie and therefore trigger sortie-local repair before remaining-path optimization. Time-window-related feasibility failures are not directly emitted as standalone events in execution traversal; instead, they appear through feasibility checks during repair or candidate acceptance, where they can reject candidate updates or force sortie repair. Consequently, response pathways are mode-dependent even though all pathways eventually update the same solution object.
+      </p>
+
+      <article class="step">
+        <h3>Failure Type 1: Truck-served customer not at home.</h3>
+        <p>
+          This operation is performed because truck-arrival service failure is the earliest observable disruption on the truck backbone and must be converted into an actionable replanning signal. Once the route cursor reaches a node that belongs to <code>truck_customers</code> and the realized home-status entry is false, the engine builds a truck-mode <code>CustomerNotHomeEvent</code> and dispatches it.
+        </p>
+        <p>
+          Subsequently, the truck-event handler updates absence truth for that customer, repairs any now-infeasible sorties, freezes already traversed decisions, and runs lightweight remaining-path optimization on the same pair. As a result, response is immediate and local to the affected pair without restarting offline global search.
+        </p>
+        <pre class="equation">\begin{equation}
+\mathbb{I}^{\mathrm{truck\_event}}_i
+=\mathbb{I}\{i\in\mathcal{C}^{T}\}\cdot(1-\hat{h}_i).
+\tag{89}
+\end{equation}</pre>
+        <p>
+          In Eq. (89), <code>\mathcal{C}^T</code> is <code>pair_solution.truck_customers</code> and <code>\hat{h}_i</code> is <code>home_status[i]</code>. Event creation uses <code>service_mode=ServiceMode.TRUCK</code>.
+        </p>
+        <p>
+          Satisfaction is declared when each detected truck absence triggers exactly one handler invocation and returns an updated or unchanged consistent solution. A violation occurs when pair lookup or timeline recomputation fails; in that case, the handler preserves recoverable state and returns without destructive mutation.
+        </p>
+        <p>
+          The output of this step is a truck-failure-conditioned pair-local replanning result.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/online.py::OnlineReplanner._handle_truck_event</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Failure Type 2: Drone-sortie customer not at home.</h3>
+        <p>
+          This operation is performed because absence inside a launched sortie can invalidate only the remaining sortie suffix while leaving already visited prefix decisions irreversible. Once an absent customer is found in the currently launched sortie scan, the engine creates a drone-mode event with sortie index and dispatches it.
+        </p>
+        <p>
+          Subsequently, the drone-event handler sets the customer absence flag, repairs the current sortie by skip-truncate-reorder logic from the failed position, constructs freeze sets including visited prefix, and then optimizes the remaining pair path. In turn, customers in other launched sorties can be protected via freeze propagation, so one failure may restrict but does not necessarily cancel other pending services.
+        </p>
+        <pre class="equation">\begin{equation}
+\mathbb{I}^{\mathrm{drone\_event}}_i
+=\mathbb{I}\{i\in\mathcal{C}^{D}_{\text{launched sortie}}\}\cdot(1-\hat{h}_i).
+\tag{90}
+\end{equation}</pre>
+        <p>
+          In Eq. (90), <code>\mathcal{C}^{D}_{launched sortie}</code> is the active sortie customer list in the launch-scan loop. Event creation uses <code>service_mode=ServiceMode.DRONE</code> and an explicit <code>sortie_index</code> when available.
+        </p>
+        <p>
+          Satisfaction is declared when the failed customer is resolvable to a valid sortie and repaired suffix stays structurally consistent. A violation occurs when stale sortie indices cannot be relocated or timeline recomputation fails; in that case, the handler returns the pre-event consistent state for that branch.
+        </p>
+        <p>
+          The output of this step is a repaired sortie and a frozen-prefix-aware local optimization result.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code> and <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Failure Type 3: Time-window-related infeasibility during online updates.</h3>
+        <p>
+          This step is performed because local repairs and remaining-path optimization can produce candidates that violate temporal constraints even when service-mode events are correctly handled. Once a candidate timeline is recomputed, drone-customer and truck-customer latest-time conditions are checked in hard-constraint routines used by the online optimizer.
+        </p>
+        <p>
+          Subsequently, infeasible candidates are rejected and search continues from the current feasible incumbent; alternatively, sortie-local repair can skip or truncate problematic suffix customers before global pair updates are attempted. As a result, temporal violations are treated as hard feasibility filters in online mode rather than soft penalties.
+        </p>
+        <pre class="equation">\begin{equation}
+\exists i:\;AT(i)>l_i
+\implies
+\text{candidate rejected in online ALNS hard-check pipeline}.
+\tag{91}
+\end{equation}</pre>
+        <p>
+          In Eq. (91), <code>AT(i)</code> is either <code>timeline.truck_arrival[i]</code> or <code>timeline.drone_arrival[i]</code>, and <code>l_i</code> is <code>customer.time_window[1]</code>. Rejection path uses <code>all_hard_constraints_satisfied(...)</code> in online mode.
+        </p>
+        <p>
+          Satisfaction is declared when accepted online updates remain temporally feasible under hard checks. A violation occurs when temporal bounds are exceeded; in that case, the current online incumbent is retained and the violating candidate is discarded.
+        </p>
+        <p>
+          The output of this step is a temporally feasible accepted update or a safe no-change fallback.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::check_sortie_feasibility</code>, <code>src/spd/core.py::is_truck_route_feasible</code>, and <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code>, called by <code>src/spd/online.py::OnlineReplanner._optimize_with_freeze</code>.</p>
+      </article>
+
+      <p>
+        Q: different failure types do trigger different response mechanisms, because truck failures route to <code>_handle_truck_event</code>, drone failures route to <code>_handle_drone_event</code>, and time-window infeasibility is treated through feasibility filters and sortie repair inside optimization logic rather than through a dedicated external event type.
+      </p>
+    </section>
+
+    <section>
+      <h3>4.4.2 Online replanning trigger decision</h3>
+
+      <article class="step">
+        <h3>Step 1: Trigger-condition evaluation.</h3>
+        <p>
+          This step is performed because online optimization must be invoked only when execution reveals a disruptive event that invalidates the unchanged continuation assumption. Once a not-home condition is detected in truck or drone checks, event dispatch is called immediately in the same traversal iteration.
+        </p>
+        <p>
+          Subsequently, no accumulation threshold is applied, so each observed failure triggers immediate local handling; in turn, events that cannot be resolved to valid pair/sortie contexts are safely ignored by returning the unchanged solution. As a result, the trigger design is event-immediate rather than batch-thresholded.
+        </p>
+        <pre class="equation">\begin{equation}
+\text{Trigger}(k)=
+\mathbb{I}^{\mathrm{truck\_event}}(k)
+\vee
+\mathbb{I}^{\mathrm{drone\_event}}(k).
+\tag{92}
+\end{equation}</pre>
+        <p>
+          In Eq. (92), the two indicators are constructed from truck-node and launched-sortie scans at traversal position <code>k</code>. The event object carries pair id, customer id, service mode, and optional sortie index.
+        </p>
+        <p>
+          Q1: trigger occurs at every detected failure, not at a cumulative threshold. Q2: range is determined by event pair id plus frozen-set construction, therefore only the affected pair remainder is optimized. Q3: no-trigger cases include successful service attempts and stale/unresolvable event contexts where handlers return unchanged solutions.
+        </p>
+        <p>
+          Satisfaction is declared when disruptive events invoke handlers exactly at detection points and non-disruptive states continue without unnecessary optimization overhead. A violation occurs when events are detected but not dispatched; in that case, execution would diverge from implemented logic, and this path is not present in the current code.
+        </p>
+        <p>
+          The output of this step is a binary control decision between direct continuation and immediate local replanning.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/simulation.py::ExecutionEngine.run</code>, called by <code>src/spd/main.py::SPDPlanner.execute_online</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 2: Construction of the replanning subproblem.</h3>
+        <p>
+          This step is performed because event handling must optimize only the mutable suffix while preserving executed commitments. Once the affected pair is located, executed nodes and launched-sortie commitments are frozen, current repaired pair state is constructed, and lightweight ALNS is called on this constrained pair solution.
+        </p>
+        <p>
+          Subsequently, the objective on candidate states remains the same global formula interface as offline <code>compute_objective</code>, but the search regime differs because online mode uses strict hard-feasibility acceptance and strict objective improvement only. As a result, objective composition remains consistent at function level while acceptance and neighborhood policies become execution-specific.
+        </p>
+        <pre class="equation">\begin{equation}
+\min_{S\in\Omega(\mathcal{F})}
+Z_{\mathrm{online\_cand}}(S)
+=Z_{\mathrm{fixed}}+Z_{\mathrm{truck}}+Z_{\mathrm{drone}}+Z_{\mathrm{fail}}^{\mathrm{exp}}+\beta Z_{\mathrm{tw}}+Z_{\mathrm{unserved}},
+\tag{93}
+\end{equation}
+
+\begin{equation}
+\Omega(\mathcal{F})=
+\{S\mid \text{customers in }\mathcal{F}\text{ keep executed order and assignment}\}.
+\tag{94}
+\end{equation}</pre>
+        <p>
+          In Eq. (93), the same accumulator variables from <code>compute_objective</code> are used, while online mode additionally enforces <code>all_hard_constraints_satisfied</code> as a hard gate before candidate acceptance. In Eq. (94), <code>\mathcal{F}</code> is the frozen set built in event handlers.
+        </p>
+        <p>
+          Satisfaction is declared when subproblem candidates preserve all frozen commitments and accepted updates remain hard-feasible. A violation occurs when a candidate touches frozen customers or violates hard constraints; in that case, the candidate is discarded and the incumbent remains active.
+        </p>
+        <p>
+          The output of this step is a pair-local constrained optimization task with explicit execution locks.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>, <code>src/spd/online.py::OnlineReplanner._handle_truck_event</code>, and <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+      </article>
+    </section>
+
+    <section>
+      <h3>4.4.3 Online re-optimization algorithm</h3>
+
+      <article class="step">
+        <h3>Step 1: Selection of lightweight online optimizer and budget compression analysis.</h3>
+        <p>
+          This step is performed because rerunning full offline ACO-ALNS at each online event would violate real-time response requirements. Once an event has been accepted for handling, the system calls <code>LightweightALNSOptimizer.optimize_remaining_path</code>, which reuses a restricted destroy-repair family but removes SA acceptance, adaptive weights, cross-group periodic moves, and offline-scale nested ant loops.
+        </p>
+        <p>
+          Subsequently, online iteration and removal budgets are read from <code>params.online_alns</code>, while offline budgets are governed by <code>params.aco.max_iterations</code>, <code>params.aco.ant_count</code>, and <code>params.alns.iterations</code>. In turn, this establishes a strong budget compression that prioritizes latency over global diversification and therefore sacrifices some improvement depth in exchange for immediate feasibility-preserving response.
+        </p>
+        <pre class="equation">\begin{equation}
+B_{\mathrm{off}}\approx I_{\mathrm{aco}}\cdot A\cdot L_{\mathrm{alns}},
+\qquad
+B_{\mathrm{on}}=L_{\mathrm{on}},
+\tag{95}
+\end{equation}
+
+\begin{equation}
+\rho_{\mathrm{budget}}=\frac{B_{\mathrm{on}}}{B_{\mathrm{off}}}.
+\tag{96}
+\end{equation}</pre>
+        <p>
+          In Eq. (95), <code>I_aco</code>, <code>A</code>, and <code>L_alns</code> map to <code>params.aco.max_iterations</code>, <code>params.aco.ant_count</code>, and <code>params.alns.iterations</code>, while <code>L_on</code> maps to <code>params.online_alns.iterations</code>. Under <code>config_small.json</code>, <code>B_off\approx20\times5\times50=5000</code> and <code>B_on=20</code>, yielding <code>\rho_budget=0.004</code>, namely 0.4% of offline local-iteration scale.
+        </p>
+        <p>
+          Q1: online re-optimization does reuse offline ALNS operators partially, yet the acceptance and control policy differs substantially; therefore it is a lightweight constrained reuse, not a full offline ALNS replica. Q2: online limits are <code>online_alns.iterations</code> and <code>online_alns.remove_count</code>, with default values 20 and 2 in provided configs. Q3: initial solution is the current pair deep copy, not a fresh ETPRC reconstruction.
+        </p>
+        <p>
+          Satisfaction is declared when online optimization returns a hard-feasible pair state no worse than the starting pair objective under strict-improvement acceptance. A violation occurs when candidate generation repeatedly fails or no improving feasible move exists; in that case, the original current pair is returned unchanged.
+        </p>
+        <p>
+          The output of this step is a latency-bounded updated pair solution that balances real-time responsiveness against reduced search depth.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code>, called by <code>src/spd/online.py::OnlineReplanner._optimize_with_freeze</code>; comparative offline reference: <code>src/spd/aco_alns.py::ALNSOptimizer.optimize</code> and <code>src/spd/aco_alns.py::ACOALNSSolver.solve</code>.</p>
+      </article>
+
+      <article class="step">
+        <h3>Step 2: Acceptance, stitching, and failure-safe fallback of optimized remainder.</h3>
+        <p>
+          This step is performed because online optimization results must be merged with already executed prefixes without violating irreversibility. Once lightweight ALNS returns, the replanner refreshes assignment sets and replaces only the targeted pair inside the global solution while other pairs remain untouched.
+        </p>
+        <p>
+          Subsequently, stitching validity is enforced implicitly through frozen-customer exclusion and hard-feasibility gates, and after replacement the system recomputes timelines and repairs subsequent sorties if required. Consequently, accepted updates are integrated as suffix modifications anchored to preserved executed prefixes.
+        </p>
+        <pre class="equation">\begin{equation}
+S^{\mathrm{new}}
+= S^{\mathrm{old}}\ominus P_{\mathrm{target}} \oplus P_{\mathrm{opt}},
+\qquad
+\text{accept if } Z(P_{\mathrm{opt}})<Z(P_{\mathrm{cur}})-\varepsilon.
+\tag{97}
+\end{equation}</pre>
+        <p>
+          In Eq. (97), <code>P_target</code> is the original pair at <code>pair_index</code>, <code>P_opt</code> is the returned pair from online ALNS, and <code>\varepsilon</code> is <code>_EPS</code>. Acceptance inequality is enforced inside the optimizer, while global solution replacement is done in event handlers.
+        </p>
+        <p>
+          Satisfaction is declared when replacement preserves frozen commitments and the post-merge pair remains feasible after recomputation. A violation occurs when optimization cannot produce a better feasible candidate; in that case, the returned pair equals the incumbent pair and stitching becomes a no-change operation.
+        </p>
+        <p>
+          The output of this step is an integrated global solution with executed prefix preserved and optimized feasible remainder attached.
+        </p>
+        <p class="code-ref"><strong>Code location:</strong> <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code> and <code>src/spd/online.py::OnlineReplanner._handle_truck_event</code>, called by <code>src/spd/online.py::OnlineReplanner.handle_event</code>.</p>
+      </article>
+    </section>
+  </section>
+
+  <section class="phase">
+    <h2>4.5 Online Feasibility-Preservation Mechanisms</h2>
+
+    <article class="step">
+      <h3>Step 1: Online maintenance of temporal constraints.</h3>
+      <p>
+        This step is performed because realized service outcomes alter departure times and can cascade into downstream lateness if timeline propagation is not recomputed. Once each relevant event mutation has been applied, truck and drone timelines are recomputed and checked against customer latest bounds through hard-feasibility gates.
+      </p>
+      <p>
+        Subsequently, temporal infeasibility is handled by candidate rejection in online ALNS and by sortie repair attempts in event handlers, rather than by soft acceptance. As a result, online mode enforces strict temporal feasibility on accepted updates while still allowing internal attempted candidates to be filtered out.
+      </p>
+      <pre class="equation">\begin{equation}
+\forall i\in\mathcal{N}_T:\;AT_T(i)\le l_i,
+\qquad
+\forall j\in\mathcal{N}_D:\;AT_D(j)\le l_j.
+\tag{98}
+\end{equation}</pre>
+      <p>
+        In Eq. (98), truck and drone arrivals correspond to <code>timeline.truck_arrival</code> and <code>timeline.drone_arrival</code>, and <code>l_i</code> is <code>customer.time_window[1]</code>. Cascade handling is operationalized by recomputing timeline and revalidating subsequent sorties after each accepted repair.
+      </p>
+      <p>
+        Satisfaction is declared when all accepted updates satisfy latest-time bounds for both truck and drone served customers. A violation occurs when any bound is exceeded; in that case, the violating candidate is rejected or the offending sortie is repaired and rechecked.
+      </p>
+      <p>
+        The output of this step is a temporally feasible online solution trajectory after each accepted mutation.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::compute_truck_timeline</code>, <code>src/spd/core.py::check_sortie_feasibility</code>, and <code>src/spd/core.py::is_truck_route_feasible</code>, called by <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 2: Online maintenance of capacity constraints.</h3>
+      <p>
+        This step is performed because realized not-home outcomes change whether delivery or pickup loads are actually transferred at visited customers. Once timeline truth is known at each visit, truck and drone loads are updated by success-dependent transfer rules, and hard-feasibility checks ensure capacities are never exceeded on accepted states.
+      </p>
+      <p>
+        Subsequently, if a service fails because the customer is absent, the load update for that customer is skipped, meaning undelivered delivery mass remains onboard and uncollected pickup mass is not loaded. In turn, downstream load states may diverge from offline expectation and require reoptimization to regain feasibility margins.
+      </p>
+      <pre class="equation">\begin{equation}
+L^{+}(i)=
+\begin{cases}
+L^{-}(i)-w_i, & i\in\mathcal{N}^D\ \land\ \hat{h}_i=1,\\
+L^{-}(i)+w_i, & i\in\mathcal{N}^P\ \land\ \hat{h}_i=1,\\
+L^{-}(i), & \hat{h}_i=0,
+\end{cases}
+\qquad
+L^{+}(i)\le Q.
+\tag{99}
+\end{equation}</pre>
+      <p>
+        In Eq. (99), <code>L^-</code> and <code>L^+</code> denote pre/post service loads in load-tracking states, <code>w_i</code> is customer weight, and <code>Q</code> denotes truck or drone capacity as appropriate. Service-failure no-transfer behavior matches <code>update_sortie_load</code> and truck-load update logic under <code>home_status</code> gating.
+      </p>
+      <p>
+        Satisfaction is declared when all node-level and recovery-transfer loads stay within capacity bounds. A violation occurs when any load exceeds its capacity; in that case, the candidate is rejected or repaired before acceptance.
+      </p>
+      <p>
+        The output of this step is a load-consistent online state that reflects realized rather than planned transfers.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::compute_truck_load</code>, <code>src/spd/core.py::update_sortie_load</code>, and <code>src/spd/core.py::check_sortie_load_feasibility</code>, called by <code>src/spd/core.py::check_sortie_feasibility</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 3: Online feasibility of drone sorties and cancellation/truncation behavior.</h3>
+      <p>
+        This step is performed because online failures inside sorties require localized corrections that may shorten the remaining customer suffix. Once a drone event occurs, the repair pipeline applies infeasible-customer skipping and energy-based truncation from the failed position, and then reorders the active remainder by expected incremental cost.
+      </p>
+      <p>
+        Subsequently, full sortie cancellation is not enforced as a separate explicit command in the online module; rather, suffix-level cancellation is achieved by truncating the post-failure segment to the largest feasible prefix, while executed or currently failed prefix customers remain fixed by design. As a result, sortie adaptability is suffix-focused and prefix-preserving.
+      </p>
+      <pre class="equation">\begin{equation}
+\mathcal{S}^{\mathrm{new}}=
+\operatorname{Reorder}\Big(
+\operatorname{Truncate}_{E_D}\big(
+\operatorname{Skip}_{\mathrm{TW},Q_D}(\mathcal{S}^{\mathrm{old}})\big)
+\Big).
+\tag{100}
+\end{equation}</pre>
+      <p>
+        In Eq. (100), <code>Skip</code> corresponds to <code>apply_b1_skip_infeasible_customers</code>, <code>Truncate</code> corresponds to <code>apply_b2_truncate_sortie</code>, and <code>Reorder</code> corresponds to <code>reorder_remaining_customers</code>. Feasibility checks rely on timeline/load recomputation and sortie-level hard constraints.
+      </p>
+      <p>
+        Satisfaction is declared when the repaired sortie passes structural, payload, battery, and synchronization checks. A violation occurs when repair cannot produce a feasible modification; in that case, the algorithm keeps the current feasible incumbent state and does not force an infeasible sortie acceptance.
+      </p>
+      <p>
+        The output of this step is a repaired sortie suffix that respects execution locks and hard constraints.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/online.py::repair_sortie</code>, <code>src/spd/online.py::apply_b1_skip_infeasible_customers</code>, <code>src/spd/online.py::apply_b2_truncate_sortie</code>, and <code>src/spd/online.py::reorder_remaining_customers</code>, called by <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>.</p>
+    </article>
+
+    <article class="step">
+      <h3>Step 4: Online enforcement of truck-drone synchronization constraints.</h3>
+      <p>
+        This step is performed because launch-recovery coupling is physically valid only if truck waiting at recovery does not exceed the configured upper bound. Once a sortie timeline is computed, truck waiting is measured at recovery as positive drone-arrival lag beyond truck arrival and is checked against the wait limit.
+      </p>
+      <p>
+        Subsequently, synchronization overruns are handled through feasibility rejection and repair cycles in online mode so that accepted states remain within wait limits. Consequently, deviation between planned and realized waiting time is tolerated only inside rejected candidate branches, not inside accepted online updates.
+      </p>
+      <pre class="equation">\begin{equation}
+W_{\mathrm{truck}}(r)=\max\{0,AT_D(r)-AT_T(r)\},
+\qquad
+W_{\mathrm{truck}}(r)\le W_{\max}.
+\tag{101}
+\end{equation}</pre>
+      <p>
+        In Eq. (101), <code>AT_D(r)</code> and <code>AT_T(r)</code> are drone and truck arrivals at recovery node <code>r</code>, and <code>W_max</code> maps to <code>params.constraints.max_truck_wait_time</code>.
+      </p>
+      <p>
+        Satisfaction is declared when recovery waiting at all sorties remains below or equal to the configured limit. A violation occurs when waiting exceeds the limit; in that case, the associated candidate update is rejected or further repaired before acceptance.
+      </p>
+      <p>
+        The output of this step is a synchronization-feasible accepted online solution with bounded truck waiting.
+      </p>
+      <p class="code-ref"><strong>Code location:</strong> <code>src/spd/core.py::check_sortie_feasibility</code>, called by <code>src/spd/online.py::LightweightALNSOptimizer.optimize_remaining_path</code> and <code>src/spd/online.py::OnlineReplanner._handle_drone_event</code>.</p>
+    </article>
+  </section>
+
+  <section>
+    <h2>4.6 Realized Reporting Structures</h2>
+    <p>
+      Once execution terminates, the engine constructs <code>ExecutionResult</code> with realized timeline dictionary, realized home-status map, failed-customer set, truck-distance and drone-energy traces, actual total cost, and replanning snapshots. Subsequently, this object is consumed by Monte Carlo aggregation and reporting utilities, so online execution remains directly analyzable without rerunning event logic.
+    </p>
+  </section>
+
+  <section>
+    <h2>4.7 Complexity and Budget Implications</h2>
+    <p>
+      The implemented online solver intentionally compresses neighborhood search to fixed small iterations and limited operators, and therefore each event response cost is approximately linear in online iteration count times candidate evaluation cost for one pair. As a result, the design privileges latency stability under repeated events, while leaving deep global restructuring to the offline stage.
+    </p>
+  </section>
+
+  <section>
+    <h2>4.8 Consolidated Interpretation</h2>
+    <p>
+      The complete online stage is an event-driven local-repair framework that preserves offline structure, reveals realized uncertainty during traversal, and updates only mutable suffixes under strict feasibility and strict-improvement policies. Consequently, the implementation is consistent with a two-layer methodology in which offline expectation planning and online realized execution are explicitly separated yet computationally coupled through shared state representations.
+    </p>
+  </section>
+
+</main>
+</body>
+</html>

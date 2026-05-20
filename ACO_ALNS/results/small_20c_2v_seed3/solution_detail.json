@@ -1,0 +1,105 @@
+{
+  "command": "solve",
+  "instance_file": "small_20c_2v_seed3.json",
+  "config_file": "_temp_config.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        0
+      ],
+      "truck_customers": [],
+      "sorties": []
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        14,
+        11,
+        9,
+        2,
+        17,
+        6,
+        18,
+        1,
+        16,
+        8,
+        19,
+        15,
+        13,
+        10,
+        0
+      ],
+      "truck_customers": [
+        1,
+        2,
+        6,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 14,
+          "recovery_node": 2,
+          "customers": [
+            5,
+            12
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 2,
+          "recovery_node": 6,
+          "customers": [
+            4,
+            3
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 13,
+          "recovery_node": 10,
+          "customers": [
+            7,
+            20
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "unserved_customers": []
+}

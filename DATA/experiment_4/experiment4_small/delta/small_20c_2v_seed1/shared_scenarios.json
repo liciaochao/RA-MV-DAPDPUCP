@@ -1,0 +1,6190 @@
+{
+  "customer_count": 20,
+  "num_time_slots": 8,
+  "trial_count": 30,
+  "scenario_seed": 582093793,
+  "execution_seeds": [
+    131286580,
+    1794664697,
+    385161034,
+    205640086,
+    351199330,
+    808508382,
+    341526404,
+    1724969282,
+    717921002,
+    655610932,
+    1362275678,
+    1577038670,
+    528759144,
+    1134869302,
+    190938990,
+    596940563,
+    1511296122,
+    1052196157,
+    349822243,
+    1045355416,
+    1947226656,
+    1784892412,
+    1426746313,
+    1106046911,
+    1297867651,
+    147062458,
+    918798063,
+    1315395617,
+    807277362,
+    1494203852
+  ],
+  "scenarios": [
+    {
+      "trial_index": 0,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "14": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 1,
+      "customer_slot_status": {
+        "1": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "12": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "13": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "19": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 2,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "15": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 3,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "13": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 4,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "15": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "16": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "17": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "20": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 5,
+      "customer_slot_status": {
+        "1": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "12": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "13": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "17": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 6,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "16": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 7,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "14": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 8,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "5": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "9": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "11": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "12": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 9,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "12": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "13": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "17": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "20": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 10,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "16": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 11,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "12": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "14": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 12,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "7": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "12": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "19": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 13,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "12": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "15": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 14,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "9": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "13": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 15,
+      "customer_slot_status": {
+        "1": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "13": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "19": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 16,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "9": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "11": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "17": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "18": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "20": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 17,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "3": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "8": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "10": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "11": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "17": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 18,
+      "customer_slot_status": {
+        "1": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "17": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 19,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "13": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "17": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "18": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 20,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "11": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "12": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "14": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "19": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 21,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 22,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "4": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "9": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "11": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "14": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "16": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 23,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "8": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "11": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "19": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "trial_index": 24,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "2": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "11": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "14": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "18": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "20": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 25,
+      "customer_slot_status": {
+        "1": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "2": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "5": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "8": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "9": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "12": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "17": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "18": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "20": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 26,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "2": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "3": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "4": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "6": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "10": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "12": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "14": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "20": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 27,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "2": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "4": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "6": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "7": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "9": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "11": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "12": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "13": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "15": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 28,
+      "customer_slot_status": {
+        "1": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "2": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "3": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "4": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "5": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "6": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "7": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "9": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "10": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "11": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "12": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "13": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "14": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "15": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "16": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "18": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "19": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "trial_index": 29,
+      "customer_slot_status": {
+        "1": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "2": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "3": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "4": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "5": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "6": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "7": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "8": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "9": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "10": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "11": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "12": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "13": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "14": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "15": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "16": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "17": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "18": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "19": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "20": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    }
+  ]
+}

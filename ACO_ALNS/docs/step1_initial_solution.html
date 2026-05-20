@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>?1???????????</title>
+<style>
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;max-width:1100px;margin:32px auto;padding:0 20px;line-height:1.7;color:#222;background:#fafafa}
+main{background:#fff;padding:32px 40px;border:1px solid #ddd;box-shadow:0 6px 24px rgba(0,0,0,.05)}
+h1,h2,h3{color:#123c63}
+h1{font-size:30px;border-bottom:3px solid #d9e7f3;padding-bottom:12px}
+h2{font-size:24px;margin-top:32px}
+h3{font-size:19px;margin-top:24px}
+p,li{font-size:15px}
+code{background:#f3f5f7;padding:1px 5px;border-radius:4px;font-family:"Consolas","Courier New",monospace}
+pre{background:#f7f9fb;border:1px solid #cfd8e3;padding:16px;overflow:auto;font-family:"Consolas","Courier New",monospace;font-size:14px}
+table{border-collapse:collapse;width:100%;margin:16px 0 24px 0;font-size:14px}
+th,td{border:1px solid #bfc9d4;padding:8px 10px;vertical-align:top}
+th{background:#e8f1f8}
+ul,ol{margin:8px 0 16px 24px}
+</style>
+</head><body><main>
+<h1>第1步：初始解构造阶段分析</h1>
+<p>分析范围：已读取 <code>D:\codex_drone</code> 下与初始解构造相关的代码、配置、测试和运行脚本，重点聚焦以下文件：</p>
+<ul>
+<li><code>src/spd/etprc.py</code></li>
+<li><code>src/spd/core.py</code></li>
+<li><code>src/spd/types.py</code></li>
+<li><code>src/spd/config.py</code></li>
+<li><code>src/spd/main.py</code></li>
+<li><code>tests/conftest.py</code></li>
+<li><code>tests/test_batch08a_etprc_grouping.py</code></li>
+<li><code>tests/test_batch08b_etprc_sorties.py</code></li>
+<li><code>tests/test_batch08c_etprc_full.py</code></li>
+<li><code>tests/test_batch10_aco_alns.py</code></li>
+<li><code>tests/test_pure_aco.py</code></li>
+<li><code>run_experiments.py</code></li>
+</ul>
+<p>说明：本文件仅做分析，不涉及任何业务源码修改。</p>
+<h2>1. 初始解构造的目标与作用</h2>
+<p>当前工程中“初始解构造”的主入口是 <code>ETPRCBuilder.build_initial_solution()</code>，定义在 <code>src/spd/etprc.py</code>。它在整体算法中的定位不是“最终求优”，而是为后续离线优化提供一个<strong>完整、可行、结构化</strong>的种子解。</p>
+<p>它的作用有四层：</p>
+<ol>
+<li>把全部客户先分配到若干 truck-drone vehicle pair 上，形成全局覆盖的初始方案。</li>
+<li>为每个 pair 构造一条卡车主路径，并从中抽取适合交给无人机执行的 sortie。</li>
+<li>在进入 ACO / ALNS 之前，先给出一个 objective 可计算、约束可检查的基线解。</li>
+<li>为后续优化阶段提供标准解结构：<code>Solution -&gt; VehiclePairSolution -&gt; Sortie</code>。</li>
+</ol>
+<p>在整体调用链中的位置如下：</p>
+<ol>
+<li><code>src/spd/main.py::_load_instance()</code> 读取实例，构造 <code>ProblemInstance</code></li>
+<li><code>src/spd/main.py::_load_parameters()</code> 读取配置，构造 <code>ProblemParameters</code></li>
+<li><code>ETPRCBuilder.build_initial_solution()</code> 构造初始解</li>
+<li><code>ACOALNSSolver.solve()</code> 或 <code>PureACOOptimizer.solve()</code> 以该初始解为起点继续离线优化</li>
+</ol>
+<p>工程上还有一个重要特点：该项目不接受“缺客户”的初始解。<code>build_initial_solution()</code> 末尾如果发现 <code>solution.unserved_customers</code> 非空，会直接抛出 <code>ValueError</code>，不进入后续优化。</p>
+<h2>2. 输入数据定义</h2>
+<h3>2.1 入口输入</h3>
+<table>
+<thead><tr><th>变量名</th><th>数据类型</th><th>含义</th><th>来源</th></tr></thead>
+<tbody><tr><td><code>instance</code></td><td><code>ProblemInstance</code></td><td>静态问题实例，包含 depot、客户、车辆对数量、距离矩阵等</td><td><code>src/spd/main.py::_load_instance</code></td></tr><tr><td><code>params</code></td><td><code>ProblemParameters</code></td><td>全局参数对象，包含时间、车辆、能耗、成本、约束、ACO/ALNS/ETPRC 参数</td><td><code>src/spd/main.py::_load_parameters</code></td></tr><tr><td><code>rng</code></td><td>`random.Random \</td><td>None`</td><td>初始解构造阶段使用的随机数源；若为空则内部创建 <code>Random(0)</code></td><td><code>src/spd/etprc.py</code></td></tr></tbody></table>
+<h3>2.2 <code>ProblemInstance</code> 中与初始解直接相关的字段</h3>
+<table>
+<thead><tr><th>变量名</th><th>数据类型</th><th>含义</th></tr></thead>
+<tbody><tr><td><code>instance.depot_id</code></td><td><code>int</code></td><td>仓库节点编号，卡车路径首尾均使用该节点</td></tr><tr><td><code>instance.vehicle_pair_count</code></td><td><code>int</code></td><td>车辆对数量；当前 <code>_customer_grouping()</code> 直接用它作为分组数</td></tr><tr><td><code>instance.customers</code></td><td><code>Mapping[int, Customer]</code></td><td>客户字典，键为客户编号</td></tr><tr><td><code>instance.delivery_customers</code></td><td><code>frozenset[int]</code></td><td>送货客户集合</td></tr><tr><td><code>instance.pickup_customers</code></td><td><code>frozenset[int]</code></td><td>取货客户集合</td></tr><tr><td><code>instance.truck_distance_km</code></td><td><code>Mapping[tuple[int, int], float]</code></td><td>卡车任意两点间距离矩阵</td></tr><tr><td><code>instance.drone_distance_km</code></td><td><code>Mapping[tuple[int, int], float]</code></td><td>无人机任意两点间距离矩阵</td></tr></tbody></table>
+<h3>2.3 <code>Customer</code> 中与初始解直接相关的字段</h3>
+<p><code>Customer</code> 定义在 <code>src/spd/types.py</code>。</p>
+<table>
+<thead><tr><th>字段名</th><th>数据类型</th><th>含义</th><th>用途</th></tr></thead>
+<tbody><tr><td><code>customer_id</code></td><td><code>int</code></td><td>客户编号</td><td>全流程索引</td></tr><tr><td><code>x</code>, <code>y</code></td><td><code>float</code></td><td>平面坐标</td><td>分组、距离相关启发式</td></tr><tr><td><code>customer_type</code></td><td><code>CustomerType</code></td><td><code>delivery</code> 或 <code>pickup</code></td><td>载重更新方向</td></tr><tr><td><code>weight</code></td><td><code>float</code></td><td>客户货重</td><td>truck/drone 容量约束</td></tr><tr><td><code>time_window</code></td><td><code>tuple[float, float]</code></td><td>时间窗 <code>(earliest, latest)</code></td><td>路径插入、sortie 可行性、概率调整</td></tr><tr><td><code>service_time</code></td><td><code>float</code></td><td>服务时间</td><td>timeline 计算</td></tr><tr><td><code>home_probabilities</code></td><td><code>tuple[float, ...]</code></td><td>分时间槽在家概率</td><td>expected failure cost、概率调整</td></tr></tbody></table>
+<h3>2.4 <code>ProblemParameters</code> 中与初始解直接相关的字段</h3>
+<table>
+<thead><tr><th>参数组</th><th>关键字段</th><th>用途</th></tr></thead>
+<tbody><tr><td><code>time</code></td><td><code>depot_earliest</code>, <code>depot_latest</code>, <code>num_time_slots</code></td><td>路径时间推进、回仓限制、slot 映射</td></tr><tr><td><code>vehicle</code></td><td><code>truck_capacity</code>, <code>drone_capacity</code>, <code>drone_empty_weight</code>, <code>truck_speed</code>, <code>drone_speed</code></td><td>路径可行性、sortie 可行性、能耗</td></tr><tr><td><code>energy</code></td><td><code>drone_battery_capacity</code>, <code>eta_wh_per_kg_min</code></td><td>sortie 能耗约束</td></tr><tr><td><code>cost</code></td><td><code>truck_cost_per_km</code>, <code>fixed_pair_cost</code>, <code>drone_energy_cost_per_wh</code></td><td>sortie 抽取与排序的 objective 评估</td></tr><tr><td><code>constraints</code></td><td><code>max_truck_wait_time</code>, <code>max_customers_per_sortie</code></td><td>sortie 可行性上界</td></tr><tr><td><code>beta_schedule</code></td><td><code>beta_init</code></td><td>初始解阶段 objective 的时间窗软惩罚权重</td></tr><tr><td><code>etprc</code></td><td><code>max_iter_kmeans</code>, <code>omega_distance</code>, <code>omega_time_window</code></td><td>分组与卡车插入构造中的启发式权重</td></tr></tbody></table>
+<h2>3. 构造策略描述</h2>
+<p>初始解不是单一策略，而是四段式复合启发式：</p>
+<h3>3.1 客户分组：带配送载重平衡的 K-means 风格聚类</h3>
+<p>对应函数：<code>ETPRCBuilder._customer_grouping()</code></p>
+<p>核心思路：</p>
+<ol>
+<li>以 <code>instance.vehicle_pair_count</code> 作为簇数 <code>k</code></li>
+<li>从客户中随机抽取初始质心</li>
+<li>反复执行“分配到最近质心 -&gt; 更新质心”</li>
+<li>若出现空簇，从最大簇迁移一个最远客户过去</li>
+<li>聚类完成后，再按“配送重量不超过卡车容量”做二次平衡</li>
+</ol>
+<p>这一步兼顾了两个目标：</p>
+<ul>
+<li>几何上把近邻客户放在一个 pair 内</li>
+<li>物理上避免某个分组在配送重量上先天过载</li>
+</ul>
+<h3>3.2 卡车路径构造：带死锁回退的 cheapest feasible insertion</h3>
+<p>对应函数：<code>ETPRCBuilder._build_truck_route()</code></p>
+<p>它不是简单最近邻，而是“全局扫描所有未插入客户的所有插入位置”，选择<strong>代价最小且可行</strong>的插入。</p>
+<p>插入代价为：</p>
+<ul>
+<li>距离增量项</li>
+<li>时间窗紧迫度项</li>
+</ul>
+<p>实现上使用：</p>
+<ul>
+<li><code>omega_distance * delta_dist</code></li>
+<li><code>omega_time_window * (1 / tw_tightness)</code></li>
+</ul>
+<p>如果当前 route 对所有剩余客户都找不到可行插入位，则进入两层回退：</p>
+<ol>
+<li><code>priority inversion</code>：优先尝试时间窗最紧客户</li>
+<li>若仍失败：暂时跳过该客户，等 route 主体完成后做 retry pass</li>
+</ol>
+<h3>3.3 无人机 sortie 抽取：枚举候选 + objective 增益筛选 + 贪心选择</h3>
+<p>对应函数：<code>ETPRCBuilder._extract_sorties()</code></p>
+<p>这一步从“全卡车服务的 route”中抽取适合改由无人机服务的客户子集。</p>
+<p>核心流程：</p>
+<ol>
+<li>先构造一个 baseline：当前 route 全由卡车服务</li>
+<li>枚举所有可能的 <code>(launch_node, recovery_node)</code> 组合</li>
+<li>枚举 launch 与 recovery 之间可候选的客户子集</li>
+<li>对每个子集，调用 <code>_optimize_sortie_order()</code> 求最优客户访问顺序</li>
+<li>用 <code>check_sortie_structure()</code>、<code>compute_truck_timeline()</code>、<code>compute_truck_load()</code>、<code>check_sortie_feasibility()</code> 过滤不可行候选</li>
+<li>用 <code>compute_objective()</code> 比较“抽取前后”的目标值变化 <code>delta_z</code></li>
+<li>只保留 <code>delta_z &gt; 0</code> 的正收益候选</li>
+<li>按 <code>delta_z</code> 从大到小贪心选择互不冲突的 sortie</li>
+</ol>
+<p>这说明当前实现的 sortie 抽取不是拍脑袋规则，而是<strong>受目标函数驱动</strong>的启发式筛选。</p>
+<h3>3.4 概率感知后调整：针对低在家概率客户做局部重排</h3>
+<p>对应函数：<code>ETPRCBuilder._adjust_by_probability()</code></p>
+<p>构造完整解后，还会执行一步后处理：</p>
+<ul>
+<li>若低概率客户是 truck customer，则尝试改变它在 truck route 中的位置</li>
+<li>若低概率客户是 drone customer，则尝试改变它在 sortie 中的访问顺序</li>
+</ul>
+<p>这里的“低概率”阈值当前写死为：</p>
+<ul>
+<li><code>threshold = 0.3</code></li>
+</ul>
+<p>每次替换都必须通过：</p>
+<ul>
+<li><code>all_hard_constraints_satisfied()</code></li>
+</ul>
+<p>否则立即回滚。这一步属于“概率感知 + 可行性保护”的轻量局部调整。</p>
+<h2>4. 逐步骤说明构造流程</h2>
+<h3>步骤 0：实例和参数装配</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/main.py::_load_instance</code></li>
+<li><code>src/spd/main.py::_load_parameters</code></li>
+</ul>
+<p>主要工作：</p>
+<ol>
+<li>把 JSON 实例读成 <code>ProblemInstance</code></li>
+<li>把 JSON 配置读成 <code>ProblemParameters</code></li>
+<li>为后续构造阶段准备客户集合、距离矩阵、时间参数、容量参数、成本参数</li>
+</ol>
+<h3>步骤 1：进入 <code>build_initial_solution</code></h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code></li>
+</ul>
+<p>主要工作：</p>
+<ol>
+<li>确定随机源：<code>rng or random.Random(0)</code></li>
+<li>调用 <code>_customer_grouping()</code> 得到 groups</li>
+<li>构造离线阶段默认 <code>home_status = {cid: True}</code></li>
+<li>逐组构造 pair 解</li>
+</ol>
+<h3>步骤 2：客户分组</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code></li>
+</ul>
+<p>输入：</p>
+<ul>
+<li><code>instance</code></li>
+<li><code>params</code></li>
+<li><code>rng</code></li>
+</ul>
+<p>输出：</p>
+<ul>
+<li><code>list[set[int]]</code></li>
+</ul>
+<p>主要逻辑：</p>
+<ol>
+<li>取全部客户编号</li>
+<li>使用 <code>instance.vehicle_pair_count</code> 作为分组数</li>
+<li>随机采样质心</li>
+<li>客户按最近质心分配</li>
+<li>更新质心</li>
+<li>若有空簇，从最大簇挪一个最远客户过去</li>
+<li>若某组配送重量超 <code>truck_capacity</code>，把最远的配送客户移动到最近的可行组</li>
+</ol>
+<h3>步骤 3：为每个 group 构造卡车主路径</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder._build_truck_route</code></li>
+</ul>
+<p>输入：</p>
+<ul>
+<li><code>group</code></li>
+<li><code>instance</code></li>
+<li><code>params</code></li>
+</ul>
+<p>输出：</p>
+<ul>
+<li>默认返回 <code>list[int]</code></li>
+<li>若 <code>return_skipped=True</code>，返回 <code>(route, skipped_customers)</code></li>
+</ul>
+<p>主要逻辑：</p>
+<ol>
+<li>从 <code>[depot]</code> 开始逐步插入客户</li>
+<li>对每个未插入客户，枚举全部插入位置</li>
+<li>对每个候选位置，调用内部 <code>is_route_feasible()</code> 检查：</li>
+<p>   - 客户时间窗是否被破坏<br>   - truck load 是否超容量<br>   - 最终回仓时间是否超 <code>depot_latest</code></p>
+<li>选择最小代价可行插入</li>
+<li>若所有客户都不可插入，改按“时间窗最紧”顺序尝试</li>
+<li>若仍不可插入，则先跳过最紧客户</li>
+<li>最后对跳过客户做 retry pass</li>
+<li>route 末尾补上 depot</li>
+</ol>
+<h3>步骤 4：从全卡车路径中抽取 sortie</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder._extract_sorties</code></li>
+</ul>
+<p>输入：</p>
+<ul>
+<li><code>truck_route</code></li>
+<li><code>instance</code></li>
+<li><code>params</code></li>
+<li><code>home_status</code></li>
+</ul>
+<p>输出：</p>
+<ul>
+<li><code>updated_route</code></li>
+<li><code>sorties</code></li>
+<li><code>truck_customers</code></li>
+<li><code>drone_customers</code></li>
+</ul>
+<p>主要逻辑：</p>
+<ol>
+<li>构造 baseline pair：不抽 sortie，所有客户都由 truck 服务</li>
+<li>计算 baseline objective</li>
+<li>枚举 launch / recovery 节点对</li>
+<li>枚举中间可由无人机服务的客户子集</li>
+<li>对客户子集调用 <code>_optimize_sortie_order()</code> 求最优顺序</li>
+<li>构造 candidate pair</li>
+<li>调用：</li>
+<p>   - <code>check_sortie_structure</code><br>   - <code>compute_truck_timeline</code><br>   - <code>compute_truck_load</code><br>   - <code>check_sortie_feasibility</code><br>   - <code>compute_objective</code></p>
+<li>计算 <code>delta_z = baseline_objective - candidate_objective</code></li>
+<li>对正收益候选按 <code>delta_z</code> 降序排序</li>
+<li>贪心选择不冲突的 sortie，并从 route 中删除对应 drone customers</li>
+</ol>
+<h3>步骤 5：优化 sortie 内部客户顺序</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder._optimize_sortie_order</code></li>
+</ul>
+<p>输入：</p>
+<ul>
+<li><code>customers</code></li>
+<li><code>launch</code></li>
+<li><code>recovery</code></li>
+<li><code>instance</code></li>
+<li><code>params</code></li>
+<li><code>home_status</code></li>
+</ul>
+<p>输出：</p>
+<ul>
+<li>排序后的 <code>list[int]</code></li>
+</ul>
+<p>主要逻辑：</p>
+<ol>
+<li>若客户数 &lt;= 1，直接返回</li>
+<li>枚举 <code>customers</code> 的全部排列</li>
+<li>对每个排列构造一个简化 pair</li>
+<li>调用结构检查、timeline/load 计算、sortie feasibility 检查</li>
+<li>用 <code>compute_objective()</code> 选 objective 最小的顺序</li>
+<li>若所有排列都不可行，则返回原始顺序</li>
+</ol>
+<h3>步骤 6：处理 route 构造时被跳过的客户</h3>
+<p>该逻辑在 <code>build_initial_solution()</code> 内部，不是单独函数。</p>
+<p>主要逻辑：</p>
+<ol>
+<li>汇总所有 pair 在 <code>_build_truck_route(..., return_skipped=True)</code> 中跳过的客户</li>
+<li>按时间窗宽度从宽到窄尝试“跨 pair 插入”</li>
+<li>在各 pair 现有 <code>truck_route</code> 的各位置尝试插入</li>
+<li>插入后必须同时满足：</li>
+<p>   - route 时间推进仍可行<br>   - 回仓仍可行<br>   - 原 sorties 的 launch / recovery 节点仍存在于新 route<br>   - 原 sorties 的 launch / recovery 顺序没有被破坏</p>
+<li>插入成功则记为 rescued</li>
+<li>若最终仍有未插入客户，保留在 <code>unserved_customers</code></li>
+</ol>
+<h3>步骤 7：概率感知后调整</h3>
+<p>对应函数：</p>
+<ul>
+<li><code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code></li>
+</ul>
+<p>主要逻辑：</p>
+<ol>
+<li>拷贝当前 solution，避免失败修改污染原始对象</li>
+<li>对每个 pair 计算 truck timeline</li>
+<li>计算每个客户在当前 arrival time 下对应的 home probability</li>
+<li>按概率升序处理客户</li>
+<li>若 <code>prob &lt; 0.3</code>：</li>
+<p>   - truck customer：尝试重新插入到 route 的其他位置<br>   - drone customer：尝试重排其所在 sortie 的客户顺序</p>
+<li>任何候选替换都必须通过 <code>all_hard_constraints_satisfied()</code> 才接受</li>
+<li>最后重算 <code>unserved_customers</code></li>
+</ol>
+<h3>步骤 8：最终完整性检查</h3>
+<p>仍在 <code>build_initial_solution()</code> 内部。</p>
+<p>主要逻辑：</p>
+<ol>
+<li>汇总所有 pair 已分配客户</li>
+<li>计算 <code>unserved = all_customers - assigned_customers + skipped_in_route_build</code></li>
+<li>若 <code>solution.unserved_customers</code> 非空，直接抛出异常</li>
+<li>返回完整初始解</li>
+</ol>
+<h2>5. 伪代码</h2>
+<pre>FUNCTION BuildInitialSolution(instance, params, rng):
+    random_state &lt;- rng if rng != None else Random(0)
+    groups &lt;- CustomerGrouping(instance, params, random_state)
+    home_status &lt;- {cid: True for cid in instance.customers}
+
+    vehicle_pairs &lt;- []
+    skipped_global &lt;- {}
+
+    FOR each group g with index p:
+        route, skipped &lt;- BuildTruckRoute(g, instance, params, return_skipped=True)
+        skipped_global &lt;- skipped_global U skipped
+
+        updated_route, sorties, truck_set, drone_set &lt;-
+            ExtractSorties(route, instance, params, home_status)
+
+        vehicle_pairs.append(
+            VehiclePairSolution(
+                pair_id = p + 1,
+                truck_route = updated_route,
+                sorties = sorties,
+                truck_customers = truck_set,
+                drone_customers = drone_set
+            )
+        )
+
+    IF skipped_global is not empty:
+        skipped_global &lt;- RescueSkippedCustomersAcrossPairs(
+            skipped_global, vehicle_pairs, instance, params
+        )
+
+    solution &lt;- Solution(
+        vehicle_pairs = vehicle_pairs,
+        unserved_customers = AllCustomers(instance) - AssignedCustomers(vehicle_pairs)
+                             U skipped_global
+    )
+
+    solution &lt;- AdjustByProbability(solution, instance, params)
+
+    IF solution.unserved_customers is not empty:
+        RAISE ValueError(&quot;ETPRC failed to serve all customers&quot;)
+
+    RETURN solution
+
+
+FUNCTION BuildTruckRoute(group, instance, params):
+    route &lt;- [depot]
+    uninserted &lt;- group
+    skipped &lt;- []
+
+    WHILE uninserted not empty:
+        try cheapest feasible insertion over all customers and positions
+        IF found:
+            apply best insertion
+            CONTINUE
+
+        try priority inversion:
+            attempt tightest time-window customer first
+        IF found:
+            apply insertion
+            CONTINUE
+
+        skip the tightest-window customer temporarily
+
+    retry skipped customers on the completed route
+    append depot
+    RETURN route, skipped
+
+
+FUNCTION ExtractSorties(route, instance, params, home_status):
+    baseline_objective &lt;- objective(all-truck route)
+    candidate_pool &lt;- []
+
+    FOR each launch node in route:
+        FOR each recovery node after launch:
+            enumerate feasible customer subsets between them
+            optimize customer order for each subset
+            check structure, timeline, load and sortie feasibility
+            compute delta objective
+            keep only positive-gain candidates
+
+    sort candidate_pool by delta descending
+    greedily pick non-conflicting sorties
+    remove selected drone customers from truck route
+    RETURN updated_route, selected_sorties, truck_customers, drone_customers</pre>
+<h2>6. 构造结果的数据结构说明</h2>
+<h3>6.1 全局结构</h3>
+<p>初始解最终返回 <code>Solution</code>，定义在 <code>src/spd/types.py</code>：</p>
+<table>
+<thead><tr><th>数据结构</th><th>字段</th><th>类型</th><th>含义</th></tr></thead>
+<tbody><tr><td><code>Solution</code></td><td><code>vehicle_pairs</code></td><td><code>list[VehiclePairSolution]</code></td><td>全局解由多个 truck-drone pair 组成</td></tr><tr><td><code>Solution</code></td><td><code>unserved_customers</code></td><td><code>set[int]</code></td><td>未服务客户集合；正常初始解应为空</td></tr></tbody></table>
+<h3>6.2 pair 级结构</h3>
+<table>
+<thead><tr><th>数据结构</th><th>字段</th><th>类型</th><th>含义</th></tr></thead>
+<tbody><tr><td><code>VehiclePairSolution</code></td><td><code>pair_id</code></td><td><code>int</code></td><td>车辆对编号</td></tr><tr><td><code>VehiclePairSolution</code></td><td><code>truck_route</code></td><td><code>list[int]</code></td><td>卡车路径，首尾为 depot</td></tr><tr><td><code>VehiclePairSolution</code></td><td><code>sorties</code></td><td><code>list[Sortie]</code></td><td>无人机 sorties 列表</td></tr><tr><td><code>VehiclePairSolution</code></td><td><code>truck_customers</code></td><td><code>set[int]</code></td><td>卡车直接服务客户集合</td></tr><tr><td><code>VehiclePairSolution</code></td><td><code>drone_customers</code></td><td><code>set[int]</code></td><td>无人机服务客户集合</td></tr></tbody></table>
+<p>注意：</p>
+<ul>
+<li><code>pair.all_customers = truck_customers ∪ drone_customers</code></li>
+<li><code>truck_customers</code> 与 <code>drone_customers</code> 应不相交</li>
+<li><code>drone_customers</code> 中的客户应已从 <code>truck_route</code> 中移除</li>
+</ul>
+<h3>6.3 sortie 级结构</h3>
+<table>
+<thead><tr><th>数据结构</th><th>字段</th><th>类型</th><th>含义</th></tr></thead>
+<tbody><tr><td><code>Sortie</code></td><td><code>launch_node</code></td><td><code>int</code></td><td>无人机起飞锚点，必须是 truck customer</td></tr><tr><td><code>Sortie</code></td><td><code>recovery_node</code></td><td><code>int</code></td><td>无人机回收锚点，必须晚于 launch_node</td></tr><tr><td><code>Sortie</code></td><td><code>customers</code></td><td><code>list[int]</code></td><td>无人机客户访问顺序</td></tr></tbody></table>
+<p>约束要求：</p>
+<ol>
+<li><code>launch_node</code> 和 <code>recovery_node</code> 不能是 depot</li>
+<li>它们必须出现在 <code>truck_route</code> 中</li>
+<li><code>launch_node</code> 在 route 中的位置必须早于 <code>recovery_node</code></li>
+<li><code>sortie.customers</code> 不能包含 launch/recovery</li>
+<li><code>sortie.customers</code> 不得仍然出现在 <code>truck_route</code> 中</li>
+</ol>
+<h3>6.4 初始解的表示示意</h3>
+<pre>Solution
+├─ vehicle_pairs[0]
+│  ├─ pair_id = 1
+│  ├─ truck_route = [0, 3, 7, 9, 0]
+│  ├─ truck_customers = {3, 7, 9}
+│  ├─ drone_customers = {4, 5}
+│  └─ sorties = [
+│       Sortie(launch_node=3, recovery_node=9, customers=[4, 5])
+│     ]
+├─ vehicle_pairs[1]
+│  └─ ...
+└─ unserved_customers = set()</pre>
+<h2>7. 关键参数列表</h2>
+<p>说明：当前实现中，多数参数在 <code>dataclass</code> 中没有代码级默认值，必须从 JSON 配置读入。下表的“默认值”优先采用现有示例配置和测试夹具中的实际值。</p>
+<table>
+<thead><tr><th>参数名</th><th>含义</th><th>默认值</th><th>所在文件</th></tr></thead>
+<tbody><tr><td><code>time.depot_earliest</code></td><td>仓库最早出发时刻</td><td><code>0.0</code></td><td><code>src/spd/config.py</code>，<code>examples/configs/*.json</code></td></tr><tr><td><code>time.depot_latest</code></td><td>仓库最晚回仓时刻</td><td><code>480.0</code></td><td><code>src/spd/config.py</code>，<code>examples/configs/*.json</code></td></tr><tr><td><code>time.num_time_slots</code></td><td>在家概率时间槽数</td><td><code>8</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>vehicle.truck_capacity</code></td><td>卡车容量上限</td><td>示例配置 <code>100.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>vehicle.drone_capacity</code></td><td>无人机容量上限</td><td>示例配置 <code>9.0</code>；测试夹具 <code>5.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>vehicle.truck_speed</code></td><td>卡车速度</td><td><code>0.5</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>vehicle.drone_speed</code></td><td>无人机速度</td><td><code>1.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>vehicle.drone_empty_weight</code></td><td>无人机空重</td><td>示例配置 <code>15.0</code>；测试夹具 <code>2.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>energy.drone_battery_capacity</code></td><td>sortie 电池约束上限</td><td>示例配置 <code>500.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>energy.eta_wh_per_kg_min</code></td><td>单位重量-时间能耗系数</td><td>示例配置 <code>0.97</code>；测试夹具 <code>0.5</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>cost.truck_cost_per_km</code></td><td>卡车单位里程成本</td><td>示例配置 <code>0.75</code>；测试夹具 <code>1.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>cost.fixed_pair_cost</code></td><td>使用一个 vehicle pair 的固定成本</td><td>示例配置 <code>22.0</code>；测试夹具 <code>50.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>cost.drone_energy_cost_per_wh</code></td><td>无人机单位能耗成本</td><td>示例配置 <code>0.00248</code>；测试夹具 <code>0.1</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>constraints.max_truck_wait_time</code></td><td>recovery 点卡车最大等待时间</td><td><code>30.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>constraints.max_customers_per_sortie</code></td><td>单个 sortie 最大客户数</td><td><code>3</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>beta_schedule.beta_init</code></td><td>初始解阶段 objective 中时间窗软惩罚系数</td><td><code>10.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>etprc.k_cluster</code></td><td>配置中的簇数参数</td><td>示例配置 <code>1</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>etprc.max_iter_kmeans</code></td><td>K-means 最大迭代次数</td><td><code>100</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>etprc.omega_distance</code></td><td>插入代价中的距离项权重</td><td><code>1.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>etprc.omega_time_window</code></td><td>插入代价中的时间窗紧迫度项权重</td><td><code>1.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>etprc.omega_balance</code></td><td>预留的平衡项权重</td><td><code>1.0</code></td><td><code>src/spd/config.py</code></td></tr><tr><td><code>rng</code></td><td>初始解构造随机源</td><td>内部默认 <code>Random(0)</code></td><td><code>src/spd/etprc.py</code></td></tr><tr><td><code>threshold</code></td><td>概率调整中的低概率阈值</td><td>硬编码 <code>0.3</code></td><td><code>src/spd/etprc.py</code></td></tr></tbody></table>
+<h2>8. 涉及的核心函数列表</h2>
+<h3>8.1 初始解主链路</h3>
+<ul>
+<li><code>src/spd/main.py::_load_instance</code></li>
+<li><code>src/spd/main.py::_load_parameters</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder.build_initial_solution</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder._customer_grouping</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder._build_truck_route</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder._extract_sorties</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder._optimize_sortie_order</code></li>
+<li><code>src/spd/etprc.py::ETPRCBuilder._adjust_by_probability</code></li>
+</ul>
+<h3>8.2 初始解依赖的判定内核</h3>
+<ul>
+<li><code>src/spd/core.py::compute_truck_timeline</code></li>
+<li><code>src/spd/core.py::compute_truck_load</code></li>
+<li><code>src/spd/core.py::check_sortie_structure</code></li>
+<li><code>src/spd/core.py::check_sortie_feasibility</code></li>
+<li><code>src/spd/core.py::all_hard_constraints_satisfied</code></li>
+<li><code>src/spd/core.py::compute_objective</code></li>
+<li><code>src/spd/config.py::map_time_to_slot</code></li>
+</ul>
+<h3>8.3 与后续优化的衔接函数</h3>
+<ul>
+<li><code>src/spd/aco_alns.py::ACOALNSSolver.solve</code></li>
+<li><code>src/spd/aco_alns.py::PureACOOptimizer.solve</code></li>
+<li><code>src/spd/aco_alns.py::ACOALNSSolver.construct_ant_solution</code></li>
+</ul>
+<p>说明：<code>construct_ant_solution()</code> 也会复用 <code>_customer_grouping()</code> 和 <code>_extract_sorties()</code> 的部分逻辑，但它属于 ACO 迭代中的构造器，不是“全流程初始解”的唯一主入口。</p>
+<h2>9. 测试与实现一致性证据</h2>
+<p>与初始解构造直接对应的测试主要有：</p>
+<table>
+<thead><tr><th>测试文件</th><th>覆盖点</th></tr></thead>
+<tbody><tr><td><code>tests/test_batch08a_etprc_grouping.py</code></td><td>分组数、非空簇、覆盖性、配送重量不超卡车容量</td></tr><tr><td><code>tests/test_batch08b_etprc_sorties.py</code></td><td>sortie 抽取结果形状、launch/recovery 非 depot、truck/drone 客户集合一致性</td></tr><tr><td><code>tests/test_batch08c_etprc_full.py</code></td><td>初始解全客户覆盖、无未服务客户、硬约束成立、跳过/回填逻辑形状正确</td></tr><tr><td><code>tests/test_batch10_aco_alns.py</code></td><td>初始解作为 ACO-ALNS 起点时可被后续优化正常消费</td></tr><tr><td><code>tests/test_pure_aco.py</code></td><td>初始解作为 Pure ACO 起点时可被正常消费</td></tr></tbody></table>
+<p>这些测试共同表明：当前项目把 ETPRC 构造结果视为后续离线优化的正式输入，而不是临时中间状态。</p>
+<h2>10. 发现的不确定点或需用户确认的内容</h2>
+<h3>10.1 <code>etprc.k_cluster</code> 与 <code>instance.vehicle_pair_count</code> 的关系</h3>
+<p>虽然配置对象 <code>ETPRCParameters</code> 中存在 <code>k_cluster</code>，实验脚本 <code>run_experiments.py</code> 也会根据实例把它写入配置，但 <code>_customer_grouping()</code> 当前实际使用的是：</p>
+<ul>
+<li><code>k = instance.vehicle_pair_count</code></li>
+</ul>
+<p>也就是说，当前初始解分组数是由实例决定，不是由 <code>params.etprc.k_cluster</code> 决定。需要确认这是否为有意设计。</p>
+<h3>10.2 <code>omega_balance</code> 当前未被消费</h3>
+<p><code>ETPRCParameters</code> 中定义了：</p>
+<ul>
+<li><code>omega_balance</code></li>
+</ul>
+<p>但在 <code>src/spd/etprc.py</code> 当前实现里，初始解构造阶段没有看到该参数被直接用于分组、插入或 sortie 抽取。需要确认：</p>
+<ol>
+<li>它是否只是历史遗留参数</li>
+<li>或者原计划用于分组平衡但尚未实现</li>
+</ol>
+<h3>10.3 概率调整阈值是硬编码</h3>
+<p><code>_adjust_by_probability()</code> 中的低概率判定阈值当前写死为：</p>
+<ul>
+<li><code>threshold = 0.3</code></li>
+</ul>
+<p>它不在配置文件中，属于代码级硬编码。若后续分析要讨论“关键参数”，需要把它归类为<strong>实现常量</strong>而不是<strong>配置参数</strong>。</p>
+<h2>11. 初始解构造策略概括（2~3句话）</h2>
+<p>当前实现以 E-TPRC 为主入口：先按车辆对数量做随机初始化的 K-means 分组，再对每个分组执行带时间窗和载重约束的 cheapest-feasible-insertion 卡车路径构造。然后从全卡车路径中枚举并筛选正收益 sortie，用 objective 差值而不是单一距离规则做贪心抽取，最后再对低在家概率客户做一次可回滚的概率感知调整。</p>
+<h2>12. 终端确认摘要</h2>
+<ul>
+<li>涉及的核心函数列表：见第 8 节</li>
+<li>初始解的构造策略概括：见第 11 节</li>
+<li>发现的不确定点或需用户确认的内容：见第 10 节</li>
+<li>提示：<strong>第1步完成，请确认后发送“继续第2步”</strong></li>
+</ul>
+</main></body></html>
