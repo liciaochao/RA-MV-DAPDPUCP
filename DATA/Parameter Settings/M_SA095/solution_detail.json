@@ -1,0 +1,144 @@
+{
+  "command": "solve",
+  "instance_file": "medium_30c_2v_seed3.json",
+  "config_file": "M_SA095.json",
+  "vehicle_pairs": [
+    {
+      "pair_id": 1,
+      "truck_route": [
+        0,
+        7,
+        6,
+        2,
+        24,
+        11,
+        14,
+        23,
+        29,
+        12,
+        3,
+        22,
+        21,
+        26,
+        20,
+        18,
+        1,
+        30,
+        16,
+        0
+      ],
+      "truck_customers": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        11,
+        12,
+        14,
+        16,
+        18,
+        20,
+        21,
+        22,
+        23,
+        24,
+        26,
+        29,
+        30
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 12,
+          "recovery_node": 3,
+          "customers": [
+            4,
+            5
+          ]
+        },
+        {
+          "sortie_index": 1,
+          "launch_node": 21,
+          "recovery_node": 26,
+          "customers": [
+            8
+          ]
+        },
+        {
+          "sortie_index": 2,
+          "launch_node": 18,
+          "recovery_node": 1,
+          "customers": [
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "pair_id": 2,
+      "truck_route": [
+        0,
+        17,
+        27,
+        19,
+        15,
+        13,
+        10,
+        0
+      ],
+      "truck_customers": [
+        10,
+        13,
+        15,
+        17,
+        19,
+        27
+      ],
+      "sorties": [
+        {
+          "sortie_index": 0,
+          "launch_node": 19,
+          "recovery_node": 15,
+          "customers": [
+            9,
+            25
+          ]
+        }
+      ]
+    }
+  ],
+  "all_customers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "unserved_customers": []
+}

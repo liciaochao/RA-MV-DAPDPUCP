@@ -1,0 +1,126 @@
+{
+  "output_run": "all_cases_3failures_strict_rescue_penalty_consolidated",
+  "main_run": "all_cases_3failures_strict_rescue_penalty",
+  "retry_run": "all_cases_3failures_strict_rescue_penalty_late_retry",
+  "main_rows_input": 168,
+  "retry_rows_input": 9,
+  "main_rows_removed": 6,
+  "main_rows_kept": 162,
+  "final_rows": 171,
+  "replaced_cases": [
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1"
+    },
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2"
+    }
+  ],
+  "removed_main_failed_customers": [
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2",
+      "failed_customer": 33,
+      "status": "optimal"
+    },
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2",
+      "failed_customer": 50,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1",
+      "failed_customer": 18,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1",
+      "failed_customer": 128,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1",
+      "failed_customer": 163,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1",
+      "failed_customer": 239,
+      "status": "optimal"
+    }
+  ],
+  "retry_failed_customers": [
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2",
+      "failed_customer": 6,
+      "status": "optimal"
+    },
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2",
+      "failed_customer": 35,
+      "status": "optimal"
+    },
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2",
+      "failed_customer": 50,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1",
+      "failed_customer": 18,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1",
+      "failed_customer": 38,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1",
+      "failed_customer": 142,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1",
+      "failed_customer": 125,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1",
+      "failed_customer": 166,
+      "status": "optimal"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1",
+      "failed_customer": 239,
+      "status": "optimal"
+    }
+  ],
+  "validation": {
+    "expected_run_count": 171,
+    "actual_run_count": 171,
+    "expected_case_count": 57,
+    "actual_case_count": 57,
+    "bad_case_counts": {},
+    "nonempty_unserved_count": 0
+  }
+}

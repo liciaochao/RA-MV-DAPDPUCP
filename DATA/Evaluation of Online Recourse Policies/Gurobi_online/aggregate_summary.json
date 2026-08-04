@@ -1,0 +1,94 @@
+{
+  "run_id": "all_cases_3failures_strict_rescue_penalty_consolidated",
+  "created_at": "2026-07-09T23:18:43",
+  "completed_run_count": 171,
+  "case_count": 57,
+  "error_count": 0,
+  "scale_summary": [
+    {
+      "scale": "large",
+      "run_count": 54,
+      "case_count": 18,
+      "status_counts": {
+        "optimal": 54
+      },
+      "avg_wall_time_seconds": 9.182348,
+      "avg_gurobi_total_solve_time_seconds": 8.480352,
+      "avg_delta_total_cost": 30.637094,
+      "avg_gap_percent": 1.29134,
+      "avg_action_count": 19.759259,
+      "unserved_run_count": 0
+    },
+    {
+      "scale": "medium",
+      "run_count": 54,
+      "case_count": 18,
+      "status_counts": {
+        "optimal": 54
+      },
+      "avg_wall_time_seconds": 17.482253,
+      "avg_gurobi_total_solve_time_seconds": 16.369241,
+      "avg_delta_total_cost": 16.541104,
+      "avg_gap_percent": 0.984442,
+      "avg_action_count": 26.074074,
+      "unserved_run_count": 0
+    },
+    {
+      "scale": "small",
+      "run_count": 63,
+      "case_count": 21,
+      "status_counts": {
+        "optimal": 62,
+        "feasible": 1
+      },
+      "avg_wall_time_seconds": 1.3315,
+      "avg_gurobi_total_solve_time_seconds": 1.139603,
+      "avg_delta_total_cost": 7.860288,
+      "avg_gap_percent": 1.624712,
+      "avg_action_count": 12.222222,
+      "unserved_run_count": 0
+    },
+    {
+      "scale": "ALL",
+      "run_count": 171,
+      "case_count": 57,
+      "status_counts": {
+        "optimal": 170,
+        "feasible": 1
+      },
+      "avg_wall_time_seconds": 8.910953,
+      "avg_gurobi_total_solve_time_seconds": 8.267094,
+      "avg_delta_total_cost": 17.794274,
+      "avg_gap_percent": 1.317246,
+      "avg_action_count": 18.976608,
+      "unserved_run_count": 0
+    }
+  ],
+  "errors": [],
+  "source_runs": {
+    "main_run": "D:\\MV-DAPDPUCP\\codex_drone_gurobi\\recourse_validation_results\\all_cases_3failures_strict_rescue_penalty",
+    "retry_run": "D:\\MV-DAPDPUCP\\codex_drone_gurobi\\recourse_validation_results\\all_cases_3failures_strict_rescue_penalty_late_retry"
+  },
+  "replaced_cases": [
+    {
+      "scale": "large",
+      "case_name": "large_150c_9v_seed1"
+    },
+    {
+      "scale": "large",
+      "case_name": "large_300c_20v_seed1"
+    },
+    {
+      "scale": "medium",
+      "case_name": "medium_50c_3v_seed2"
+    }
+  ],
+  "validation": {
+    "expected_run_count": 171,
+    "actual_run_count": 171,
+    "expected_case_count": 57,
+    "actual_case_count": 57,
+    "bad_case_counts": {},
+    "nonempty_unserved_count": 0
+  }
+}
